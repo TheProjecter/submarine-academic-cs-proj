@@ -1,0 +1,16 @@
+obj\Debug\ResolveAssemblyReference.cache
+obj\Debug\Sub_Marine_Client.Properties.Resources.resources
+obj\Debug\Sub_Marine_Client.csproj.GenerateResource.Cache
+obj\Debug\Sub_Marine_Client.Client_Form.resources
+bin\Debug\Sub_Marine_Client.exe
+bin\Debug\Sub_Marine_Client.pdb
+obj\Debug\Sub_Marine_Client.exe
+obj\Debug\Sub_Marine_Client.pdb
+bin\Release\Sub_Marine_Client.exe
+bin\Release\Sub_Marine_Client.pdb
+obj\Release\ResolveAssemblyReference.cache
+obj\Release\Sub_Marine_Client.Client_Form.resources
+obj\Release\Sub_Marine_Client.Properties.Resources.resources
+obj\Release\Sub_Marine_Client.csproj.GenerateResource.Cache
+obj\Release\Sub_Marine_Client.exe
+obj\Release\Sub_Marine_Client.pdb
