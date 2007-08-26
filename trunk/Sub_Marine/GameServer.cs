@@ -105,7 +105,14 @@ namespace Sub_Marine_Server
             input = new BinaryReader(socketStream);
             while (status)
             {
-                onDataRecieved();
+                if (reacive_t == null)
+                {
+                    MessageBox.Show("Start reaciving");
+                    reacive_t = new Thread(new ThreadStart(onDataRecieved));
+                    reacive_t.IsBackground = true;
+                    reacive_t.Start();
+                }
+                //onDataRecieved();
             }
 
         }
