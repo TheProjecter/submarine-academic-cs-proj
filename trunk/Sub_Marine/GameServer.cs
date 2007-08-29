@@ -43,6 +43,7 @@ namespace Sub_Marine_Server
             {
                 MessageBox.Show("odrse " +se.Message);
                 reacive_t.Abort();
+                listener.Stop();
                 return;
             }
             catch (IOException se1)
@@ -106,22 +107,21 @@ namespace Sub_Marine_Server
         public void start()
         {
             bool status = true;
+            init();
             socketStream = new NetworkStream(connection);
             output = new BinaryWriter(socketStream);
             input = new BinaryReader(socketStream);
-            init();
             while (status)
             {
                 reacive_t = new Thread(new ThreadStart(onDataRecieved));
                 reacive_t.IsBackground = true;
                 reacive_t.Start();
                 while (reacive_t.IsAlive) ;
-                //onDataRecieved();
-                if (reacive_t.ThreadState == ThreadState.Aborted)
+               if (reacive_t.ThreadState == ThreadState.Aborted)
                 {
-                    listener.Stop();
-                    init();
-                }
+                 listener.Stop();
+                   init();
+              }
             }
         }
 
