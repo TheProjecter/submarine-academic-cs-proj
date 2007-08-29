@@ -32,7 +32,7 @@ namespace Sub_Marine_Server
         {
             //MessageBox.Show(str);
 
-            input.Set = str;
+            input.Text = str; //unsafe safe write to another thread
         }
 
     }
