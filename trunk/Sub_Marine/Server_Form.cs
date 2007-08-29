@@ -35,5 +35,10 @@ namespace Sub_Marine_Server
             input.Text = str; //unsafe safe write to another thread
         }
 
+        
+        void Server_FormFormClosing(object sender, FormClosingEventArgs e)
+        {
+        		MessageBox.Show("BABAABBAABBAHAAHHHHH!!!!");
+        }
     }
 }
