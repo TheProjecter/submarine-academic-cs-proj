@@ -24,11 +24,26 @@ namespace Sub_Marine_Server
         private NetworkStream socketStream; // network data stream
         public delegate void Command(String str);
         public Command m_Command;
+        private bool connectionIsUp = true;
+        private bool serverIsUp = true;
         public GameServer(String ip, int port)
         {
             m_IP = ip;
             m_IP = "127.0.0.1";
             m_port = port;
+            try
+            {
+                listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
+            }
+            catch (ArgumentNullException ar)
+            {
+                MessageBox.Show("ar " + ar.Message);
+            }
+
+            catch (ArgumentOutOfRangeException ar1)
+            {
+                MessageBox.Show("ar1 " + ar1.Message);
+            }
         }
         public void onDataRecieved()
         {
@@ -42,15 +57,16 @@ namespace Sub_Marine_Server
             catch (ObjectDisposedException se)
             {
                 MessageBox.Show("odrse " +se.Message);
-                reacive_t.Abort();
                 listener.Stop();
+                connectionIsUp = false;
                 return;
             }
             catch (IOException se1)
             {
+            	connectionIsUp = false;
                 MessageBox.Show("odrse1 "+se1.Message);
-                reacive_t.Abort();
                 listener.Stop();
+                MessageBox.Show("status was set to false");
                 return;
             }
             if (str != null)
@@ -65,19 +81,6 @@ namespace Sub_Marine_Server
 
         public void init()
         {
-            try
-            {
-                listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
-            }
-            catch (ArgumentNullException ar)
-            {
-                MessageBox.Show("ar " + ar.Message);
-            }
-
-            catch (ArgumentOutOfRangeException ar1)
-            {
-                MessageBox.Show("ar1 " + ar1.Message);
-            }
             try
             {
                 listener.Start();
@@ -106,26 +109,30 @@ namespace Sub_Marine_Server
         }
         public void start()
         {
-            bool status = true;
-            init();
-            socketStream = new NetworkStream(connection);
-            output = new BinaryWriter(socketStream);
-            input = new BinaryReader(socketStream);
-            while (status)
-            {
-                reacive_t = new Thread(new ThreadStart(onDataRecieved));
-                reacive_t.IsBackground = true;
-                reacive_t.Start();
-                while (reacive_t.IsAlive) ;
-               if (reacive_t.ThreadState == ThreadState.Aborted)
-                {
-                 listener.Stop();
-                   init();
-              }
-            }
+        	while (serverIsUp)
+        	{
+        		init();
+	        	
+	        	socketStream = new NetworkStream(connection);
+	        	output = new BinaryWriter(socketStream);
+	        	input = new BinaryReader(socketStream);
+	        	while (connectionIsUp)
+	        	{
+	        		reacive_t = new Thread(new ThreadStart(onDataRecieved));
+	        		reacive_t.IsBackground = true;
+	        		reacive_t.Start();
+	        		while (reacive_t.IsAlive) ;
+	        		if (reacive_t.ThreadState == ThreadState.Aborted)
+	        		{
+	        			listener.Stop();
+	        			init();
+	        		}
+	        	}
+	        	connectionIsUp = true;
+        	}
         }
 
-        }
+    }
 
 
     }
