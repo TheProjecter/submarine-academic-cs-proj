@@ -29,42 +29,31 @@ namespace Sub_Marine_Server
             m_IP = ip;
             m_IP = "127.0.0.1";
             m_port = port;
-            try
-            {
-                listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
-            }
-            catch (ArgumentNullException ar)
-            {
-                MessageBox.Show(ar.Message);
-
-            }
-
-            catch (ArgumentOutOfRangeException ar1)
-            {
-                MessageBox.Show(ar1.Message);
-            }
-
-
-
         }
         public void onDataRecieved()
         {
             String str = null;
             try
             {
+                MessageBox.Show("I'm stupid");
                 str = input.ReadString();
+
             }
             catch (ObjectDisposedException se)
             {
-                MessageBox.Show(se.Message);
+                MessageBox.Show("odrse " +se.Message);
+                reacive_t.Abort();
+                return;
             }
             catch (IOException se1)
             {
-                MessageBox.Show(se1.Message);
+                MessageBox.Show("odrse1 "+se1.Message);
+                reacive_t.Abort();
+                listener.Stop();
+                return;
             }
             if (str != null)
             {
-                MessageBox.Show(str);
                 handleData(str);
             }
         }
@@ -72,24 +61,38 @@ namespace Sub_Marine_Server
         {
             m_Command(str);
         }
-        public void start()
+
+        public void init()
         {
+            try
+            {
+                listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
+            }
+            catch (ArgumentNullException ar)
+            {
+                MessageBox.Show("ar " + ar.Message);
+            }
+
+            catch (ArgumentOutOfRangeException ar1)
+            {
+                MessageBox.Show("ar1 " + ar1.Message);
+            }
             try
             {
                 listener.Start();
             }
-    
+
             catch (ArgumentOutOfRangeException se)
             {
-                MessageBox.Show(se.Message);
+                MessageBox.Show("se " + se.Message);
             }
             catch (SocketException se1)
             {
-                MessageBox.Show(se1.Message);
+                MessageBox.Show("se1 " + se1.Message);
             }
             catch (InvalidOperationException se2)
             {
-                MessageBox.Show(se2.Message);
+                MessageBox.Show("se2 " + se2.Message);
             }
             try
             {
@@ -97,27 +100,33 @@ namespace Sub_Marine_Server
             }
             catch (InvalidOperationException op)
             {
-                MessageBox.Show(op.Message);
+                MessageBox.Show("op " + op.Message);
             }
+        }
+        public void start()
+        {
             bool status = true;
             socketStream = new NetworkStream(connection);
             output = new BinaryWriter(socketStream);
             input = new BinaryReader(socketStream);
+            init();
             while (status)
             {
-                if (reacive_t == null)
-                {
-                    MessageBox.Show("Start reaciving");
-                    reacive_t = new Thread(new ThreadStart(onDataRecieved));
-                    reacive_t.IsBackground = true;
-                    reacive_t.Start();
-                }
+                reacive_t = new Thread(new ThreadStart(onDataRecieved));
+                reacive_t.IsBackground = true;
+                reacive_t.Start();
+                while (reacive_t.IsAlive) ;
                 //onDataRecieved();
+                if (reacive_t.ThreadState == ThreadState.Aborted)
+                {
+                    listener.Stop();
+                    init();
+                }
             }
+        }
 
         }
 
 
     }
 
-}
