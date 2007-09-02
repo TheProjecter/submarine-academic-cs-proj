@@ -50,7 +50,6 @@ namespace Sub_Marine_Server
             String str = null;
             try
             {
-                MessageBox.Show("I'm stupid");
                 str = input.ReadString();
 
             }
@@ -66,7 +65,6 @@ namespace Sub_Marine_Server
             	connectionIsUp = false;
                 MessageBox.Show("odrse1 "+se1.Message);
                 listener.Stop();
-                MessageBox.Show("status was set to false");
                 return;
             }
             if (str != null)
@@ -107,6 +105,12 @@ namespace Sub_Marine_Server
                 MessageBox.Show("op " + op.Message);
             }
         }
+        public void stop()
+        {
+        	reacive_t.Abort();
+        	connectionIsUp=false;
+        	serverIsUp = false;
+        }
         public void start()
         {
         	while (serverIsUp)
@@ -121,15 +125,11 @@ namespace Sub_Marine_Server
 	        		reacive_t = new Thread(new ThreadStart(onDataRecieved));
 	        		reacive_t.IsBackground = true;
 	        		reacive_t.Start();
-	        		while (reacive_t.IsAlive) ;
-	        		if (reacive_t.ThreadState == ThreadState.Aborted)
-	        		{
-	        			listener.Stop();
-	        			init();
-	        		}
+	        		while (reacive_t.IsAlive) System.Console.Out.WriteLine("I'm alive");
 	        	}
 	        	connectionIsUp = true;
         	}
+        	reacive_t.Abort();
         }
 
     }
