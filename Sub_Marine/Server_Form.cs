@@ -38,7 +38,9 @@ namespace Sub_Marine_Server
         
         void Server_FormFormClosing(object sender, FormClosingEventArgs e)
         {
-        		MessageBox.Show("BABAABBAABBAHAAHHHHH!!!!");
+
+        	server.stop();
+        		
         }
     }
 }
