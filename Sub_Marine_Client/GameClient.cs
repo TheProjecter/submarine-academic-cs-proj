@@ -10,15 +10,19 @@ namespace Sub_Marine_Client
 {
     class GameClient
     {
+    	const int TEN=10;
+    	public enum Result{BEGIN,BOL,PGIAA,MISS,WIN,LOOSE,END};
         private string m_IP;
         private int m_port;
         private Thread reacive_t, send_t; //Reavice and send data thread
         private BinaryWriter output; //Out buffer
         private BinaryReader input;  //in buffer
         private TcpClient connection; //Connection
-        private NetworkStream stream; // network data stream    
+        private NetworkStream stream; // network data stream
+        private int[,] gameBoard;
         public GameClient(String ip, int port)
 	    {
+        	gameBoard = new int[TEN,TEN];
         m_IP = ip;
         m_port = port;
         try
@@ -48,7 +52,21 @@ namespace Sub_Marine_Client
         {
             
         }
+        
+        public Result Move(int x,int y)
+        {	
+        	SendData("x="+x+"y="+y);
+        	string str=WaitForData();
+        	Resault resaultStr = parsestr(str);
+			return resaultStr;
+        }
+        public Result counterMove(string Str)
+        {
+        	int x,y;
+        	parsepoint(Str,ref x,ref y);
+        	Result res=checkInArray(x,y);
+        	SendData(res.ToString());
+        }
     }
-
 
 }
