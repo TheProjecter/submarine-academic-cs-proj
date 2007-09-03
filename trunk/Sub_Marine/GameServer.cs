@@ -113,23 +113,30 @@ namespace Sub_Marine_Server
         }
         public void start()
         {
-        	while (serverIsUp)
+        	try
         	{
-        		init();
-	        	
-	        	socketStream = new NetworkStream(connection);
-	        	output = new BinaryWriter(socketStream);
-	        	input = new BinaryReader(socketStream);
-	        	while (connectionIsUp)
+	        	while (serverIsUp)
 	        	{
-	        		reacive_t = new Thread(new ThreadStart(onDataRecieved));
-	        		reacive_t.IsBackground = true;
-	        		reacive_t.Start();
-	        		while (reacive_t.IsAlive) System.Console.Out.WriteLine("I'm alive");
+	        		init();
+		        	
+		        	socketStream = new NetworkStream(connection);
+		        	output = new BinaryWriter(socketStream);
+		        	input = new BinaryReader(socketStream);
+		        	while (connectionIsUp)
+		        	{
+		        		reacive_t = new Thread(new ThreadStart(onDataRecieved));
+		        		reacive_t.IsBackground = true;
+		        		reacive_t.Start();
+		        		while (reacive_t.IsAlive) System.Console.Out.WriteLine("I'm alive");
+		        	}
+		        	connectionIsUp = true;
 	        	}
-	        	connectionIsUp = true;
+	        	reacive_t.Abort();
         	}
-        	reacive_t.Abort();
+        	catch (ThreadAbortException)
+        	{
+        		stop();
+        	}
         }
 
     }

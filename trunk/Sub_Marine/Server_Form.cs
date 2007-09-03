@@ -11,8 +11,8 @@ namespace Sub_Marine_Server
 {
     public partial class Server_Form : Form
     {
-        public GameServer server;
-        private Thread init;
+        public GameServer server = null;
+        private Thread init = null;
         public Server_Form()
         {
             InitializeComponent();
@@ -38,8 +38,14 @@ namespace Sub_Marine_Server
         
         void Server_FormFormClosing(object sender, FormClosingEventArgs e)
         {
-
-        	server.stop();
+        	if (server != null)
+        	{
+        		server.stop();
+        	}
+        	if (init != null) 
+        	{
+        		init.Abort();
+        	}
         		
         }
     }
