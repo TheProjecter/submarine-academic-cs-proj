@@ -92,7 +92,7 @@ namespace Sub_Marine_Server
             {
                 MessageBox.Show("se1 " + se1.Message);
             }
-            catch (InvalidOperationException se2)
+           catch (InvalidOperationException se2)
             {
                 MessageBox.Show("se2 " + se2.Message);
             }
@@ -104,10 +104,19 @@ namespace Sub_Marine_Server
             {
                 MessageBox.Show("op " + op.Message);
             }
+            catch (SocketException se)
+            {
+            	MessageBox.Show("se " + se.Message);
+            }
         }
         public void stop()
         {
-        	reacive_t.Abort();
+        	listener.Stop();
+        	if (reacive_t != null)
+        	{
+        		reacive_t.Abort();
+        		reacive_t = null;
+        	}
         	connectionIsUp=false;
         	serverIsUp = false;
         }
@@ -135,7 +144,7 @@ namespace Sub_Marine_Server
         	}
         	catch (ThreadAbortException)
         	{
-        		stop();
+        		//stop();
         	}
         }
 

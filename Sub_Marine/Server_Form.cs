@@ -42,11 +42,12 @@ namespace Sub_Marine_Server
         	{
         		server.stop();
         	}
-        	if (init != null) 
+        	
+        	init.Abort();
+        	while (init.IsAlive)
         	{
-        		init.Abort();
+        		Thread.Sleep(250);
         	}
-        		
         }
     }
 }
