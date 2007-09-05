@@ -23,7 +23,7 @@ namespace Sub_Marine_Server
         private BinaryReader input;  //in buffer
         private NetworkStream socketStream; // network data stream
         public delegate void Command(String str);
-        public Command m_Command;
+        public Command r_Command; //Revice functio
         private bool connectionIsUp = true;
         private bool serverIsUp = true;
         public GameServer(String ip, int port)
@@ -74,7 +74,7 @@ namespace Sub_Marine_Server
         }
         void handleData(String str)
         {
-            m_Command(str);
+            r_Command(str);
         }
 
         public void init()
@@ -147,9 +147,11 @@ namespace Sub_Marine_Server
         		//stop();
         	}
         }
-
+        public void send(string str)
+        {
+        	output.Write(str);
+        }
+      }
     }
 
-
-    }
 

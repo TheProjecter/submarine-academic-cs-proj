@@ -35,6 +35,9 @@
         	this.port = new System.Windows.Forms.TextBox();
         	this.label2 = new System.Windows.Forms.Label();
         	this.label3 = new System.Windows.Forms.Label();
+        	this.label4 = new System.Windows.Forms.Label();
+        	this.m_Output = new System.Windows.Forms.TextBox();
+        	this.sendToClient = new System.Windows.Forms.Button();
         	this.SuspendLayout();
         	// 
         	// input
@@ -95,11 +98,40 @@
         	this.label3.TabIndex = 6;
         	this.label3.Text = "port";
         	// 
+        	// label4
+        	// 
+        	this.label4.Location = new System.Drawing.Point(249, 70);
+        	this.label4.Name = "label4";
+        	this.label4.Size = new System.Drawing.Size(50, 13);
+        	this.label4.TabIndex = 7;
+        	this.label4.Text = "Output";
+        	// 
+        	// m_Output
+        	// 
+        	this.m_Output.Location = new System.Drawing.Point(204, 86);
+        	this.m_Output.Name = "m_Output";
+        	this.m_Output.Size = new System.Drawing.Size(85, 20);
+        	this.m_Output.TabIndex = 8;
+        	this.m_Output.TextChanged += new System.EventHandler(this.TextBox1TextChanged);
+        	// 
+        	// sendToClient
+        	// 
+        	this.sendToClient.Location = new System.Drawing.Point(230, 213);
+        	this.sendToClient.Name = "sendToClient";
+        	this.sendToClient.Size = new System.Drawing.Size(50, 41);
+        	this.sendToClient.TabIndex = 9;
+        	this.sendToClient.Text = "Send";
+        	this.sendToClient.UseVisualStyleBackColor = true;
+        	this.sendToClient.Click += new System.EventHandler(this.Button1Click);
+        	// 
         	// Server_Form
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(292, 266);
+        	this.Controls.Add(this.sendToClient);
+        	this.Controls.Add(this.m_Output);
+        	this.Controls.Add(this.label4);
         	this.Controls.Add(this.label3);
         	this.Controls.Add(this.label2);
         	this.Controls.Add(this.port);
@@ -113,6 +145,9 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.Button sendToClient;
+        private System.Windows.Forms.TextBox m_Output;
+        private System.Windows.Forms.Label label4;
 
         #endregion
 
