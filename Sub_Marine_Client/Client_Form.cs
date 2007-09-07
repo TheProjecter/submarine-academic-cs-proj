@@ -29,7 +29,7 @@ namespace Sub_Marine_Client
 
         private void send_Click(object sender, EventArgs e)
         {
-                    game.SendData(outData.Text);
+        	game.SendData(outData.Text);
         }
         
         private void reaciveEvent(string str)
@@ -37,5 +37,10 @@ namespace Sub_Marine_Client
         	input.Text = str;
         }
 
+        
+        void Client_FormLoad(object sender, EventArgs e)
+        {
+        	repositoryGridPanel1.addSubs();
+        }
     }
 }

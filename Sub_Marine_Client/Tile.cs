@@ -11,55 +11,71 @@ namespace Sub_Marine_Client
     public partial class Tile : UserControl
     {
         private Bitmap m_image;
+        private GridPanelBase m_parent;
 
-        public Tile()
+        public Tile(GridPanelBase parent)
         {
             // Initialize
             InitializeComponent();
+            
+            m_parent = parent;
         }
 
-        private void Tile_DragDrop(object sender, DragEventArgs e)
+        public bool isInUse()
         {
-            int tileNumber = 0;
-            try
-            {
-                Int32.TryParse(this.Name.Replace("tile",""),out tileNumber);
-                Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
-                int vertImageTiles = draggedImage.Size.Height / 30;
-                int horizImageTiles = draggedImage.Size.Width / 30;
-                
-                if ((tileNumber % 10) + horizImageTiles < 10)
-                {
-                    // Switch the cursor to the arrow
-                    this.Cursor = Cursors.Default;
+        	return m_image!=null;
+        }
+        
+        private void Tile_DragDrop(object sender, DragEventArgs e)
+        {   
+        	Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
+        	
+            // Switch the cursor to the arrow
+            this.Cursor = Cursors.Default;
 
-                    // Put an item here
-                    PutItem(draggedImage);
-                }
-            }
-            catch (ArgumentException)
-            {
-
-            }
+            // Put an item here
+            PutItem(draggedImage);
         }
 
         private void Tile_DragEnter(object sender, DragEventArgs e)
         {
             if (this.BackgroundImage == null)
             {
-
-                // Check to see if we can handle what is being dragged
-                if (e.Data.GetDataPresent(DataFormats.Bitmap))
-                {
-
-                    // Change the cursor to a hand
-                    this.Cursor = Cursors.Hand;
-
-                    // Lets it know what effects can be done
-                    e.Effect = DragDropEffects.Copy;
-
-                    this.BackgroundImage = (Bitmap) e.Data.GetData(DataFormats.Bitmap);
-                }
+				int tileNumber = 0;
+	            try
+	            {
+	                Int32.TryParse(this.Name.Replace("tile",""),out tileNumber);
+	                Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
+	                int horizImageTiles = draggedImage.Size.Width / 30;
+	                
+	                if (m_parent.checkOverlap(tileNumber-1, horizImageTiles)==false &&
+	                    ((tileNumber-1) % 10) + horizImageTiles <= 10)
+	                {
+		                // Check to see if we can handle what is being dragged
+		                if (e.Data.GetDataPresent(DataFormats.Bitmap))
+		                {
+		
+		                    // Change the cursor to a hand
+		                    this.Cursor = Cursors.Hand;
+		
+		                    // Lets it know what effects can be done
+		                    e.Effect = DragDropEffects.Copy;
+		
+		                    this.Size = draggedImage.Size;
+		                    this.BackColor = Color.Transparent;
+		                    this.BackgroundImage = draggedImage;
+		                    this.BringToFront();
+		                }
+	                }
+	                else
+	                {
+	                	e.Effect = DragDropEffects.None;
+	                }
+		        }
+	            catch (ArgumentException)
+	            {
+	
+	            }
             }
             else
             {
@@ -71,13 +87,15 @@ namespace Sub_Marine_Client
         private void Tile_DragLeave(object sender, EventArgs e)
         {
             // Only do something if the tile has an item
-            if (this.BackgroundImage == null)
+            if (this.m_image == null)
             {
                 // Reset the cursor
                 this.Cursor = Cursors.Default;
+                
+                this.BackColor = Color.Black;
+                this.Size = new Size(30, 30);
+            	this.BackgroundImage = null;
             }
-
-            this.BackgroundImage = null;
         }
 
         private void Tile_MouseDown(object sender, MouseEventArgs e)
@@ -106,9 +124,11 @@ namespace Sub_Marine_Client
         public void PutItem(Bitmap image)
         {
             this.Size = image.Size;
+            System.Console.Out.WriteLine(Size);
             m_image = image;
             this.BackColor = Color.Transparent;
             this.BackgroundImage = m_image;
+            this.BringToFront();
         }
         #endregion
 
@@ -122,6 +142,7 @@ namespace Sub_Marine_Client
             this.BackgroundImage = null;
             this.BackColor = Color.Black;
             this.Size = new Size(30, 30);
+            m_image = null;
         }
         #endregion
 
