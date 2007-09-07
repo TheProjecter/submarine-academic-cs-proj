@@ -49,6 +49,10 @@
     <Compile Include="GameGridPanel.Designer.cs">
       <DependentUpon>GameGridPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="GridPanelBase.cs" />
+    <Compile Include="GridPanelBase.Designer.cs">
+      <DependentUpon>GridPanelBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Client_Form.resx">
@@ -77,6 +81,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Icons\Submarine1.jpg" />
+    <None Include="Icons\Submarine2.jpg" />
+    <None Include="Icons\Submarine3.jpg" />
+    <None Include="Icons\Submarine4.jpg" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -100,16 +108,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Submarine4.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Submarine1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Submarine2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Submarine3.jpg" />
+    <Folder Include="Icons" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
