@@ -8,150 +8,181 @@ using System.Net;
 
 namespace Sub_Marine_Server
 {
-    /// <summary>
-    /// Summary description for Class1
-    /// </summary>
-    public class GameServer
-    {
-        //public AsyncCallback pfnWorkerCallBack; //Async Callback
-        internal Socket connection; // Socket for accepting a connection
-        private TcpListener listener; // listen for client connection 
-        private string m_IP;
-        private int m_port;
-        private Thread reacive_t, send_t; //Reavice and send data thread
-        private BinaryWriter output; //Out buffer
-        private BinaryReader input;  //in buffer
-        private NetworkStream socketStream; // network data stream
-        public delegate void Command(String str);
-        public Command r_Command; //Revice functio
-        private bool connectionIsUp = true;
-        private bool serverIsUp = true;
-        public GameServer(String ip, int port)
-        {
-            m_IP = ip;
-            m_IP = "127.0.0.1";
-            m_port = port;
-            try
-            {
-                listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
-            }
-            catch (ArgumentNullException ar)
-            {
-                MessageBox.Show("ar " + ar.Message);
-            }
+	/// <summary>
+	/// Summary description for Class1
+	/// </summary>
+	public class GameServer
+	{
+		const int NPLAYER = 2; //Number of players
+		//public AsyncCallback pfnWorkerCallBack; //Async Callback
+		private TcpListener listener; // listen for client connection
+		private string m_IP;
+		private int m_port;
+		private Thread[] reacive_t,send_t; //Reavice and send data thread
+		public delegate void Command(String str);
+		public Command r_Command; //Revice functio
+		private bool connectionIsUp = true;
+		private bool serverIsUp = true;
+		private int aPlayer = 0; //Active player between 0 and 1
+		private Player[] m_Player;
+		public GameServer(String ip, int port)
+		{
+			m_IP = ip;
+			m_IP = "127.0.0.1";
+			m_port = port;
+			m_Player = new Player[NPLAYER];
+			m_Player[0] = new Player();
+			m_Player[1] = new Player();
+			reacive_t = new Thread[NPLAYER];
+			//reacive_t[0] = new Thread(
+	
+			try
+			{
+				listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
+			}
+			catch (ArgumentNullException ar)
+			{
+				MessageBox.Show("ar " + ar.Message);
+			}
 
-            catch (ArgumentOutOfRangeException ar1)
-            {
-                MessageBox.Show("ar1 " + ar1.Message);
-            }
-        }
-        public void onDataRecieved()
-        {
-            String str = null;
-            try
-            {
-                str = input.ReadString();
+			catch (ArgumentOutOfRangeException ar1)
+			{
+				MessageBox.Show("ar1 " + ar1.Message);
+			}
+		}
+		public void onDataRecieved()
+		{
+			String str;
+			try
+			{
+				str = m_Player[aPlayer].input.ReadString();
 
-            }
-            catch (ObjectDisposedException se)
-            {
-                MessageBox.Show("odrse " +se.Message);
-                listener.Stop();
-                connectionIsUp = false;
-                return;
-            }
-            catch (IOException se1)
-            {
-            	connectionIsUp = false;
-                MessageBox.Show("odrse1 "+se1.Message);
-                listener.Stop();
-                return;
-            }
-            if (str != null)
-            {
-                handleData(str);
-            }
-        }
-        void handleData(String str)
-        {
-            r_Command(str);
-        }
+			}
+			catch (ObjectDisposedException se)
+			{
+				MessageBox.Show("odrse " +se.Message);
+				listener.Stop();
+				connectionIsUp = false;
+				aPlayer = -1; //Reset game
+				return;
+			}
+			catch (IOException se1)
+			{
+				connectionIsUp = false;
+				MessageBox.Show("odrse1 "+se1.Message);
+				listener.Stop();
+				return;
+			}
+			if (str != null)
+			{
+				handleData(str);
+			}
+		}
+		void handleData(String str)
+		{
+			r_Command(str);
+		}
 
-        public void init()
-        {
-            try
-            {
-                listener.Start();
-            }
+		public void startListen()
+		{
+			try
+			{
+				listener.Start();
+			}
 
-            catch (ArgumentOutOfRangeException se)
-            {
-                MessageBox.Show("se " + se.Message);
-            }
-            catch (SocketException se1)
-            {
-                MessageBox.Show("se1 " + se1.Message);
-            }
-           catch (InvalidOperationException se2)
-            {
-                MessageBox.Show("se2 " + se2.Message);
-            }
-            try
-            {
-                connection = listener.AcceptSocket();
-            }
-            catch (InvalidOperationException op)
-            {
-                MessageBox.Show("op " + op.Message);
-            }
-            catch (SocketException se)
-            {
-            	MessageBox.Show("se " + se.Message);
-            }
-        }
-        public void stop()
-        {
-        	listener.Stop();
-        	if (reacive_t != null)
-        	{
-        		reacive_t.Abort();
-        		reacive_t = null;
-        	}
-        	connectionIsUp=false;
-        	serverIsUp = false;
-        }
-        public void start()
-        {
-        	try
-        	{
-	        	while (serverIsUp)
-	        	{
-	        		init();
-		        	
-		        	socketStream = new NetworkStream(connection);
-		        	output = new BinaryWriter(socketStream);
-		        	input = new BinaryReader(socketStream);
-		        	while (connectionIsUp)
-		        	{
-		        		reacive_t = new Thread(new ThreadStart(onDataRecieved));
-		        		reacive_t.IsBackground = true;
-		        		reacive_t.Start();
-		        		while (reacive_t.IsAlive) System.Console.Out.WriteLine("I'm alive");
-		        	}
-		        	connectionIsUp = true;
-	        	}
-	        	reacive_t.Abort();
-        	}
-        	catch (ThreadAbortException)
-        	{
-        		//stop();
-        	}
-        }
-        public void send(string str)
-        {
-        	output.Write(str);
-        }
-      }
-    }
+			catch (ArgumentOutOfRangeException se)
+			{
+				MessageBox.Show("se " + se.Message);
+			}
+			catch (SocketException se1)
+			{
+				MessageBox.Show("se1 " + se1.Message);
+			}
+			catch (InvalidOperationException se2)
+			{
+				MessageBox.Show("se2 " + se2.Message);
+			}
+		}
+		public void init()
+		{
+
+			try
+			{
+				Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+				m_Player[aPlayer].connection = listener.AcceptSocket();
+			}
+			catch (InvalidOperationException op)
+			{
+				MessageBox.Show("op " + op.Message);
+			}
+			catch (SocketException se)
+			{
+				MessageBox.Show("se " + se.Message);
+			}
+		}
+		public void stop()
+		{
+			listener.Stop();
+			if (reacive_t[0] != null)
+			{
+				reacive_t[0].Abort();
+				reacive_t[0] = null;
+			}
+						if (reacive_t[1] != null)
+			{
+				reacive_t[1].Abort();
+				reacive_t[1] = null;
+			}
+			aPlayer = -1; //Reset game
+			connectionIsUp=false;
+			serverIsUp = false;
+		}
+		public void start()
+		{
+			try
+			{
+				while (serverIsUp)
+				{
+					startListen();
+					init();
+					aPlayer=1;
+					init();
+					m_Player[0].setSocketStream();
+					m_Player[1].setSocketStream();
+					aPlayer=0;
+					while (connectionIsUp && (aPlayer>=0 && aPlayer<3))
+					{
+						reacive_t[aPlayer] = new Thread(new ThreadStart(onDataRecieved));
+						reacive_t[aPlayer].IsBackground = true;
+						reacive_t[aPlayer].Start();
+						while (reacive_t[aPlayer].IsAlive);
+						if (aPlayer==0)
+						{
+							aPlayer=1;
+							MessageBox.Show("Player 1 is active");
+						}
+						else
+							if (aPlayer==1)
+						{
+							aPlayer=0;
+							MessageBox.Show("Player 2 is active");
+						}
+						connectionIsUp = true;
+					}
+
+				}
+				reacive_t[aPlayer].Abort();
+			}
+			catch (ThreadAbortException)
+			{
+				//stop();
+			}
+		}
+		public void send(string str)
+		{
+			m_Player[aPlayer].output.Write(str);
+		}
+	}
+}
 
 

@@ -11,6 +11,20 @@ namespace Sub_Marine_Server
 {
     public partial class Server_Form : Form
     {
+    	public delegate void MyDelegateMethod(string str);
+    	public void DoWork(string str)
+{
+   if (this.InvokeRequired)
+   {
+      MyDelegateMethod theDelegateMethod = new MyDelegateMethod(this.DoWork);
+      this.Invoke(theDelegateMethod, new object[] { str });
+   }
+   else
+   {
+      this.input.Text = str;
+   }
+}
+
         public GameServer server = null;
         private Thread init = null;
         public Server_Form()
@@ -32,7 +46,7 @@ namespace Sub_Marine_Server
         {
             //MessageBox.Show(str);
 
-            input.Text = str; //unsafe safe write to another thread
+            DoWork(str);
         }
 
         
