@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Created by SharpDevelop.
  * User: Administrator
  * Date: 07/09/2007
@@ -36,11 +36,15 @@ namespace Sub_Marine_Client
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.SuspendLayout();
 			// 
 			// GridPanelBase
 			// 
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.BackColor = System.Drawing.Color.Transparent;
 			this.Name = "GridPanelBase";
+			this.ResumeLayout(false);
 		}
 	}
 }

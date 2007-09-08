@@ -22,6 +22,13 @@ namespace Sub_Marine_Client
 				
 		private Tile[] m_tilesList = null;
 		
+		private GridPanelBase()
+		{
+			//
+			// The InitializeComponent() call is required for Windows Forms designer support.
+			//
+			InitializeComponent();
+		}
 		public GridPanelBase(int numOfTiles)
 		{
 			m_tilesList = new Tile[numOfTiles];
@@ -69,6 +76,20 @@ namespace Sub_Marine_Client
 				}
 			}
 			return rc;
+		}
+		
+		public void markTile(int tileNumber, Tile.TileState state)
+		{
+			Tile tile = m_tilesList[tileNumber];
+			tile.State = state;
+		}
+		
+		public void markAllTiles(Tile.TileState state)
+		{
+			foreach(Tile tile in m_tilesList)
+			{
+				tile.State = state;
+			}
 		}
 	}
 }

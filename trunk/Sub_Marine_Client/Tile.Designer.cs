@@ -1,4 +1,4 @@
-namespace Sub_Marine_Client
+﻿namespace Sub_Marine_Client
 {
     partial class Tile
     {
@@ -38,6 +38,7 @@ namespace Sub_Marine_Client
         	this.BackColor = System.Drawing.Color.Transparent;
         	this.Name = "Tile";
         	this.Size = new System.Drawing.Size(25, 25);
+        	this.DoubleClick += new System.EventHandler(this.TileDoubleClick);
         	this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tile_MouseDown);
         	this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Tile_DragDrop);
         	this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Tile_DragEnter);
