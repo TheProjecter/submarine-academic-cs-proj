@@ -12,7 +12,42 @@ namespace Sub_Marine_Client
     {
         private Bitmap m_image;
         private GridPanelBase m_parent;
+        private TileState m_state;
+        private const int TILE_EDGE_LENGTH = 30;
+        
+        public enum TileState {Set, Freeze, Hit, Miss};
 
+        public TileState State
+        {
+        	set
+        	{
+        		if (value != TileState.Set && 
+        		    (m_state == TileState.Set || m_state == TileState.Freeze))
+        		{
+        			string directory = "";
+        			string newBackFileName = null;
+#if DEBUG
+            		directory = "../../Icons/";
+#endif
+        			switch (value)
+        			{
+        				case TileState.Hit:
+        					newBackFileName = directory + "hit.bmp";
+        					break;
+        				case TileState.Miss:
+        					newBackFileName = directory + "missed.jpg";
+        					break;
+        			}
+        			if (newBackFileName!=null)
+        			{
+        				Bitmap newBack = new Bitmap(newBackFileName);
+        				PutItem(newBack);
+        			}
+        			m_state = value;
+        		}
+        	}
+        }
+        
         public Tile(GridPanelBase parent)
         {
             // Initialize
@@ -39,14 +74,14 @@ namespace Sub_Marine_Client
 
         private void Tile_DragEnter(object sender, DragEventArgs e)
         {
-            if (this.BackgroundImage == null)
+            if (this.BackgroundImage == null && m_state == TileState.Set)
             {
 				int tileNumber = 0;
 	            try
 	            {
 	                Int32.TryParse(this.Name.Replace("tile",""),out tileNumber);
 	                Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
-	                int horizImageTiles = draggedImage.Size.Width / 30;
+	                int horizImageTiles = draggedImage.Size.Width / TILE_EDGE_LENGTH;
 	                
 	                if (m_parent.checkOverlap(tileNumber-1, horizImageTiles)==false &&
 	                    ((tileNumber-1) % 10) + horizImageTiles <= 10)
@@ -93,7 +128,7 @@ namespace Sub_Marine_Client
                 this.Cursor = Cursors.Default;
                 
                 this.BackColor = Color.Black;
-                this.Size = new Size(30, 30);
+                this.Size = new Size(TILE_EDGE_LENGTH, TILE_EDGE_LENGTH);
             	this.BackgroundImage = null;
             }
         }
@@ -101,7 +136,7 @@ namespace Sub_Marine_Client
         private void Tile_MouseDown(object sender, MouseEventArgs e)
         {
             // Only allowing dragging if there is an item
-            if (this.BackgroundImage != null)
+            if (m_state == TileState.Set && this.BackgroundImage != null)
             {
 
                 // Start the dragging process
@@ -138,14 +173,33 @@ namespace Sub_Marine_Client
         /// </summary>
         public void RemoveItem()
         {
-
             this.BackgroundImage = null;
             this.BackColor = Color.Black;
-            this.Size = new Size(30, 30);
+            this.Size = new Size(TILE_EDGE_LENGTH, TILE_EDGE_LENGTH);
             m_image = null;
         }
         #endregion
 
 
+        
+        void TileDoubleClick(object sender, EventArgs e)
+        {
+        	if (m_state == TileState.Freeze)
+        	{
+        		TileState result = TileState.Freeze;
+        		
+        		//TODO ask server instead of user
+        		string message = "Is it a hit? If not, then it's a miss...";
+                string caption = "Choose result";
+		        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+		        DialogResult mbresult;
+		
+		        mbresult = MessageBox.Show(message, caption, buttons);
+		
+		        result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
+	
+				this.State = result;
+        	}
+        }
     }
 }

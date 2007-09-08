@@ -49,7 +49,9 @@
     <Compile Include="GameGridPanel.Designer.cs">
       <DependentUpon>GameGridPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="GridPanelBase.cs" />
+    <Compile Include="GridPanelBase.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GridPanelBase.Designer.cs">
       <DependentUpon>GridPanelBase.cs</DependentUpon>
     </Compile>
@@ -62,6 +64,9 @@
     <EmbeddedResource Include="GameGridPanel.resx">
       <SubType>Designer</SubType>
       <DependentUpon>GameGridPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GridPanelBase.resx">
+      <DependentUpon>GridPanelBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -106,9 +111,6 @@
     <Compile Include="Tile.Designer.cs">
       <DependentUpon>Tile.cs</DependentUpon>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Icons" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

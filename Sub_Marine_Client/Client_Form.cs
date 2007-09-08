@@ -40,7 +40,10 @@ namespace Sub_Marine_Client
         
         void Client_FormLoad(object sender, EventArgs e)
         {
-        	repositoryGridPanel1.addSubs();
+        	m_submarineHanger.addSubs();
+        	m_opponentBoard.markAllTiles(Tile.TileState.Freeze);
+        	m_opponentBoard.Text = "Opponent Board";
+        	m_myBoard.Text = "My Board";
         }
     }
 }

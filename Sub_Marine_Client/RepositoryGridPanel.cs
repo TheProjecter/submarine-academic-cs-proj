@@ -33,7 +33,7 @@ namespace Sub_Marine_Client
             sub2 = new System.Drawing.Bitmap(directory + "Submarine2.jpg");
             sub3 = new System.Drawing.Bitmap(directory + "Submarine3.jpg");
             sub4 = new System.Drawing.Bitmap(directory + "Submarine4.jpg");
-
+            
             tile1.PutItem(sub1);
             tile2.PutItem(sub1);
             tile3.PutItem(sub1);
