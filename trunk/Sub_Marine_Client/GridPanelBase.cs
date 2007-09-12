@@ -22,6 +22,9 @@ namespace Sub_Marine_Client
 				
 		private Tile[] m_tilesList = null;
 		
+		/// <summary>
+		/// used for internal purposes by the !@!!@#!@# form desinger
+		/// </summary>
 		private GridPanelBase()
 		{
 			//
@@ -29,6 +32,11 @@ namespace Sub_Marine_Client
 			//
 			InitializeComponent();
 		}
+		
+		/// <summary>
+		/// GridPanelBase c'tor
+		/// </summary>
+		/// <param name="numOfTiles">number of tiles in board</param>
 		public GridPanelBase(int numOfTiles)
 		{
 			m_tilesList = new Tile[numOfTiles];
@@ -43,6 +51,10 @@ namespace Sub_Marine_Client
 			//
 		}
 		
+		/// <summary>
+		/// add all tiles from the given controlList in to the internal m_tilesList 
+		/// </summary>
+		/// <param name="controlList">a list of the controls in the inherited child</param>
 		protected void addTilesToList(ControlCollection controlList)
 		{
 			foreach (Control control in controlList)
@@ -64,6 +76,12 @@ namespace Sub_Marine_Client
 			}
 		}
 		
+		/// <summary>
+		/// check for overlapping tiles in a specific tile and for horizSize length
+		/// </summary>
+		/// <param name="tileNumber">tile number to check</param>
+		/// <param name="horizSize">size of the tile object in default tiles</param>
+		/// <returns>true if overlap, false otherwise</returns>
 		public bool checkOverlap(int tileNumber, int horizSize)
 		{
 			bool rc = false;
@@ -78,18 +96,75 @@ namespace Sub_Marine_Client
 			return rc;
 		}
 		
+		/// <summary>
+		/// mark a specific tile with a specific state
+		/// </summary>
+		/// <param name="tileNumber">the number of the tile in the tile array.
+		/// usuablly the number in the tiles name minus one</param>
+		/// <param name="state"></param>
 		public void markTile(int tileNumber, Tile.TileState state)
 		{
 			Tile tile = m_tilesList[tileNumber];
 			tile.State = state;
 		}
 		
+		/// <summary>
+		/// mark all tiles on board with a specific state
+		/// look in Tile.TileState for list of possible states
+		/// </summary>
+		/// <param name="state"></param>
 		public void markAllTiles(Tile.TileState state)
 		{
 			foreach(Tile tile in m_tilesList)
 			{
 				tile.State = state;
 			}
+		}
+		
+		/// <summary>
+		/// check if none of the tiles on the board contains an object 
+		/// </summary>
+		/// <returns>true if board is empty, false otherwise</returns>
+		public bool isEmptyBoard()
+		{
+			bool rc = true;
+			foreach(Tile tile in m_tilesList)
+			{
+				rc &= !tile.isInUse();
+			}
+			return rc;
+		}
+		
+		/// <summary>
+		/// check if a specific tile is in use (contain a submarine or a bomb)
+		/// </summary>
+		/// <param name="tileNumber">the number of the tile in the tile array.
+		/// usuablly the number in the tiles name minus one</param>
+		/// <returns>true if tile is not in use, false otherwise</returns>
+		public bool isEmptyTile(int tileNumber)
+		{
+			Tile tile = m_tilesList[tileNumber];
+			return !tile.isInUse();
+		}
+		
+		/// <summary>
+		/// observer design pattern - notify containing board of a
+		/// removed submarine
+		/// </summary>
+		/// <param name="containingTile"></param>
+		public virtual void objectInTileWasRemoved(Tile containingTile)
+		{
+			
+		}
+		
+		/// <summary>
+		/// observer design pattern - notify containing board of an
+		/// added submarine
+		/// </summary>
+		/// <param name="containingTile"></param>
+		public virtual void objectInTileWasAdded(Tile containingTile)
+		{
+			
 		}
 	}
 }

@@ -17,6 +17,9 @@ namespace Sub_Marine_Client
             addTilesToList(Controls);
         }
 
+        /// <summary>
+        /// Game board title
+        /// </summary>
         public override string Text
         {
             get
