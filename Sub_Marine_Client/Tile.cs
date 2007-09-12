@@ -15,8 +15,16 @@ namespace Sub_Marine_Client
         private TileState m_state;
         private const int TILE_EDGE_LENGTH = 30;
         
+        /// <summary>
+        /// possible tile states
+        /// </summary>
         public enum TileState {Set, Freeze, Hit, Miss};
 
+        /// <summary>
+        /// set a tile state. tile state will chage only if it is in a
+        /// settable state (either TileState.Set or TileState.Freeze)
+        /// Possible new states are (TileState.Freeze, TileState.Hit & TileState.Miss
+        /// </summary>
         public TileState State
         {
         	set
@@ -48,6 +56,10 @@ namespace Sub_Marine_Client
         	}
         }
         
+        /// <summary>
+        /// Tile c'tor
+        /// </summary>
+        /// <param name="parent">containing grid</param>
         public Tile(GridPanelBase parent)
         {
             // Initialize
@@ -56,11 +68,20 @@ namespace Sub_Marine_Client
             m_parent = parent;
         }
 
+        /// <summary>
+        /// check if tile is in use
+        /// </summary>
+        /// <returns>true if it does not contain an image, false otherwise</returns>
         public bool isInUse()
         {
         	return m_image!=null;
         }
         
+        /// <summary>
+        /// Drop event occured. An image was dropped in this tile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tile_DragDrop(object sender, DragEventArgs e)
         {   
         	Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
@@ -72,6 +93,11 @@ namespace Sub_Marine_Client
             PutItem(draggedImage);
         }
 
+        /// <summary>
+        /// Dragged Entered event occured. A dragged image entered this tile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tile_DragEnter(object sender, DragEventArgs e)
         {
             if (this.BackgroundImage == null && m_state == TileState.Set)
@@ -79,10 +105,15 @@ namespace Sub_Marine_Client
 				int tileNumber = 0;
 	            try
 	            {
+	            	//retrieve the tile number, which is also the tile number in the
+	            	//GridPanelBase.m_tileList minus one
 	                Int32.TryParse(this.Name.Replace("tile",""),out tileNumber);
 	                Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
+	                
+	                //number of default tiles which fit current tile
 	                int horizImageTiles = draggedImage.Size.Width / TILE_EDGE_LENGTH;
 	                
+	                //check if the grabed image can be placed in this tab
 	                if (m_parent.checkOverlap(tileNumber-1, horizImageTiles)==false &&
 	                    ((tileNumber-1) % 10) + horizImageTiles <= 10)
 	                {
@@ -119,6 +150,11 @@ namespace Sub_Marine_Client
             }
         }
 
+        /// <summary>
+        /// Dragged Leave event occured. A dragged image left this tile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tile_DragLeave(object sender, EventArgs e)
         {
             // Only do something if the tile has an item
@@ -133,6 +169,11 @@ namespace Sub_Marine_Client
             }
         }
 
+        /// <summary>
+        /// Mouse down event occured. User started a drag event from this tile.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Tile_MouseDown(object sender, MouseEventArgs e)
         {
             // Only allowing dragging if there is an item
@@ -152,12 +193,13 @@ namespace Sub_Marine_Client
             }
         }
 
-        #region PutItem
-        /// <summary>
-        /// Put an item on the tile.
-        /// </summary>
+		/// <summary>
+		/// put an image in the current tile
+		/// </summary>
+		/// <param name="image">image to put in the current tile</param>
         public void PutItem(Bitmap image)
         {
+        	m_parent.objectInTileWasAdded(this);
             this.Size = image.Size;
             System.Console.Out.WriteLine(Size);
             m_image = image;
@@ -165,11 +207,9 @@ namespace Sub_Marine_Client
             this.BackgroundImage = m_image;
             this.BringToFront();
         }
-        #endregion
 
-        #region RemoveItem
         /// <summary>
-        /// Takes the item off the tile
+        /// Takes the image off the tile
         /// </summary>
         public void RemoveItem()
         {
@@ -177,11 +217,14 @@ namespace Sub_Marine_Client
             this.BackColor = Color.Black;
             this.Size = new Size(TILE_EDGE_LENGTH, TILE_EDGE_LENGTH);
             m_image = null;
+            m_parent.objectInTileWasRemoved(this);
         }
-        #endregion
-
-
         
+        /// <summary>
+        /// Tile double click event occured. User double clicked on the current tile
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void TileDoubleClick(object sender, EventArgs e)
         {
         	if (m_state == TileState.Freeze)
