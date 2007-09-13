@@ -31,25 +31,20 @@
         	this.input = new System.Windows.Forms.TextBox();
         	this.lunchServer = new System.Windows.Forms.Button();
         	this.label1 = new System.Windows.Forms.Label();
-        	this.ip = new System.Windows.Forms.TextBox();
         	this.port = new System.Windows.Forms.TextBox();
-        	this.label2 = new System.Windows.Forms.Label();
         	this.label3 = new System.Windows.Forms.Label();
-        	this.label4 = new System.Windows.Forms.Label();
-        	this.m_Output = new System.Windows.Forms.TextBox();
-        	this.sendToClient = new System.Windows.Forms.Button();
         	this.SuspendLayout();
         	// 
         	// input
         	// 
-        	this.input.Location = new System.Drawing.Point(204, 31);
+        	this.input.Location = new System.Drawing.Point(90, 28);
         	this.input.Name = "input";
         	this.input.Size = new System.Drawing.Size(86, 20);
         	this.input.TabIndex = 0;
         	// 
         	// lunchServer
         	// 
-        	this.lunchServer.Location = new System.Drawing.Point(230, 116);
+        	this.lunchServer.Location = new System.Drawing.Point(182, 28);
         	this.lunchServer.Name = "lunchServer";
         	this.lunchServer.Size = new System.Drawing.Size(50, 41);
         	this.lunchServer.TabIndex = 1;
@@ -60,82 +55,35 @@
         	// label1
         	// 
         	this.label1.AutoSize = true;
-        	this.label1.Location = new System.Drawing.Point(249, 12);
+        	this.label1.Location = new System.Drawing.Point(135, 9);
         	this.label1.Name = "label1";
         	this.label1.Size = new System.Drawing.Size(31, 13);
         	this.label1.TabIndex = 2;
         	this.label1.Text = "Input";
         	// 
-        	// ip
-        	// 
-        	this.ip.Location = new System.Drawing.Point(24, 31);
-        	this.ip.Name = "ip";
-        	this.ip.Size = new System.Drawing.Size(87, 20);
-        	this.ip.TabIndex = 3;
-        	// 
         	// port
         	// 
-        	this.port.Location = new System.Drawing.Point(127, 31);
+        	this.port.Location = new System.Drawing.Point(13, 28);
         	this.port.Name = "port";
         	this.port.Size = new System.Drawing.Size(56, 20);
         	this.port.TabIndex = 4;
         	// 
-        	// label2
-        	// 
-        	this.label2.AutoSize = true;
-        	this.label2.Location = new System.Drawing.Point(38, 12);
-        	this.label2.Name = "label2";
-        	this.label2.Size = new System.Drawing.Size(15, 13);
-        	this.label2.TabIndex = 5;
-        	this.label2.Text = "ip";
-        	// 
         	// label3
         	// 
         	this.label3.AutoSize = true;
-        	this.label3.Location = new System.Drawing.Point(138, 12);
+        	this.label3.Location = new System.Drawing.Point(24, 9);
         	this.label3.Name = "label3";
         	this.label3.Size = new System.Drawing.Size(25, 13);
         	this.label3.TabIndex = 6;
         	this.label3.Text = "port";
         	// 
-        	// label4
-        	// 
-        	this.label4.Location = new System.Drawing.Point(249, 70);
-        	this.label4.Name = "label4";
-        	this.label4.Size = new System.Drawing.Size(50, 13);
-        	this.label4.TabIndex = 7;
-        	this.label4.Text = "Output";
-        	// 
-        	// m_Output
-        	// 
-        	this.m_Output.Location = new System.Drawing.Point(204, 86);
-        	this.m_Output.Name = "m_Output";
-        	this.m_Output.Size = new System.Drawing.Size(85, 20);
-        	this.m_Output.TabIndex = 8;
-        	this.m_Output.TextChanged += new System.EventHandler(this.TextBox1TextChanged);
-        	// 
-        	// sendToClient
-        	// 
-        	this.sendToClient.Location = new System.Drawing.Point(230, 213);
-        	this.sendToClient.Name = "sendToClient";
-        	this.sendToClient.Size = new System.Drawing.Size(50, 41);
-        	this.sendToClient.TabIndex = 9;
-        	this.sendToClient.Text = "Send";
-        	this.sendToClient.UseVisualStyleBackColor = true;
-        	this.sendToClient.Click += new System.EventHandler(this.Button1Click);
-        	// 
         	// Server_Form
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.ClientSize = new System.Drawing.Size(292, 266);
-        	this.Controls.Add(this.sendToClient);
-        	this.Controls.Add(this.m_Output);
-        	this.Controls.Add(this.label4);
+        	this.ClientSize = new System.Drawing.Size(232, 119);
         	this.Controls.Add(this.label3);
-        	this.Controls.Add(this.label2);
         	this.Controls.Add(this.port);
-        	this.Controls.Add(this.ip);
         	this.Controls.Add(this.label1);
         	this.Controls.Add(this.lunchServer);
         	this.Controls.Add(this.input);
@@ -145,18 +93,13 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
-        private System.Windows.Forms.Button sendToClient;
-        private System.Windows.Forms.TextBox m_Output;
-        private System.Windows.Forms.Label label4;
 
         #endregion
 
         private System.Windows.Forms.TextBox input;
         private System.Windows.Forms.Button lunchServer;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox ip;
         private System.Windows.Forms.TextBox port;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
     }
 }
