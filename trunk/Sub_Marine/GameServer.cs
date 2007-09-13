@@ -25,9 +25,8 @@ namespace Sub_Marine_Server
 		private bool serverIsUp = true;
 		private int aPlayer = 0; //Active player between 0 and 1
 		private Player[] m_Player;
-		public GameServer(String ip, int port)
+		public GameServer(int port)
 		{
-			m_IP = ip;
 			m_IP = "127.0.0.1";
 			m_port = port;
 			m_Player = new Player[NPLAYER];
@@ -35,7 +34,7 @@ namespace Sub_Marine_Server
 			m_Player[1] = new Player();
 			reacive_t = new Thread[NPLAYER];
 			//reacive_t[0] = new Thread(
-	
+			
 			try
 			{
 				listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
@@ -50,33 +49,53 @@ namespace Sub_Marine_Server
 				MessageBox.Show("ar1 " + ar1.Message);
 			}
 		}
-		public void onDataRecieved()
+		public void onDataRecieved(object data)
 		{
+			int pnum = int.Parse(data.ToString());
 			String str;
-			try
+			while(connectionIsUp)
 			{
-				str = m_Player[aPlayer].input.ReadString();
+				try
+				{
+					str = m_Player[pnum].input.ReadString();
 
+				}
+				catch (ObjectDisposedException se)
+				{
+					MessageBox.Show("odrse " +se.Message);
+					listener.Stop();
+					connectionIsUp = false;
+					aPlayer = -1; //Reset game
+					return;
+				}
+				catch (IOException se1)
+				{
+					connectionIsUp = false;
+					MessageBox.Show("odrse1 "+se1.Message);
+					listener.Stop();
+					return;
+				}
+				if (str != null & pnum==aPlayer)
+				{
+					handleData(str);
+					if (pnum == 0){
+						send(str,1);
+						changePlayer();
+					}
+					else
+					{
+						send(str,0);
+						changePlayer();
+					}
+				}
+				else
+				{
+					send("Not Your Turn",pnum);
+				}
+				
+				
 			}
-			catch (ObjectDisposedException se)
-			{
-				MessageBox.Show("odrse " +se.Message);
-				listener.Stop();
-				connectionIsUp = false;
-				aPlayer = -1; //Reset game
-				return;
-			}
-			catch (IOException se1)
-			{
-				connectionIsUp = false;
-				MessageBox.Show("odrse1 "+se1.Message);
-				listener.Stop();
-				return;
-			}
-			if (str != null)
-			{
-				handleData(str);
-			}
+
 		}
 		void handleData(String str)
 		{
@@ -128,7 +147,7 @@ namespace Sub_Marine_Server
 				reacive_t[0].Abort();
 				reacive_t[0] = null;
 			}
-						if (reacive_t[1] != null)
+			if (reacive_t[1] != null)
 			{
 				reacive_t[1].Abort();
 				reacive_t[1] = null;
@@ -141,46 +160,42 @@ namespace Sub_Marine_Server
 		{
 			try
 			{
-				while (serverIsUp)
+				//	while (serverIsUp)
+				//	{
+				//Need to add socket expection if a client died not at the end
+				startListen();
+				for (aPlayer=0;aPlayer<NPLAYER;aPlayer++)
 				{
-					startListen();
 					init();
-					aPlayer=1;
-					init();
-					m_Player[0].setSocketStream();
-					m_Player[1].setSocketStream();
-					aPlayer=0;
-					while (connectionIsUp && (aPlayer>=0 && aPlayer<3))
-					{
-						reacive_t[aPlayer] = new Thread(new ThreadStart(onDataRecieved));
-						reacive_t[aPlayer].IsBackground = true;
-						reacive_t[aPlayer].Start();
-						while (reacive_t[aPlayer].IsAlive);
-						if (aPlayer==0)
-						{
-							aPlayer=1;
-							MessageBox.Show("Player 1 is active");
-						}
-						else
-							if (aPlayer==1)
-						{
-							aPlayer=0;
-							MessageBox.Show("Player 2 is active");
-						}
-						connectionIsUp = true;
-					}
-
+					m_Player[aPlayer].setSocketStream();
+					reacive_t[aPlayer] = new Thread((onDataRecieved));
+					reacive_t[aPlayer].IsBackground = true;
 				}
-				reacive_t[aPlayer].Abort();
+				connectionIsUp = true;
+				aPlayer=0;
+				reacive_t[0].Start(0);
+				reacive_t[1].Start(1);
 			}
 			catch (ThreadAbortException)
 			{
 				//stop();
 			}
 		}
-		public void send(string str)
+		public void send(string str ,int pnum)
 		{
-			m_Player[aPlayer].output.Write(str);
+			m_Player[pnum].output.Write(str);
+		}
+		private void changePlayer()
+		{
+			if (aPlayer==0)
+				{
+					aPlayer=1;
+				}
+				else
+					if (aPlayer==1)
+				{
+					aPlayer=0;
+				}
 		}
 	}
 }
