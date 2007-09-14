@@ -41,6 +41,7 @@
         	this.m_myBoard = new Sub_Marine_Client.GameGridPanel();
         	this.m_submarineHanger = new Sub_Marine_Client.RepositoryGridPanel();
         	this.m_opponentBoard = new Sub_Marine_Client.GameGridPanel();
+        	this.m_startGame = new System.Windows.Forms.Button();
         	this.SuspendLayout();
         	// 
         	// outData
@@ -138,7 +139,7 @@
         	// 
         	this.m_submarineHanger.AllowDrop = true;
         	this.m_submarineHanger.BackColor = System.Drawing.Color.Transparent;
-        	this.m_submarineHanger.Location = new System.Drawing.Point(40, 404);
+        	this.m_submarineHanger.Location = new System.Drawing.Point(33, 393);
         	this.m_submarineHanger.Name = "m_submarineHanger";
         	this.m_submarineHanger.Size = new System.Drawing.Size(318, 65);
         	this.m_submarineHanger.TabIndex = 12;
@@ -151,11 +152,25 @@
         	this.m_opponentBoard.Size = new System.Drawing.Size(346, 378);
         	this.m_opponentBoard.TabIndex = 13;
         	// 
+        	// m_startGame
+        	// 
+        	this.m_startGame.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+        	this.m_startGame.ForeColor = System.Drawing.Color.DarkRed;
+        	this.m_startGame.Location = new System.Drawing.Point(18, 390);
+        	this.m_startGame.Name = "m_startGame";
+        	this.m_startGame.Size = new System.Drawing.Size(342, 76);
+        	this.m_startGame.TabIndex = 14;
+        	this.m_startGame.Text = "My submarines are all in place!        Give me a worthy opponent to crush!";
+        	this.m_startGame.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        	this.m_startGame.UseVisualStyleBackColor = true;
+        	this.m_startGame.Visible = false;
+        	// 
         	// Client_Form
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(716, 477);
+        	this.Controls.Add(this.m_startGame);
         	this.Controls.Add(this.m_opponentBoard);
         	this.Controls.Add(this.m_submarineHanger);
         	this.Controls.Add(this.m_myBoard);
@@ -177,6 +192,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.Button m_startGame;
         private Sub_Marine_Client.RepositoryGridPanel m_submarineHanger;
         private Sub_Marine_Client.GameGridPanel m_opponentBoard;
         private Sub_Marine_Client.GameGridPanel m_myBoard;

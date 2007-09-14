@@ -166,5 +166,29 @@ namespace Sub_Marine_Client
 		{
 			
 		}
+		
+		/// <summary>
+		/// Set all tiles on grid as Dragable according to isDragable
+		/// </summary>
+		/// <param name="isDragable"></param>
+		public void setAllTilesDragable(bool isDragable)
+		{
+			foreach(Tile tile in m_tilesList)
+			{
+				tile.Dragable = isDragable;
+			}
+		}
+		
+		/// <summary>
+		/// Set all tiles on grid as Clickable according to isClickable
+		/// </summary>
+		/// <param name="isClickable"></param>
+		public void setAllTilesClickable(bool isClickable)
+		{
+			foreach(Tile tile in m_tilesList)
+			{
+				tile.Clickable = isClickable;
+			}
+		}
 	}
 }
