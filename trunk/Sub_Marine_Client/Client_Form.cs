@@ -53,5 +53,22 @@ namespace Sub_Marine_Client
         	m_submarineHanger.Hide();
         	m_startGame.Show();
         }
+        
+        void M_startGameClick(object sender, EventArgs e)
+        {
+        	//TODO check if player 1
+        	
+        	m_startGame.Text = "Waiting for the worthy opponent to connect...";
+        	m_startGame.Enabled = false;
+ 
+        	//TODO wait for other side
+        	
+        	m_startGame.Text = "Fight for your life!";
+        	
+        	m_myBoard.setAllTilesDragable(false);
+        	m_opponentBoard.setAllTilesClickable(true);
+        	
+     		//TODO start game
+        }
     }
 }
