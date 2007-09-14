@@ -41,9 +41,17 @@ namespace Sub_Marine_Client
         void Client_FormLoad(object sender, EventArgs e)
         {
         	m_submarineHanger.addSubs();
-        	m_opponentBoard.markAllTiles(Tile.TileState.Freeze);
+        	m_submarineHanger.setAllTilesDragable(true);
+        	m_submarineHanger.setParent(this);
         	m_opponentBoard.Text = "Opponent Board";
         	m_myBoard.Text = "My Board";
+        	m_myBoard.setAllTilesDragable(true);
+        }
+        
+        public void repositoryIsEmpty()
+        {
+        	m_submarineHanger.Hide();
+        	m_startGame.Show();
         }
     }
 }

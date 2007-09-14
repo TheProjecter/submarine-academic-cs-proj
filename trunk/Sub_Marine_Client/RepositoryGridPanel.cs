@@ -14,12 +14,18 @@ namespace Sub_Marine_Client
         private Bitmap sub2;
         private Bitmap sub3;
         private Bitmap sub4;
+        private Client_Form m_parent = null;
 
         public RepositoryGridPanel()
         	:base(20)
         {
             InitializeComponent();
             addTilesToList(Controls);
+        }
+        
+        public void setParent(Client_Form parent)
+        {
+        	m_parent = parent;
         }
         
         /// <summary>
@@ -72,7 +78,10 @@ namespace Sub_Marine_Client
 		{
 			if (isEmptyBoard()==true)
 			{
-				this.Hide();
+				if (m_parent != null)
+				{
+					m_parent.repositoryIsEmpty();
+				}
 			}
 		}
     }

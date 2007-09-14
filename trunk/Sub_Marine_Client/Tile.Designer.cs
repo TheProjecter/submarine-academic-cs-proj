@@ -38,11 +38,6 @@
         	this.BackColor = System.Drawing.Color.Transparent;
         	this.Name = "Tile";
         	this.Size = new System.Drawing.Size(25, 25);
-        	this.DoubleClick += new System.EventHandler(this.TileDoubleClick);
-        	this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tile_MouseDown);
-        	this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Tile_DragDrop);
-        	this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Tile_DragEnter);
-        	this.DragLeave += new System.EventHandler(this.Tile_DragLeave);
         	this.ResumeLayout(false);
         }
 

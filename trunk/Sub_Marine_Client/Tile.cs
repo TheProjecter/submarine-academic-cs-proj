@@ -18,8 +18,9 @@ namespace Sub_Marine_Client
         /// <summary>
         /// possible tile states
         /// </summary>
-        public enum TileState {Set, Freeze, Hit, Miss};
+        public enum TileState {Hit, Miss};
 
+        #region Tile Properties
         /// <summary>
         /// set a tile state. tile state will chage only if it is in a
         /// settable state (either TileState.Set or TileState.Freeze)
@@ -29,32 +30,65 @@ namespace Sub_Marine_Client
         {
         	set
         	{
-        		if (value != TileState.Set && 
-        		    (m_state == TileState.Set || m_state == TileState.Freeze))
-        		{
-        			string directory = "";
-        			string newBackFileName = null;
+        		string directory = "";
+        		string newBackFileName = null;
 #if DEBUG
-            		directory = "../../Icons/";
+            	directory = "../../Icons/";
 #endif
-        			switch (value)
-        			{
-        				case TileState.Hit:
-        					newBackFileName = directory + "hit.bmp";
-        					break;
-        				case TileState.Miss:
-        					newBackFileName = directory + "missed.jpg";
-        					break;
-        			}
-        			if (newBackFileName!=null)
-        			{
-        				Bitmap newBack = new Bitmap(newBackFileName);
-        				PutItem(newBack);
-        			}
-        			m_state = value;
+    			switch (value)
+    			{
+    				case TileState.Hit:
+    					newBackFileName = directory + "hit.bmp";
+    					break;
+    				case TileState.Miss:
+    					newBackFileName = directory + "missed.jpg";
+    					break;
+    			}
+    			if (newBackFileName!=null)
+    			{
+    				Bitmap newBack = new Bitmap(newBackFileName);
+    				PutItem(newBack);
+    			}
+    			m_state = value;
+        	}
+        }
+        
+        public bool Dragable
+        {
+        	set
+        	{	
+        		if (value)
+        		{
+        			this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Tile_MouseDown);
+	        		this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Tile_DragDrop);
+	        		this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Tile_DragEnter);
+	        		this.DragLeave += new System.EventHandler(this.Tile_DragLeave);
+        		}
+        		else
+        		{
+    			   	this.MouseDown -= new System.Windows.Forms.MouseEventHandler(this.Tile_MouseDown);
+		        	this.DragDrop -= new System.Windows.Forms.DragEventHandler(this.Tile_DragDrop);
+		        	this.DragEnter -= new System.Windows.Forms.DragEventHandler(this.Tile_DragEnter);
+		        	this.DragLeave -= new System.EventHandler(this.Tile_DragLeave);
         		}
         	}
         }
+        
+        public bool Clickable
+        {
+        	set
+        	{
+        		if (value)
+        		{
+        			this.DoubleClick += new System.EventHandler(this.TileDoubleClick);
+        		}
+        		else
+        		{
+        			this.DoubleClick -= new System.EventHandler(this.TileDoubleClick);
+        		}
+        	}
+        }
+        #endregion
         
         /// <summary>
         /// Tile c'tor
@@ -100,7 +134,7 @@ namespace Sub_Marine_Client
         /// <param name="e"></param>
         private void Tile_DragEnter(object sender, DragEventArgs e)
         {
-            if (this.BackgroundImage == null && m_state == TileState.Set)
+            if (this.BackgroundImage == null)
             {
 				int tileNumber = 0;
 	            try
@@ -177,7 +211,7 @@ namespace Sub_Marine_Client
         private void Tile_MouseDown(object sender, MouseEventArgs e)
         {
             // Only allowing dragging if there is an item
-            if (m_state == TileState.Set && this.BackgroundImage != null)
+            if (this.BackgroundImage != null)
             {
 
                 // Start the dragging process
@@ -226,23 +260,18 @@ namespace Sub_Marine_Client
         /// <param name="sender"></param>
         /// <param name="e"></param>
         void TileDoubleClick(object sender, EventArgs e)
-        {
-        	if (m_state == TileState.Freeze)
-        	{
-        		TileState result = TileState.Freeze;
-        		
-        		//TODO ask server instead of user
-        		string message = "Is it a hit? If not, then it's a miss...";
-                string caption = "Choose result";
-		        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-		        DialogResult mbresult;
-		
-		        mbresult = MessageBox.Show(message, caption, buttons);
-		
-		        result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
+        {	
+    		//TODO ask server instead of user
+    		string message = "Is it a hit? If not, then it's a miss...";
+            string caption = "Choose result";
+	        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+	        DialogResult mbresult;
 	
-				this.State = result;
-        	}
+	        mbresult = MessageBox.Show(message, caption, buttons);
+	
+	        TileState result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
+
+			this.State = result;
         }
     }
 }
