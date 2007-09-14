@@ -140,22 +140,27 @@ namespace Sub_Marine_Server
 			}
 		}
 		public void stop()
-		{
-			listener.Stop();
-			if (reacive_t[0] != null)
-			{
-				reacive_t[0].Abort();
-				reacive_t[0] = null;
+		{   try{
+				listener.Stop();
 			}
-			if (reacive_t[1] != null)
-			{
-				reacive_t[1].Abort();
-				reacive_t[1] = null;
+			catch (ArgumentNullException)
+			       {
+			       	
+			       }
+			       if (reacive_t[0] != null)
+			       {
+			       	reacive_t[0].Abort();
+			       	reacive_t[0] = null;
+			       }
+			       if (reacive_t[1] != null)
+			       {
+			       	reacive_t[1].Abort();
+			       	reacive_t[1] = null;
+			       }
+			       aPlayer = -1; //Reset game
+			       connectionIsUp=false;
+			       serverIsUp = false;
 			}
-			aPlayer = -1; //Reset game
-			connectionIsUp=false;
-			serverIsUp = false;
-		}
 		public void start()
 		{
 			try
@@ -188,14 +193,14 @@ namespace Sub_Marine_Server
 		private void changePlayer()
 		{
 			if (aPlayer==0)
-				{
-					aPlayer=1;
-				}
-				else
-					if (aPlayer==1)
-				{
-					aPlayer=0;
-				}
+			{
+				aPlayer=1;
+			}
+			else
+				if (aPlayer==1)
+			{
+				aPlayer=0;
+			}
 		}
 	}
 }
