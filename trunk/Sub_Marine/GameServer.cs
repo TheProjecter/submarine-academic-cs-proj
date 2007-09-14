@@ -19,6 +19,7 @@ namespace Sub_Marine_Server
 		private string m_IP;
 		private int m_port;
 		private Thread[] reacive_t,send_t; //Reavice and send data thread
+		private Thread ping_t;
 		public delegate void Command(String str);
 		public Command r_Command; //Revice functio
 		private bool connectionIsUp = true;
@@ -33,6 +34,7 @@ namespace Sub_Marine_Server
 			m_Player[0] = new Player();
 			m_Player[1] = new Player();
 			reacive_t = new Thread[NPLAYER];
+			ping_t = new Thread((ping));
 			//reacive_t[0] = new Thread(
 			
 			try
@@ -130,6 +132,10 @@ namespace Sub_Marine_Server
 				Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 				m_Player[aPlayer].connection = listener.AcceptSocket();
 			}
+			catch (ObjectDisposedException di)
+			{
+				MessageBox.Show(di.Message);
+			}
 			catch (InvalidOperationException op)
 			{
 				MessageBox.Show("op " + op.Message);
@@ -144,23 +150,23 @@ namespace Sub_Marine_Server
 				listener.Stop();
 			}
 			catch (ArgumentNullException)
-			       {
-			       	
-			       }
-			       if (reacive_t[0] != null)
-			       {
-			       	reacive_t[0].Abort();
-			       	reacive_t[0] = null;
-			       }
-			       if (reacive_t[1] != null)
-			       {
-			       	reacive_t[1].Abort();
-			       	reacive_t[1] = null;
-			       }
-			       aPlayer = -1; //Reset game
-			       connectionIsUp=false;
-			       serverIsUp = false;
+			{
+				
 			}
+			if (reacive_t[0] != null)
+			{
+				reacive_t[0].Abort();
+				reacive_t[0] = null;
+			}
+			if (reacive_t[1] != null)
+			{
+				reacive_t[1].Abort();
+				reacive_t[1] = null;
+			}
+			aPlayer = -1; //Reset game
+			connectionIsUp=false;
+			serverIsUp = false;
+		}
 		public void start()
 		{
 			try
@@ -180,6 +186,7 @@ namespace Sub_Marine_Server
 				aPlayer=0;
 				reacive_t[0].Start(0);
 				reacive_t[1].Start(1);
+				ping_t.Start();
 			}
 			catch (ThreadAbortException)
 			{
@@ -200,6 +207,15 @@ namespace Sub_Marine_Server
 				if (aPlayer==1)
 			{
 				aPlayer=0;
+			}
+		}
+		private void ping()
+		{
+			while(serverIsUp)
+			{
+				send("ping",0);
+					send ("ping",1);
+				System.Threading.Thread.Sleep(15000);
 			}
 		}
 	}
