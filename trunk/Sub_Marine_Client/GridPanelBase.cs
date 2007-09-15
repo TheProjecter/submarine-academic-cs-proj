@@ -55,9 +55,9 @@ namespace Sub_Marine_Client
 		/// add all tiles from the given controlList in to the internal m_tilesList 
 		/// </summary>
 		/// <param name="controlList">a list of the controls in the inherited child</param>
-		protected void addTilesToList(ControlCollection controlList)
+		protected void addTilesToList()
 		{
-			foreach (Control control in controlList)
+			foreach (Control control in Controls)
 			{
 				if (control.Name.StartsWith("tile"))
 				{
@@ -188,6 +188,17 @@ namespace Sub_Marine_Client
 			foreach(Tile tile in m_tilesList)
 			{
 				tile.Clickable = isClickable;
+			}
+		}
+		
+		/// <summary>
+		/// reset all of the board tile's state
+		/// </summary>
+		public void resetBoard()
+		{
+			foreach(Tile tile in m_tilesList)
+			{
+				tile.resetTile();
 			}
 		}
 	}

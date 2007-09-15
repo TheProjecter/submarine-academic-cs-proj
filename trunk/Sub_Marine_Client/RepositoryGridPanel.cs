@@ -20,7 +20,7 @@ namespace Sub_Marine_Client
         	:base(20)
         {
             InitializeComponent();
-            addTilesToList(Controls);
+            addTilesToList();
         }
         
         public void setParent(Client_Form parent)
