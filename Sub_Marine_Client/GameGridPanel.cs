@@ -14,7 +14,7 @@ namespace Sub_Marine_Client
         	:base(100)
         {
             InitializeComponent();
-            addTilesToList(Controls);
+            addTilesToList();
         }
 
         /// <summary>

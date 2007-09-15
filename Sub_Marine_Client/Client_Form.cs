@@ -58,10 +58,23 @@ namespace Sub_Marine_Client
         
         void Client_FormLoad(object sender, EventArgs e)
         {
+        	resetGame();
+        }
+        
+        public void resetGame()
+        {
+        	//submarine hanger reset
+        	m_submarineHanger.resetBoard();
         	m_submarineHanger.addSubs();
         	m_submarineHanger.setAllTilesDragable(true);
         	m_submarineHanger.setParent(this);
+        	
+        	//opponent reset
+        	m_opponentBoard.resetBoard();
         	m_opponentBoard.Text = "Opponent Board";
+        	
+        	//my reset
+        	m_opponentBoard.resetBoard();
         	m_myBoard.Text = "My Board";
         	m_myBoard.setAllTilesDragable(true);
         }

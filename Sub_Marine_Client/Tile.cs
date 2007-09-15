@@ -18,13 +18,12 @@ namespace Sub_Marine_Client
         /// <summary>
         /// possible tile states
         /// </summary>
-        public enum TileState {Hit, Miss};
+        public enum TileState {Empty, Hit, Miss};
 
         #region Tile Properties
         /// <summary>
-        /// set a tile state. tile state will chage only if it is in a
-        /// settable state (either TileState.Set or TileState.Freeze)
-        /// Possible new states are (TileState.Freeze, TileState.Hit & TileState.Miss
+        /// set a tile state.
+        /// Possible new states are (TileState.Empty, TileState.Hit & TileState.Miss)
         /// </summary>
         public TileState State
         {
@@ -192,7 +191,7 @@ namespace Sub_Marine_Client
         private void Tile_DragLeave(object sender, EventArgs e)
         {
             // Only do something if the tile has an item
-            if (this.m_image == null)
+            if (isInUse() == false)
             {
                 // Reset the cursor
                 this.Cursor = Cursors.Default;
@@ -210,8 +209,8 @@ namespace Sub_Marine_Client
         /// <param name="e"></param>
         private void Tile_MouseDown(object sender, MouseEventArgs e)
         {
-            // Only allowing dragging if there is an item
-            if (this.BackgroundImage != null)
+            // Only allowing dragging if it is in use
+            if (isInUse() == true)
             {
 
                 // Start the dragging process
@@ -261,17 +260,30 @@ namespace Sub_Marine_Client
         /// <param name="e"></param>
         void TileDoubleClick(object sender, EventArgs e)
         {	
-    		//TODO ask server instead of user
-    		string message = "Is it a hit? If not, then it's a miss...";
-            string caption = "Choose result";
-	        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-	        DialogResult mbresult;
+        	//only allow double clicking on a tile if it is not in use
+        	if (isInUse() == false)
+        	{
+        		//TODO ask server instead of user
+	        	
+	    		string message = "Is it a hit? If not, then it's a miss...";
+	            string caption = "Choose result";
+		        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+		        DialogResult mbresult;
+		
+		        mbresult = MessageBox.Show(message, caption, buttons);
+		
+		        TileState result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
 	
-	        mbresult = MessageBox.Show(message, caption, buttons);
-	
-	        TileState result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
-
-			this.State = result;
+				this.State = result;
+        	}
+        }
+        
+        public void resetTile()
+        {
+        	this.BackgroundImage = null;
+        	this.Dragable = false;
+        	this.Clickable = true;
+        	this.State = TileState.Empty;
         }
     }
 }
