@@ -21,10 +21,28 @@ namespace Sub_Marine_Client
 
         private void Connect_Click(object sender, EventArgs e)
         {
-            game = new GameClient(ip.Text, int.Parse(port.Text));
-            game.r_Command = reaciveEvent;
-            init = new Thread(new ThreadStart(game.start));
-            init.Start();
+        	
+        	try
+        	{
+        		int portNumber = 0;
+        		Int32.TryParse(port.Text,out portNumber);
+        		if ( 0 >= portNumber || portNumber >= 65535 )
+        		{
+        			throw new ArgumentException();
+        		}
+        		game = new GameClient(ip.Text, portNumber);
+	            game.r_Command = reaciveEvent;
+	            init = new Thread(new ThreadStart(game.start));
+	            init.Start();
+	            Connect.Enabled = false;
+        	}
+        	catch (ArgumentException)
+        	{
+        		MessageBox.Show("Port number is invalid. Please choose a different port",
+        		                "Error", 
+        		                MessageBoxButtons.OK, 
+        		                MessageBoxIcon.Error);
+        	}
         }
 
         private void send_Click(object sender, EventArgs e)
@@ -69,6 +87,14 @@ namespace Sub_Marine_Client
         	m_opponentBoard.setAllTilesClickable(true);
         	
      		//TODO start game
+        }
+        
+        void Client_FormFormClosing(object sender, FormClosingEventArgs e)
+        {
+        	if (game != null)
+        	{
+        		game.stop();
+        	}
         }
     }
 }

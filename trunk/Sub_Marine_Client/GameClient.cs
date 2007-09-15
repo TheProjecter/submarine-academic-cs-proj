@@ -55,26 +55,29 @@ namespace Sub_Marine_Client
 		public void onDataRecieved()
 		{
 			String str = null;
-			try
+			while (connectionIsUp == true)
 			{
-				str = input.ReadString();
-
-			}
-			catch (ObjectDisposedException se)
-			{
-				MessageBox.Show("odrse " +se.Message);
-				connectionIsUp = false;
-				return;
-			}
-			catch (IOException se1)
-			{
-				connectionIsUp = false;
-				MessageBox.Show("odrse1 "+se1.Message);
-				return;
-			}
-			if (str != null)
-			{
-				handleData(str);
+				try
+				{
+					str = input.ReadString();
+	
+				}
+				catch (ObjectDisposedException se)
+				{
+					MessageBox.Show("odrse " +se.Message);
+					connectionIsUp = false;
+					return;
+				}
+				catch (IOException se1)
+				{
+					connectionIsUp = false;
+					MessageBox.Show("odrse1 "+se1.Message);
+					return;
+				}
+				if (str != null)
+				{
+					handleData(str);
+				}
 			}
 		}
 		void handleData(String str)
@@ -86,21 +89,21 @@ namespace Sub_Marine_Client
 		{
 			try
 			{
-				
-				while (connectionIsUp)
-				{
-					reacive_t = new Thread(new ThreadStart(onDataRecieved));
-					reacive_t.IsBackground = true;
-					reacive_t.Start();
-					while (reacive_t.IsAlive) System.Console.Out.WriteLine("I'm alive");
-				}
-				reacive_t.Abort();
+				reacive_t = new Thread(new ThreadStart(onDataRecieved));
+				reacive_t.IsBackground = true;
+				reacive_t.Start();
 			}
 			catch (ThreadAbortException)
 			{
 				//stop();
 			}
 		}
+		
+		public void stop()
+		{
+			connectionIsUp = false;
+		}
+				
 		/*
         public Result Move(int x,int y)
         {

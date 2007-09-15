@@ -164,6 +164,7 @@
         	this.m_startGame.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
         	this.m_startGame.UseVisualStyleBackColor = true;
         	this.m_startGame.Visible = false;
+        	this.m_startGame.Click += new System.EventHandler(this.M_startGameClick);
         	// 
         	// Client_Form
         	// 
@@ -188,6 +189,7 @@
         	this.MaximizeBox = false;
         	this.Name = "Client_Form";
         	this.Text = "SubMarine";
+        	this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Client_FormFormClosing);
         	this.Load += new System.EventHandler(this.Client_FormLoad);
         	this.ResumeLayout(false);
         	this.PerformLayout();
