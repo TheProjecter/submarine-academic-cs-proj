@@ -72,19 +72,19 @@ namespace Sub_Marine_Server
 				{
 					connectionIsUp = false;
 					MessageBox.Show("odrse1 "+se1.Message);
-					if (!m_Player[0].connection.Connected && m_Player[0]!=null)
+					if (m_Player[0]!=null && !m_Player[0].connection.Connected)
 					{
+						MessageBox.Show("Player 1 is dead");
 						m_Player[0].clearUser();
-						m_Player[0] = null;
-						reacive_t[0].Abort();
+						m_Player[0] = new Player();
 						reacive_t[0] = null;
 						recover(0);
 					}
-					if (!m_Player[1].connection.Connected && m_Player[1]!=null)
+					if (m_Player[1]!=null && !m_Player[1].connection.Connected)
 					{
+						MessageBox.Show("Player 2 is dead");
 						m_Player[1].clearUser();
-						m_Player[1] = null;
-						reacive_t[1].Abort();
+						m_Player[1] = new Player();
 						reacive_t[1] = null;
 						recover(1);
 					}
@@ -235,6 +235,7 @@ namespace Sub_Marine_Server
 			m_Player[pnum].setSocketStream();
 			reacive_t[pnum] = new Thread((onDataRecieved));
 			reacive_t[pnum].IsBackground = true;
+			reacive_t[pnum].Start(pnum);
 		}
 	}
 }
