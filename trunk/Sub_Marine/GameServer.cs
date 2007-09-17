@@ -18,8 +18,7 @@ namespace Sub_Marine_Server
 		private TcpListener listener; // listen for client connection
 		private string m_IP;
 		private int m_port;
-		private Thread[] reacive_t,send_t; //Reavice and send data thread
-		private Thread ping_t;
+		private Thread[] reacive_t; //Reavice and send data thread
 		public delegate void Command(String str);
 		public Command r_Command; //Revice functio
 		private bool connectionIsUp = true;
@@ -34,7 +33,6 @@ namespace Sub_Marine_Server
 			m_Player[0] = new Player();
 			m_Player[1] = new Player();
 			reacive_t = new Thread[NPLAYER];
-			ping_t = new Thread((ping));
 			//reacive_t[0] = new Thread(
 			
 			try
@@ -65,7 +63,7 @@ namespace Sub_Marine_Server
 				catch (ObjectDisposedException se)
 				{
 					MessageBox.Show("odrse " +se.Message);
-					listener.Stop();
+					//listener.Stop();
 					connectionIsUp = false;
 					aPlayer = -1; //Reset game
 					return;
@@ -74,7 +72,23 @@ namespace Sub_Marine_Server
 				{
 					connectionIsUp = false;
 					MessageBox.Show("odrse1 "+se1.Message);
-					listener.Stop();
+					if (!m_Player[0].connection.Connected && m_Player[0]!=null)
+					{
+						m_Player[0].clearUser();
+						m_Player[0] = null;
+						reacive_t[0].Abort();
+						reacive_t[0] = null;
+						recover(0);
+					}
+					if (!m_Player[1].connection.Connected && m_Player[1]!=null)
+					{
+						m_Player[1].clearUser();
+						m_Player[1] = null;
+						reacive_t[1].Abort();
+						reacive_t[1] = null;
+						recover(1);
+					}
+					//listener.Stop();
 					return;
 				}
 				if (str != null & pnum==aPlayer)
@@ -124,13 +138,13 @@ namespace Sub_Marine_Server
 				MessageBox.Show("se2 " + se2.Message);
 			}
 		}
-		public void init()
+		public void init(int pnum)
 		{
 
 			try
 			{
 				Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-				m_Player[aPlayer].connection = listener.AcceptSocket();
+				m_Player[pnum].connection = listener.AcceptSocket();
 			}
 			catch (ObjectDisposedException di)
 			{
@@ -177,7 +191,7 @@ namespace Sub_Marine_Server
 				startListen();
 				for (aPlayer=0;aPlayer<NPLAYER;aPlayer++)
 				{
-					init();
+					init(aPlayer);
 					m_Player[aPlayer].setSocketStream();
 					reacive_t[aPlayer] = new Thread((onDataRecieved));
 					reacive_t[aPlayer].IsBackground = true;
@@ -186,16 +200,21 @@ namespace Sub_Marine_Server
 				aPlayer=0;
 				reacive_t[0].Start(0);
 				reacive_t[1].Start(1);
-				ping_t.Start();
 			}
 			catch (ThreadAbortException)
 			{
 				//stop();
 			}
 		}
-		public void send(string str ,int pnum)
+		public bool send(string str ,int pnum)
 		{
-			m_Player[pnum].output.Write(str);
+			if (m_Player[pnum]!=null)
+			{
+				m_Player[pnum].output.Write(str);
+				return true;
+			}
+			else
+				return false;
 		}
 		private void changePlayer()
 		{
@@ -209,14 +228,13 @@ namespace Sub_Marine_Server
 				aPlayer=0;
 			}
 		}
-		private void ping()
+
+		private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
 		{
-			while(serverIsUp)
-			{
-				send("ping",0);
-					send ("ping",1);
-				System.Threading.Thread.Sleep(15000);
-			}
+			init(pnum);
+			m_Player[pnum].setSocketStream();
+			reacive_t[pnum] = new Thread((onDataRecieved));
+			reacive_t[pnum].IsBackground = true;
 		}
 	}
 }

@@ -39,5 +39,15 @@ namespace Sub_Marine_Server
         output = new BinaryWriter(socketStream);
 		input = new BinaryReader(socketStream);
         }
+        public void clearUser()
+        {
+        	connection.Close();
+        	socketStream.Close();
+        	output.Close();
+        	input = null;
+            output = null;
+            connection = null;
+            socketStream = null;
+        }
 	}
 }
