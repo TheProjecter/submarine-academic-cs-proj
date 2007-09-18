@@ -74,19 +74,28 @@ namespace Sub_Marine_Server
 					MessageBox.Show("odrse1 "+se1.Message);
 					if (m_Player[0]!=null && !m_Player[0].connection.Connected)
 					{
-						MessageBox.Show("Player 1 is dead");
 						m_Player[0].clearUser();
-						m_Player[0] = new Player();
-						reacive_t[0] = null;
-						recover(0);
+						if (m_Player[1]!=null)
+						{
+							m_Player[0] = new Player();
+							reacive_t[0] = null;
+							recover(0);
+						}
+						else
+							startPlayers();
 					}
 					if (m_Player[1]!=null && !m_Player[1].connection.Connected)
 					{
-						MessageBox.Show("Player 2 is dead");
 						m_Player[1].clearUser();
-						m_Player[1] = new Player();
-						reacive_t[1] = null;
-						recover(1);
+						if (m_Player[0]!=null)
+						{
+							m_Player[1] = new Player();
+							reacive_t[1] = null;
+							recover(1);
+						}
+						else
+							startPlayers();
+						
 					}
 					//listener.Stop();
 					return;
@@ -189,17 +198,8 @@ namespace Sub_Marine_Server
 				//	{
 				//Need to add socket expection if a client died not at the end
 				startListen();
-				for (aPlayer=0;aPlayer<NPLAYER;aPlayer++)
-				{
-					init(aPlayer);
-					m_Player[aPlayer].setSocketStream();
-					reacive_t[aPlayer] = new Thread((onDataRecieved));
-					reacive_t[aPlayer].IsBackground = true;
-				}
-				connectionIsUp = true;
-				aPlayer=0;
-				reacive_t[0].Start(0);
-				reacive_t[1].Start(1);
+				startPlayers();
+
 			}
 			catch (ThreadAbortException)
 			{
@@ -229,6 +229,25 @@ namespace Sub_Marine_Server
 			}
 		}
 
+		private void startPlayers()
+		{
+			for (aPlayer=0;aPlayer<NPLAYER;aPlayer++)
+			{
+				init(aPlayer);
+				m_Player[aPlayer].setSocketStream();
+				reacive_t[aPlayer] = new Thread((onDataRecieved));
+				reacive_t[aPlayer].IsBackground = true;
+			}
+			connectionIsUp = true;
+			aPlayer=0;
+			reacive_t[0].Start(0);
+			reacive_t[1].Start(1);
+		}
+		private void stopPlayer(int pnum)
+		{
+			m_Player[pnum].clearUser();
+			reacive_t[pnum]=null;
+		}
 		private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
 		{
 			init(pnum);
