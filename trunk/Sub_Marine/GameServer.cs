@@ -18,11 +18,12 @@ namespace Sub_Marine_Server
 		private TcpListener listener; // listen for client connection
 		private string m_IP;
 		private int m_port;
-		private Thread[] reacive_t; //Reavice and send data thread
+		private Thread[] reacive_t;
+		private Thread connection_t; //Reavice and send data thread
 		public delegate void Command(String str);
 		public Command r_Command; //Revice functio
 		private bool connectionIsUp = true;
-		private bool serverIsUp = true;
+		private bool serverIsUp;
 		private int aPlayer = 0; //Active player between 0 and 1
 		private Player[] m_Player;
 		public GameServer(int port)
@@ -33,6 +34,8 @@ namespace Sub_Marine_Server
 			m_Player[0] = new Player();
 			m_Player[1] = new Player();
 			reacive_t = new Thread[NPLAYER];
+			connection_t = new Thread((limitConnection));
+			connection_t.Start();
 			//reacive_t[0] = new Thread(
 			
 			try
@@ -41,12 +44,12 @@ namespace Sub_Marine_Server
 			}
 			catch (ArgumentNullException ar)
 			{
-				MessageBox.Show("ar " + ar.Message);
+				//	MessageBox.Show("ar " + ar.Message);
 			}
 
 			catch (ArgumentOutOfRangeException ar1)
 			{
-				MessageBox.Show("ar1 " + ar1.Message);
+				//	MessageBox.Show("ar1 " + ar1.Message);
 			}
 		}
 		private void onDataRecieved(object data)
@@ -63,7 +66,7 @@ namespace Sub_Marine_Server
 				}
 				catch (ObjectDisposedException se)
 				{
-					MessageBox.Show("odrse " +se.Message);
+					//	MessageBox.Show("odrse " +se.Message);
 					//listener.Stop();
 					connectionIsUp = false;
 					aPlayer = -1; //Reset game
@@ -72,8 +75,8 @@ namespace Sub_Marine_Server
 				catch (IOException se1)
 				{
 					connectionIsUp = false;
-					MessageBox.Show("odrse1 "+se1.Message);
-					if (m_Player[0]!=null && !m_Player[0].connection.Connected)
+					//MessageBox.Show("odrse1 "+se1.Message);
+					if (m_Player[0].connection!=null && !m_Player[0].connection.Connected)
 					{
 						m_Player[0].clearUser();
 						if (m_Player[1]!=null)
@@ -87,7 +90,7 @@ namespace Sub_Marine_Server
 							startPlayers();
 						}
 					}
-					if (m_Player[1]!=null && !m_Player[1].connection.Connected)
+					if (m_Player[1].connection!=null  && !m_Player[1].connection.Connected)
 					{
 						m_Player[1].clearUser();
 						if (m_Player[0]!=null)
@@ -141,15 +144,15 @@ namespace Sub_Marine_Server
 
 			catch (ArgumentOutOfRangeException se)
 			{
-				MessageBox.Show("se " + se.Message);
+				//MessageBox.Show("se " + se.Message);
 			}
 			catch (SocketException se1)
 			{
-				MessageBox.Show("se1 " + se1.Message);
+				//MessageBox.Show("se1 " + se1.Message);
 			}
 			catch (InvalidOperationException se2)
 			{
-				MessageBox.Show("se2 " + se2.Message);
+				//MessageBox.Show("se2 " + se2.Message);
 			}
 		}
 		private void init(int pnum)
@@ -162,15 +165,15 @@ namespace Sub_Marine_Server
 			}
 			catch (ObjectDisposedException di)
 			{
-				MessageBox.Show(di.Message);
+				//MessageBox.Show(di.Message);
 			}
 			catch (InvalidOperationException op)
 			{
-				MessageBox.Show("op " + op.Message);
+				//MessageBox.Show("op " + op.Message);
 			}
 			catch (SocketException se)
 			{
-				MessageBox.Show("se " + se.Message);
+				//MessageBox.Show("se " + se.Message);
 			}
 		}
 		public void stop()
@@ -254,12 +257,23 @@ namespace Sub_Marine_Server
 			reacive_t[pnum]=null;
 		}
 		private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
-		{
+		{							
 			init(pnum);
 			m_Player[pnum].setSocketStream();
 			reacive_t[pnum] = new Thread((onDataRecieved));
 			reacive_t[pnum].IsBackground = true;
 			reacive_t[pnum].Start(pnum);
+		}
+		private void limitConnection()
+		{
+			Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			while(1) //it should be written with throw expection
+			if (m_Player[0].isConnected() && m_Player[1].isConnected())
+			{
+				connection = listener.AcceptSocket();
+				connection.Close();
+				
+			}
 		}
 	}
 }

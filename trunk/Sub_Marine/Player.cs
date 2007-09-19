@@ -49,5 +49,13 @@ namespace Sub_Marine_Server
             connection = null;
             socketStream = null;
         }
+        public bool isConnected()
+        {
+        	if (connection!=null && connection.Connected)
+        		return true;
+        	else
+        		return false;
+        		
+        }
 	}
 }
