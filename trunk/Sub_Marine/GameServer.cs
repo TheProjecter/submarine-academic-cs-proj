@@ -49,10 +49,11 @@ namespace Sub_Marine_Server
 				MessageBox.Show("ar1 " + ar1.Message);
 			}
 		}
-		public void onDataRecieved(object data)
+		private void onDataRecieved(object data)
 		{
 			int pnum = int.Parse(data.ToString());
 			String str;
+			connectionIsUp = true;
 			while(connectionIsUp)
 			{
 				try
@@ -82,7 +83,9 @@ namespace Sub_Marine_Server
 							recover(0);
 						}
 						else
+						{
 							startPlayers();
+						}
 					}
 					if (m_Player[1]!=null && !m_Player[1].connection.Connected)
 					{
@@ -94,7 +97,9 @@ namespace Sub_Marine_Server
 							recover(1);
 						}
 						else
+						{
 							startPlayers();
+						}
 						
 					}
 					//listener.Stop();
@@ -122,12 +127,12 @@ namespace Sub_Marine_Server
 			}
 
 		}
-		void handleData(String str)
+		private void handleData(String str)
 		{
 			r_Command(str);
 		}
 
-		public void startListen()
+		private void startListen()
 		{
 			try
 			{
@@ -147,7 +152,7 @@ namespace Sub_Marine_Server
 				MessageBox.Show("se2 " + se2.Message);
 			}
 		}
-		public void init(int pnum)
+		private void init(int pnum)
 		{
 
 			try
@@ -206,7 +211,7 @@ namespace Sub_Marine_Server
 				//stop();
 			}
 		}
-		public bool send(string str ,int pnum)
+		private bool send(string str ,int pnum)
 		{
 			if (m_Player[pnum]!=null)
 			{
