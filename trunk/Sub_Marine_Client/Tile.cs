@@ -135,52 +135,43 @@ namespace Sub_Marine_Client
         {
             if (this.BackgroundImage == null)
             {
-				int tileNumber = 0;
-	            try
-	            {
-	            	//retrieve the tile number, which is also the tile number in the
-	            	//GridPanelBase.m_tileList minus one
-	                Int32.TryParse(this.Name.Replace("tile",""),out tileNumber);
-	                Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
-	                
-	                //number of default tiles which fit current tile
-	                int horizImageTiles = draggedImage.Size.Width / TILE_EDGE_LENGTH;
-	                
-	                //check if the grabed image can be placed in this tab
-	                if (m_parent.checkOverlap(tileNumber-1, horizImageTiles)==false &&
-	                    ((tileNumber-1) % 10) + horizImageTiles <= 10)
+            	//retrieve the tile number
+            	int tileNumber = getTileNumber();
+                Bitmap draggedImage = (Bitmap)e.Data.GetData(DataFormats.Bitmap);
+                
+                //number of default tiles which fit current tile
+                int horizImageTiles = draggedImage.Size.Width / TILE_EDGE_LENGTH;
+                
+                //check if the grabed image can be placed in this tab
+                if (m_parent.checkOverlap(tileNumber, horizImageTiles)==false &&
+                    (tileNumber % 10) + horizImageTiles <= 10)
+                {
+	                // Check to see if we can handle what is being dragged
+	                if (e.Data.GetDataPresent(DataFormats.Bitmap))
 	                {
-		                // Check to see if we can handle what is being dragged
-		                if (e.Data.GetDataPresent(DataFormats.Bitmap))
-		                {
-		
-		                    // Change the cursor to a hand
-		                    this.Cursor = Cursors.Hand;
-		
-		                    // Lets it know what effects can be done
-		                    e.Effect = DragDropEffects.Copy;
-		
-		                    this.Size = draggedImage.Size;
-		                    this.BackColor = Color.Transparent;
-		                    this.BackgroundImage = draggedImage;
-		                    this.BringToFront();
-		                }
-	                }
-	                else
-	                {
-	                	e.Effect = DragDropEffects.None;
-	                }
-		        }
-	            catch (ArgumentException)
-	            {
 	
-	            }
-            }
-            else
-            {
-                // Change the cursor to the arrow
-                this.Cursor = Cursors.Default;
-            }
+	                    // Change the cursor to a hand
+	                    this.Cursor = Cursors.Hand;
+	
+	                    // Lets it know what effects can be done
+	                    e.Effect = DragDropEffects.Copy;
+	
+	                    this.Size = draggedImage.Size;
+	                    this.BackColor = Color.Transparent;
+	                    this.BackgroundImage = draggedImage;
+	                    this.BringToFront();
+	                }
+                }
+                else
+                {
+                	e.Effect = DragDropEffects.None;
+                }
+	        }
+	        else
+	        {
+	            // Change the cursor to the arrow
+	            this.Cursor = Cursors.Default;
+	        }
         }
 
         /// <summary>
@@ -263,18 +254,19 @@ namespace Sub_Marine_Client
         	//only allow double clicking on a tile if it is not in use
         	if (isInUse() == false)
         	{
-        		//TODO ask server instead of user
-	        	
-	    		string message = "Is it a hit? If not, then it's a miss...";
-	            string caption = "Choose result";
-		        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-		        DialogResult mbresult;
-		
-		        mbresult = MessageBox.Show(message, caption, buttons);
-		
-		        TileState result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
-	
-				this.State = result;
+        		m_parent.tileWasClicked(this);
+//        		//TODO ask server instead of user
+//	        	
+//	    		string message = "Is it a hit? If not, then it's a miss...";
+//	            string caption = "Choose result";
+//		        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
+//		        DialogResult mbresult;
+//		
+//		        mbresult = MessageBox.Show(message, caption, buttons);
+//		
+//		        TileState result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
+//	
+//				this.State = result;
         	}
         }
         
@@ -284,6 +276,20 @@ namespace Sub_Marine_Client
         	this.Dragable = false;
         	this.Clickable = true;
         	this.State = TileState.Empty;
+        }
+        
+        public int getTileNumber()
+        {
+        	int tileNumber = 0;
+        	try
+        	{
+        		Int32.TryParse(this.Name.Replace("tile",""),out tileNumber);
+        	}
+        	catch (ArgumentException)
+        	{
+        		MessageBox.Show("Invalid tile name - tile cannot be numbered");
+        	}
+        	return tileNumber-1;
         }
     }
 }

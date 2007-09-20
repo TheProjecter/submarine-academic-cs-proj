@@ -61,17 +61,9 @@ namespace Sub_Marine_Client
 			{
 				if (control.Name.StartsWith("tile"))
 				{
-					int tileNumber = 0;
-		            try
-		            {
-		            	string tileNumberString = control.Name.Replace("tile","");
-		                Int32.TryParse(tileNumberString,out tileNumber);
-		                m_tilesList[tileNumber-1] = (Tile) control;
-		            }
-		            catch (ArgumentException)
-		            {
-		
-		            }
+	            	Tile tile = (Tile) control;
+	            	int tileNumber = tile.getTileNumber();
+	                m_tilesList[tileNumber] = tile;
 				}
 			}
 		}
@@ -163,6 +155,16 @@ namespace Sub_Marine_Client
 		/// </summary>
 		/// <param name="containingTile"></param>
 		public virtual void objectInTileWasAdded(Tile containingTile)
+		{
+			
+		}
+		
+		/// <summary>
+		/// observer design pattern - notify containing board of an
+		/// clicked tile
+		/// </summary>
+		/// <param name="containingTile"></param>
+		public virtual void tileWasClicked(Tile containingTile)
 		{
 			
 		}

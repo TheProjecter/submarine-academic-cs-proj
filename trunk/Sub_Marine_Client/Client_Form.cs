@@ -13,6 +13,9 @@ namespace Sub_Marine_Client
     {
     	private Thread init = null;
         private GameClient game; 
+        public enum DataType {HIT, MISS, GUESS};
+        private const int NUMBER_OF_CHARS_IN_HEADER = 2;
+        
         public Client_Form()
         {
             InitializeComponent();
@@ -45,14 +48,72 @@ namespace Sub_Marine_Client
         	}
         }
 
-        private void send_Click(object sender, EventArgs e)
+        public void sendData(DataType type, string data)
         {
-        	game.SendData(outData.Text);
+        	Type DataTypes = typeof(DataType);
+        	string header = DataType.GetName(DataTypes, type).Substring(0,NUMBER_OF_CHARS_IN_HEADER);
+        	game.SendData(header+data);
         }
         
         private void reaciveEvent(string str)
         {
-        	input.Text = str;
+        	Type DataTypes = typeof(DataType);
+        	string[] types = DataType.GetNames(DataTypes);
+        	if (str.StartsWith(types[0].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+        	{
+        		//Hit event
+        		try
+        		{
+        			int tileNumber = 0;
+        			int.TryParse(str.Substring(NUMBER_OF_CHARS_IN_HEADER), out tileNumber);
+        			m_opponentBoard.markTile(tileNumber, Tile.TileState.Hit);
+        		}
+        		catch (ArgumentException)
+        		{
+        			
+        		}
+        	}
+        	else if (str.StartsWith(types[1].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+        	{
+        		//Miss event
+        		try
+        		{
+        			int tileNumber = 0;
+        			int.TryParse(str.Substring(NUMBER_OF_CHARS_IN_HEADER), out tileNumber);
+        			m_opponentBoard.markTile(tileNumber, Tile.TileState.Miss);
+        		}
+        		catch (ArgumentException)
+        		{
+        			
+        		}
+        	}
+        	else if (str.StartsWith(types[2].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+        	{
+        		//guess request
+        		try
+        		{
+        			int tileNumber = 0;
+        			int.TryParse(str.Substring(NUMBER_OF_CHARS_IN_HEADER), out tileNumber);
+        			if(m_myBoard.isEmptyTile(tileNumber) == true)
+        			{
+        				m_myBoard.markTile(tileNumber,Tile.TileState.Miss);
+        				sendData(DataType.MISS, tileNumber.ToString());
+        			}
+        			else
+        			{
+        				m_myBoard.markTile(tileNumber,Tile.TileState.Hit);
+        				sendData(DataType.HIT, tileNumber.ToString());
+        			}
+        		}
+        		catch (ArgumentException)
+        		{
+        			
+        		}
+        	}
+        	else
+        	{
+        		MessageBox.Show(str);
+        	}
         }
 
         
@@ -72,6 +133,8 @@ namespace Sub_Marine_Client
         	//opponent reset
         	m_opponentBoard.resetBoard();
         	m_opponentBoard.Text = "Opponent Board";
+        	m_opponentBoard.setParent(this);
+        	m_submarineHanger.setAllTilesClickable(false);
         	
         	//my reset
         	m_opponentBoard.resetBoard();
