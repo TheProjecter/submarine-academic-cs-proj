@@ -23,13 +23,14 @@ namespace Sub_Marine_Server
 		public delegate void Command(String str);
 		public Command r_Command; //Revice functio
 		private bool connectionIsUp = true;
-		private bool serverIsUp;
 		private int aPlayer = 0; //Active player between 0 and 1
 		private Player[] m_Player;
-		public GameServer(int port)
+		Globals.LoggerDelegate m_logger = null;
+		public GameServer(int port, Globals.LoggerDelegate logger)
 		{
 			m_IP = "127.0.0.1";
 			m_port = port;
+			m_logger = logger;
 			m_Player = new Player[NPLAYER];
 			m_Player[0] = new Player();
 			m_Player[1] = new Player();
@@ -42,14 +43,13 @@ namespace Sub_Marine_Server
 			{
 				listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
 			}
-			catch (ArgumentNullException ar)
+			catch (ArgumentNullException)
 			{
-				//	MessageBox.Show("ar " + ar.Message);
+				m_logger("caught ArgumentNullException");
 			}
-
-			catch (ArgumentOutOfRangeException ar1)
+			catch (ArgumentOutOfRangeException)
 			{
-				//	MessageBox.Show("ar1 " + ar1.Message);
+				m_logger("caught ArgumentOutOfRangeException");
 			}
 		}
 		private void onDataRecieved(object data)
@@ -62,22 +62,20 @@ namespace Sub_Marine_Server
 				try
 				{
 					str = m_Player[pnum].input.ReadString();
-
+					m_logger(string.Format("data recieved from player {0}",pnum));
 				}
-				catch (ObjectDisposedException se)
+				catch (ObjectDisposedException)
 				{
-					//	MessageBox.Show("odrse " +se.Message);
-					//listener.Stop();
 					connectionIsUp = false;
 					aPlayer = -1; //Reset game
 					return;
 				}
-				catch (IOException se1)
+				catch (IOException)
 				{
 					connectionIsUp = false;
-					//MessageBox.Show("odrse1 "+se1.Message);
 					if (m_Player[0].connection!=null && !m_Player[0].connection.Connected)
 					{
+						m_logger("player 0 was disconnected");
 						m_Player[0].clearUser();
 						if (m_Player[1]!=null)
 						{
@@ -87,11 +85,13 @@ namespace Sub_Marine_Server
 						}
 						else
 						{
+							m_logger("both players disconnected");
 							startPlayers();
 						}
 					}
 					if (m_Player[1].connection!=null  && !m_Player[1].connection.Connected)
 					{
+						m_logger(string.Format("player 1 was disconnected"));
 						m_Player[1].clearUser();
 						if (m_Player[0]!=null)
 						{
@@ -101,11 +101,11 @@ namespace Sub_Marine_Server
 						}
 						else
 						{
+							m_logger("both players disconnected");
 							startPlayers();
 						}
 						
 					}
-					//listener.Stop();
 					return;
 				}
 				if (str != null & pnum==aPlayer)
@@ -124,11 +124,9 @@ namespace Sub_Marine_Server
 				else
 				{
 					send("Not Your Turn",pnum);
-				}
-				
-				
+					m_logger(string.Format("Player {0} tried to move while it was not it's turn",pnum));
+				}				
 			}
-
 		}
 		private void handleData(String str)
 		{
@@ -142,47 +140,48 @@ namespace Sub_Marine_Server
 				listener.Start();
 			}
 
-			catch (ArgumentOutOfRangeException se)
+			catch (ArgumentOutOfRangeException)
 			{
-				//MessageBox.Show("se " + se.Message);
+				m_logger("caught ArgumentOutOfRangeException");
 			}
-			catch (SocketException se1)
+			catch (SocketException)
 			{
-				//MessageBox.Show("se1 " + se1.Message);
+				m_logger("caught SocketException");
 			}
-			catch (InvalidOperationException se2)
+			catch (InvalidOperationException)
 			{
-				//MessageBox.Show("se2 " + se2.Message);
+				m_logger("caught InvalidOperationException");
 			}
 		}
 		private void init(int pnum)
 		{
-
 			try
 			{
 				Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 				m_Player[pnum].connection = listener.AcceptSocket();
+				m_logger(string.Format("Player {0} is connected",pnum));
 			}
-			catch (ObjectDisposedException di)
+			catch (ObjectDisposedException)
 			{
-				//MessageBox.Show(di.Message);
+				m_logger("caught ObjectDisposedException");
 			}
-			catch (InvalidOperationException op)
+			catch (InvalidOperationException)
 			{
-				//MessageBox.Show("op " + op.Message);
+				m_logger("caught InvalidOperationException");
 			}
-			catch (SocketException se)
+			catch (SocketException)
 			{
-				//MessageBox.Show("se " + se.Message);
+				m_logger("caught SocketException");
 			}
 		}
 		public void stop()
 		{   try{
 				listener.Stop();
+				m_logger("Server stopped");
 			}
 			catch (ArgumentNullException)
 			{
-				
+				m_logger("caught ArgumentNullException");
 			}
 			if (reacive_t[0] != null)
 			{
@@ -196,7 +195,6 @@ namespace Sub_Marine_Server
 			}
 			aPlayer = -1; //Reset game
 			connectionIsUp=false;
-			serverIsUp = false;
 		}
 		public void start()
 		{
@@ -207,11 +205,12 @@ namespace Sub_Marine_Server
 				//Need to add socket expection if a client died not at the end
 				startListen();
 				startPlayers();
+				m_logger("Commencing game");
 
 			}
 			catch (ThreadAbortException)
 			{
-				//stop();
+				
 			}
 		}
 		private bool send(string str ,int pnum)
@@ -219,6 +218,7 @@ namespace Sub_Marine_Server
 			if (m_Player[pnum]!=null)
 			{
 				m_Player[pnum].output.Write(str);
+				m_logger(string.Format("data was sent to player {0}", pnum));
 				return true;
 			}
 			else
@@ -250,6 +250,7 @@ namespace Sub_Marine_Server
 			aPlayer=0;
 			reacive_t[0].Start(0);
 			reacive_t[1].Start(1);
+			m_logger("2 players have been connected successfully");
 		}
 		private void stopPlayer(int pnum)
 		{
@@ -267,7 +268,7 @@ namespace Sub_Marine_Server
 		private void limitConnection()
 		{
 			Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			while(1) //it should be written with throw expection
+			//while(1) //it should be written with throw expection
 			if (m_Player[0].isConnected() && m_Player[1].isConnected())
 			{
 				connection = listener.AcceptSocket();
