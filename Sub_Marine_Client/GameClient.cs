@@ -14,7 +14,7 @@ namespace Sub_Marine_Client
 		public enum Result{BEGIN,BOL,PGIAA,MISS,WIN,LOOSE,END};
 		private string m_IP;
 		private int m_port;
-		private Thread reacive_t, send_t; //Reavice and send data thread
+		private Thread reacive_t; //Reavice data thread
 		private BinaryWriter output; //Out buffer
 		private BinaryReader input;  //in buffer
 		private TcpClient connection; //Connection
@@ -44,8 +44,6 @@ namespace Sub_Marine_Client
 				MessageBox.Show(ar.Message);
 
 			}
-
-
 		}
 		public void SendData(String str)
 		{
