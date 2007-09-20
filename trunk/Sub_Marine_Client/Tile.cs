@@ -97,7 +97,6 @@ namespace Sub_Marine_Client
         {
             // Initialize
             InitializeComponent();
-            
             m_parent = parent;
         }
 
@@ -217,26 +216,53 @@ namespace Sub_Marine_Client
             }
         }
 
+        private delegate void PutItemDelegate(Bitmap image);
+                
 		/// <summary>
 		/// put an image in the current tile
 		/// </summary>
 		/// <param name="image">image to put in the current tile</param>
         public void PutItem(Bitmap image)
         {
-        	m_parent.objectInTileWasAdded(this);
-            this.Size = image.Size;
-            System.Console.Out.WriteLine(Size);
-            m_image = image;
-            this.BackColor = Color.Transparent;
-            this.BackgroundImage = m_image;
-            this.BringToFront();
+        	if (m_image==null)
+        	{
+        		if (InvokeRequired)
+        		{
+        			this.BeginInvoke(new PutItemDelegate(PutItem),new object []{image});
+        			return;
+        		}
+        		m_parent.objectInTileWasAdded(this);
+            	this.Size = image.Size;
+	            System.Console.Out.WriteLine(Size);
+	            m_image = image;
+	            this.BackColor = Color.Transparent;
+	            this.BackgroundImage = m_image;
+	            this.BringToFront();
+        	}
+        	else
+        	{
+        		if (InvokeRequired)
+        		{
+        			this.BeginInvoke(new PutItemDelegate(PutItem),new object []{image});
+        			return;
+        		}
+        		m_upperLayerImage.Image = image;
+        		m_upperLayerImage.Show();
+        	}
         }
 
+        private delegate void RemoveItemDelegate();
+        
         /// <summary>
         /// Takes the image off the tile
         /// </summary>
         public void RemoveItem()
         {
+        	if (InvokeRequired)
+    		{
+    			this.BeginInvoke(new RemoveItemDelegate(RemoveItem));
+    			return;
+    		}
             this.BackgroundImage = null;
             this.BackColor = Color.Black;
             this.Size = new Size(TILE_EDGE_LENGTH, TILE_EDGE_LENGTH);
@@ -255,27 +281,18 @@ namespace Sub_Marine_Client
         	if (isInUse() == false)
         	{
         		m_parent.tileWasClicked(this);
-//        		//TODO ask server instead of user
-//	        	
-//	    		string message = "Is it a hit? If not, then it's a miss...";
-//	            string caption = "Choose result";
-//		        MessageBoxButtons buttons = MessageBoxButtons.YesNo;
-//		        DialogResult mbresult;
-//		
-//		        mbresult = MessageBox.Show(message, caption, buttons);
-//		
-//		        TileState result = (mbresult == System.Windows.Forms.DialogResult.Yes)? TileState.Hit: TileState.Miss;
-//	
-//				this.State = result;
         	}
         }
         
         public void resetTile()
         {
         	this.BackgroundImage = null;
+        	m_image = null;
         	this.Dragable = false;
         	this.Clickable = true;
         	this.State = TileState.Empty;
+        	m_upperLayerImage.Image = null;
+        	m_upperLayerImage.Hide();
         }
         
         public int getTileNumber()
@@ -290,6 +307,15 @@ namespace Sub_Marine_Client
         		MessageBox.Show("Invalid tile name - tile cannot be numbered");
         	}
         	return tileNumber-1;
+        }
+        
+        public int getTileHorizSize()
+        {
+        	if (BackgroundImage!=null)
+        	{
+        		return BackgroundImage.Size.Width / TILE_EDGE_LENGTH;
+        	}
+        	return TILE_EDGE_LENGTH;
         }
     }
 }

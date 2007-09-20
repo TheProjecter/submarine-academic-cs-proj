@@ -28,7 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+        	this.m_upperLayerImage = new System.Windows.Forms.PictureBox();
+        	((System.ComponentModel.ISupportInitialize)(this.m_upperLayerImage)).BeginInit();
         	this.SuspendLayout();
+        	// 
+        	// m_upperLayerImage
+        	// 
+        	this.m_upperLayerImage.Location = new System.Drawing.Point(0, 0);
+        	this.m_upperLayerImage.Name = "m_upperLayerImage";
+        	this.m_upperLayerImage.Size = new System.Drawing.Size(30, 30);
+        	this.m_upperLayerImage.TabIndex = 0;
+        	this.m_upperLayerImage.TabStop = false;
+        	this.m_upperLayerImage.Visible = false;
         	// 
         	// Tile
         	// 
@@ -36,10 +47,13 @@
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.BackColor = System.Drawing.Color.Transparent;
+        	this.Controls.Add(this.m_upperLayerImage);
         	this.Name = "Tile";
         	this.Size = new System.Drawing.Size(25, 25);
+        	((System.ComponentModel.ISupportInitialize)(this.m_upperLayerImage)).EndInit();
         	this.ResumeLayout(false);
         }
+        private System.Windows.Forms.PictureBox m_upperLayerImage;
 
         #endregion
     }
