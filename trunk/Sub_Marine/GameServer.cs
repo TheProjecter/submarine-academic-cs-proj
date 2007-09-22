@@ -62,7 +62,7 @@ namespace Sub_Marine_Server
 				try
 				{
 					str = m_Player[pnum].input.ReadString();
-					m_logger(string.Format("data recieved from player {0}",pnum));
+					m_logger(string.Format("data recieved from player {0}:{1}",pnum, str));
 				}
 				catch (ObjectDisposedException)
 				{
@@ -113,19 +113,26 @@ namespace Sub_Marine_Server
 					handleData(str);
 					if (pnum == 0){
 						send(str,1);
+						if (str.StartsWith("HI:") || str.StartsWith("MI:"))
 						changePlayer();
 					}
 					else
 					{
 						send(str,0);
+						if (str.StartsWith("HI:") || str.StartsWith("MI:"))
 						changePlayer();
 					}
 				}
 				else
 				{
-					send("Not Your Turn",pnum);
-					m_logger(string.Format("Player {0} tried to move while it was not it's turn",pnum));
-				}				
+					if (str.StartsWith("GU"))
+					send(str,aPlayer); //It will always send to aplayer the data
+					else
+					{
+						send("nut",pnum);
+						m_logger(string.Format("Player {0} tried to move while it was not it's turn",pnum));
+					}
+				}
 			}
 		}
 		private void handleData(String str)
@@ -229,11 +236,15 @@ namespace Sub_Marine_Server
 			if (aPlayer==0)
 			{
 				aPlayer=1;
+				send("ut",1);
+				send("nut",0);
 			}
 			else
 				if (aPlayer==1)
 			{
 				aPlayer=0;
+				send("ut",0);
+				send("nut",1);
 			}
 		}
 
@@ -258,7 +269,7 @@ namespace Sub_Marine_Server
 			reacive_t[pnum]=null;
 		}
 		private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
-		{							
+		{
 			init(pnum);
 			m_Player[pnum].setSocketStream();
 			reacive_t[pnum] = new Thread((onDataRecieved));

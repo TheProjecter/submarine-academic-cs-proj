@@ -37,6 +37,7 @@
         	this.m_submarineHanger = new Sub_Marine_Client.RepositoryGridPanel();
         	this.m_opponentBoard = new Sub_Marine_Client.GameGridPanel();
         	this.m_startGame = new System.Windows.Forms.Button();
+        	this.turn = new System.Windows.Forms.Label();
         	this.SuspendLayout();
         	// 
         	// ip
@@ -120,11 +121,22 @@
         	this.m_startGame.Visible = false;
         	this.m_startGame.Click += new System.EventHandler(this.M_startGameClick);
         	// 
+        	// turn
+        	// 
+        	this.turn.BackColor = System.Drawing.SystemColors.ActiveBorder;
+        	this.turn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+        	this.turn.ForeColor = System.Drawing.SystemColors.ControlText;
+        	this.turn.Location = new System.Drawing.Point(262, 9);
+        	this.turn.Name = "turn";
+        	this.turn.Size = new System.Drawing.Size(185, 23);
+        	this.turn.TabIndex = 15;
+        	// 
         	// Client_Form
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         	this.ClientSize = new System.Drawing.Size(716, 477);
+        	this.Controls.Add(this.turn);
         	this.Controls.Add(this.m_startGame);
         	this.Controls.Add(this.m_opponentBoard);
         	this.Controls.Add(this.m_submarineHanger);
@@ -143,6 +155,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.Label turn;
         private System.Windows.Forms.Button m_startGame;
         private Sub_Marine_Client.RepositoryGridPanel m_submarineHanger;
         private Sub_Marine_Client.GameGridPanel m_opponentBoard;
