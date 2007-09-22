@@ -293,6 +293,8 @@ namespace Sub_Marine_Client
         	this.State = TileState.Empty;
         	m_upperLayerImage.Image = null;
         	m_upperLayerImage.Hide();
+        	this.Clickable = false;
+        	this.Dragable = false;
         }
         
         public int getTileNumber()

@@ -226,7 +226,7 @@ namespace Sub_Marine_Server
 		if (m_Player[pnum]!=null)
 		{
 			m_Player[pnum].output.Write(str);
-			m_logger(string.Format("data was sent to player {0}", pnum));
+			m_logger(string.Format("data was sent to player {0} " + str, pnum));
 			return true;
 		}
 		else
