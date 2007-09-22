@@ -119,10 +119,6 @@ namespace Sub_Marine_Client
 					
 				}
 			}
-			else //If a players asks to play even when it is not his turn
-			{
-				MessageBox.Show("It is not you'r turn");
-			}
 		}
 
 		
