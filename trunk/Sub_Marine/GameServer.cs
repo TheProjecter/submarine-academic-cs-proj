@@ -113,181 +113,182 @@ namespace Sub_Marine_Server
 					handleData(str);
 					if (pnum == 0){
 						send(str,1);
-						if (str.StartsWith("HI:") || str.StartsWith("MI:"))
-						changePlayer();
 					}
 					else
 					{
 						send(str,0);
-						if (str.StartsWith("HI:") || str.StartsWith("MI:"))
-						changePlayer();
 					}
 				}
 				else
 				{
-					if (str.StartsWith("GU"))
-					send(str,aPlayer); //It will always send to aplayer the data
-					else
+					if (str.StartsWith("HI") || str.StartsWith("MI"))
 					{
+						send(str,aPlayer); //I will always send to aplayer. it
+						changePlayer(); //After sending data switch player
+						
+					}
+					else {
 						send("nut",pnum);
 						m_logger(string.Format("Player {0} tried to move while it was not it's turn",pnum));
 					}
 				}
 			}
-		}
-		private void handleData(String str)
-		{
-			r_Command(str);
+
 		}
 
-		private void startListen()
-		{
-			try
-			{
-				listener.Start();
-			}
+	private void handleData(String str)
+	{
+		r_Command(str);
+	}
 
-			catch (ArgumentOutOfRangeException)
-			{
-				m_logger("caught ArgumentOutOfRangeException");
-			}
-			catch (SocketException)
-			{
-				m_logger("caught SocketException");
-			}
-			catch (InvalidOperationException)
-			{
-				m_logger("caught InvalidOperationException");
-			}
-		}
-		private void init(int pnum)
+	private void startListen()
+	{
+		try
 		{
-			try
-			{
-				Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-				m_Player[pnum].connection = listener.AcceptSocket();
-				m_logger(string.Format("Player {0} is connected",pnum));
-			}
-			catch (ObjectDisposedException)
-			{
-				m_logger("caught ObjectDisposedException");
-			}
-			catch (InvalidOperationException)
-			{
-				m_logger("caught InvalidOperationException");
-			}
-			catch (SocketException)
-			{
-				m_logger("caught SocketException");
-			}
-		}
-		public void stop()
-		{   try{
-				listener.Stop();
-				m_logger("Server stopped");
-			}
-			catch (ArgumentNullException)
-			{
-				m_logger("caught ArgumentNullException");
-			}
-			if (reacive_t[0] != null)
-			{
-				reacive_t[0].Abort();
-				reacive_t[0] = null;
-			}
-			if (reacive_t[1] != null)
-			{
-				reacive_t[1].Abort();
-				reacive_t[1] = null;
-			}
-			aPlayer = -1; //Reset game
-			connectionIsUp=false;
-		}
-		public void start()
-		{
-			try
-			{
-				//	while (serverIsUp)
-				//	{
-				//Need to add socket expection if a client died not at the end
-				startListen();
-				startPlayers();
-				m_logger("Commencing game");
-
-			}
-			catch (ThreadAbortException)
-			{
-				
-			}
-		}
-		private bool send(string str ,int pnum)
-		{
-			if (m_Player[pnum]!=null)
-			{
-				m_Player[pnum].output.Write(str);
-				m_logger(string.Format("data was sent to player {0}", pnum));
-				return true;
-			}
-			else
-				return false;
-		}
-		private void changePlayer()
-		{
-			if (aPlayer==0)
-			{
-				aPlayer=1;
-				send("ut",1);
-				send("nut",0);
-			}
-			else
-				if (aPlayer==1)
-			{
-				aPlayer=0;
-				send("ut",0);
-				send("nut",1);
-			}
+			listener.Start();
 		}
 
-		private void startPlayers()
+		catch (ArgumentOutOfRangeException)
 		{
-			for (aPlayer=0;aPlayer<NPLAYER;aPlayer++)
-			{
-				init(aPlayer);
-				m_Player[aPlayer].setSocketStream();
-				reacive_t[aPlayer] = new Thread((onDataRecieved));
-				reacive_t[aPlayer].IsBackground = true;
-			}
-			connectionIsUp = true;
-			aPlayer=0;
-			reacive_t[0].Start(0);
-			reacive_t[1].Start(1);
-			m_logger("2 players have been connected successfully");
+			m_logger("caught ArgumentOutOfRangeException");
 		}
-		private void stopPlayer(int pnum)
+		catch (SocketException)
 		{
-			m_Player[pnum].clearUser();
-			reacive_t[pnum]=null;
+			m_logger("caught SocketException");
 		}
-		private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
+		catch (InvalidOperationException)
 		{
-			init(pnum);
-			m_Player[pnum].setSocketStream();
-			reacive_t[pnum] = new Thread((onDataRecieved));
-			reacive_t[pnum].IsBackground = true;
-			reacive_t[pnum].Start(pnum);
-		}
-		private void limitConnection()
-		{
-			Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-			//while(1) //it should be written with throw expection
-			if (m_Player[0].isConnected() && m_Player[1].isConnected())
-			{
-				connection = listener.AcceptSocket();
-				connection.Close();
-				
-			}
+			m_logger("caught InvalidOperationException");
 		}
 	}
+	private void init(int pnum)
+	{
+		try
+		{
+			Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+			m_Player[pnum].connection = listener.AcceptSocket();
+			m_logger(string.Format("Player {0} is connected",pnum));
+		}
+		catch (ObjectDisposedException)
+		{
+			m_logger("caught ObjectDisposedException");
+		}
+		catch (InvalidOperationException)
+		{
+			m_logger("caught InvalidOperationException");
+		}
+		catch (SocketException)
+		{
+			m_logger("caught SocketException");
+		}
+	}
+	public void stop()
+	{   try{
+			listener.Stop();
+			m_logger("Server stopped");
+		}
+		catch (ArgumentNullException)
+		{
+			m_logger("caught ArgumentNullException");
+		}
+		if (reacive_t[0] != null)
+		{
+			reacive_t[0].Abort();
+			reacive_t[0] = null;
+		}
+		if (reacive_t[1] != null)
+		{
+			reacive_t[1].Abort();
+			reacive_t[1] = null;
+		}
+		aPlayer = -1; //Reset game
+		connectionIsUp=false;
+	}
+	public void start()
+	{
+		try
+		{
+			//	while (serverIsUp)
+			//	{
+			//Need to add socket expection if a client died not at the end
+			startListen();
+			startPlayers();
+			m_logger("Commencing game");
+
+		}
+		catch (ThreadAbortException)
+		{
+			
+		}
+	}
+	private bool send(string str ,int pnum)
+	{
+		if (m_Player[pnum]!=null)
+		{
+			m_Player[pnum].output.Write(str);
+			m_logger(string.Format("data was sent to player {0}", pnum));
+			return true;
+		}
+		else
+			return false;
+	}
+	private void changePlayer()
+	{
+		if (aPlayer==0)
+		{
+			aPlayer=1;
+			send("ut",1);
+			send("nut",0);
+		}
+		else
+			if (aPlayer==1)
+		{
+			aPlayer=0;
+			send("ut",0);
+			send("nut",1);
+		}
+	}
+
+	private void startPlayers()
+	{
+		for (aPlayer=0;aPlayer<NPLAYER;aPlayer++)
+		{
+			init(aPlayer);
+			m_Player[aPlayer].setSocketStream();
+			reacive_t[aPlayer] = new Thread((onDataRecieved));
+			reacive_t[aPlayer].IsBackground = true;
+		}
+		connectionIsUp = true;
+		aPlayer=0;
+		reacive_t[0].Start(0);
+		reacive_t[1].Start(1);
+		m_logger("2 players have been connected successfully");
+	}
+	private void stopPlayer(int pnum)
+	{
+		m_Player[pnum].clearUser();
+		reacive_t[pnum]=null;
+	}
+	private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
+	{
+		init(pnum);
+		m_Player[pnum].setSocketStream();
+		reacive_t[pnum] = new Thread((onDataRecieved));
+		reacive_t[pnum].IsBackground = true;
+		reacive_t[pnum].Start(pnum);
+	}
+	private void limitConnection()
+	{
+		Socket connection = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+		//while(1) //it should be written with throw expection
+		if (m_Player[0].isConnected() && m_Player[1].isConnected())
+		{
+			connection = listener.AcceptSocket();
+			connection.Close();
+			
+		}
+	}
+}
 }
 
 
