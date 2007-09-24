@@ -158,10 +158,7 @@ namespace Sub_Marine_Client
 						if (isGameLost()==true)
 						{
 							sendData(DataType.GOVER,"");
-							MessageBox.Show(this,"Game Over, you lose!",
-					                "Game Over",
-					                MessageBoxButtons.OK,
-					                MessageBoxIcon.Hand);
+							displayGameOverMessageBox("Game Over, you lose!");
 							resetGame();
 						}
 					}
@@ -174,14 +171,26 @@ namespace Sub_Marine_Client
 			else if (str.StartsWith(types[3].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
 			{
 				//Game Over event
-				MessageBox.Show(this,"Game Over, you won!",
-				                "Game Over",
-				                MessageBoxButtons.OK,
-				                MessageBoxIcon.Exclamation);
+				displayGameOverMessageBox("Game Over, you won!");
 				resetGame();
 			}
 		}
 
+		delegate void DisplayMessageBoxDelegate(string msg);
+		
+		private void displayGameOverMessageBox(string msg)
+		{
+			if (this.InvokeRequired)
+			{
+				BeginInvoke(new DisplayMessageBoxDelegate(displayGameOverMessageBox),new object[] {msg});
+				return;
+			}
+			MessageBox.Show(this,msg,
+				                "Game Over",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Exclamation);
+		}
+		
 		/// <summary>
 		/// return true if the player lost the game, false otherwise
 		/// </summary>
