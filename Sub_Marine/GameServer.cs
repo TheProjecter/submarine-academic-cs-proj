@@ -16,7 +16,6 @@ namespace Sub_Marine_Server
 		const int NPLAYER = 2; //Number of players
 		//public AsyncCallback pfnWorkerCallBack; //Async Callback
 		private TcpListener listener; // listen for client connection
-		private string m_IP;
 		private int m_port;
 		private Thread[] reacive_t;
 		private Thread connection_t; //Reavice and send data thread
@@ -28,7 +27,11 @@ namespace Sub_Marine_Server
 		Globals.LoggerDelegate m_logger = null;
 		public GameServer(int port, Globals.LoggerDelegate logger)
 		{
-			m_IP = "127.0.0.1";
+	    IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+        IPAddress ipAddress = ipHostInfo.AddressList[1];
+        IPEndPoint localEndPoint = new IPEndPoint(ipAddress, 11000);
+        MessageBox.Show(ipAddress.ToString());
+
 			m_port = port;
 			m_logger = logger;
 			m_Player = new Player[NPLAYER];
@@ -41,7 +44,7 @@ namespace Sub_Marine_Server
 			
 			try
 			{
-				listener = new TcpListener(IPAddress.Parse(m_IP), m_port); //listner
+				listener = new TcpListener(ipAddress, m_port); //listner
 			}
 			catch (ArgumentNullException)
 			{
@@ -56,6 +59,7 @@ namespace Sub_Marine_Server
 		private void waitForSubs(int pnum)
 		{
 			
+			try{
 			while (!m_Player[pnum].subInPlace) {
 			string str = m_Player[pnum].input.ReadString(); //need to suround
 			m_logger(string.Format("data recieved from player {0}:{1}",pnum, str));
@@ -63,6 +67,14 @@ namespace Sub_Marine_Server
 			{
 				m_Player[pnum].subInPlace = true;
 			}
+			}
+			}
+			catch (ObjectDisposedException)
+				{
+			}
+			catch (IOException)
+			{
+				
 			}
 		}
 		private void waitForopSubs(int pnum)
