@@ -30,7 +30,7 @@ namespace Sub_Marine_Client
 			m_port = port;
 			try
 			{
-				connection = new TcpClient("localhost", port);
+				connection = new TcpClient(ip, port);
 				stream = connection.GetStream();
 				output = new BinaryWriter(stream);
 				input = new BinaryReader(stream);
