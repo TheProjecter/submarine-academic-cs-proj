@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Net;
 
 namespace Sub_Marine_Client
 {
@@ -13,7 +14,7 @@ namespace Sub_Marine_Client
 	{
 		private Thread init = null;
 		private GameClient game;
-		public enum DataType {HIT, MISS, GUESS};
+		public enum DataType {HIT, MISS, GUESS, GOVER};
 		private const int NUMBER_OF_CHARS_IN_HEADER = 2;
 		
 		public Client_Form()
@@ -38,16 +39,27 @@ namespace Sub_Marine_Client
 				{
 					throw new ArgumentException();
 				}
-				game = new GameClient(ip.Text, portNumber);
-				game.r_Command = reaciveEvent;
-				init = new Thread(new ThreadStart(game.start));
-				init.Start();
-				Connect.Enabled = false;
-				changeBoardstatus(true);
+				IPAddress ipAdder = new IPAddress(0);
+				if(IPAddress.TryParse(ip.Text,out ipAdder)==true)
+				{
+					game = new GameClient(ip.Text, portNumber);
+					game.r_Command = reaciveEvent;
+					init = new Thread(new ThreadStart(game.start));
+					init.Start();
+					Connect.Enabled = false;
+					changeBoardstatus(true);
+				}
+				else
+				{
+					MessageBox.Show("Bad IP Address. Please choose a different ip",
+				                "Error",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
+				}
 			}
 			catch (ArgumentException)
 			{
-				MessageBox.Show("Port number is invalid. Please choose a different port",
+				MessageBox.Show("Port number is invalid or empty. Please choose a different port",
 				                "Error",
 				                MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);
@@ -61,29 +73,39 @@ namespace Sub_Marine_Client
 			string header = DataType.GetName(DataTypes, type).Substring(0,NUMBER_OF_CHARS_IN_HEADER);
 			game.SendData(header+data);
 		}
+		delegate void EditTextBoxDelegate(string msg);
 		
+		private void editTurnTextBox(string msg)
+		{
+			if (this.InvokeRequired)
+			{
+				this.BeginInvoke(new EditTextBoxDelegate(editTurnTextBox), new object[] {msg});
+				return;
+			}
+			turn.Text = msg;
+		}
 		private void reaciveEvent(string str)
 		{
 			if (str=="ut")
 			{
-				turn.Text= "It is your's turn";
+				editTurnTextBox("It is your's turn");
 				changeBoardstatus(true);
 				return;
 			}
 			if(str=="nut")
 			{
-				turn.Text="It is not you'r turn";
+				editTurnTextBox("It is not you'r turn");
 				changeBoardstatus(false);
 				return;
 			}
 			if (str=="wj")
 			{
-				turn.Text = "Waiting for other \n player to join";
+				editTurnTextBox("Waiting for other \n player to join");
 				return;
 			}
 			if (str=="WA")
 			{
-				turn.Text = "Waiting for other player \n to  arrange his subs";
+				editTurnTextBox("Waiting for other player \n to  arrange his subs");
 				return;
 			}
 			
@@ -133,6 +155,15 @@ namespace Sub_Marine_Client
 					{
 						m_myBoard.markTile(tileNumber,Tile.TileState.Hit);
 						sendData(DataType.HIT, tileNumber.ToString());
+						if (isGameLost()==true)
+						{
+							sendData(DataType.GOVER,"");
+							MessageBox.Show(this,"Game Over, you lose!",
+					                "Game Over",
+					                MessageBoxButtons.OK,
+					                MessageBoxIcon.Hand);
+							resetGame();
+						}
 					}
 				}
 				catch (ArgumentException)
@@ -142,6 +173,24 @@ namespace Sub_Marine_Client
 			}
 		}
 
+		/// <summary>
+		/// return true if the player lost the game, false otherwise
+		/// </summary>
+		/// <returns></returns>
+		private bool isGameLost()
+		{
+			bool rc = false;
+			
+			//if the player suffered 20 hits (the sum of tiles of all of the subs)
+			//then he/she lost
+			if (m_myBoard.countTilesOfState(Tile.TileState.Hit) == 20)
+			{
+				rc = true;
+			}
+			return rc;
+		}
+		
+		
 		void Client_FormLoad(object sender, EventArgs e)
 		{
 			resetGame();
@@ -160,17 +209,21 @@ namespace Sub_Marine_Client
 			//opponent reset
 			m_opponentBoard.resetBoard();
 			m_opponentBoard.setParent(this);
-			m_submarineHanger.setAllTilesClickable(false);
+			m_opponentBoard.setAllTilesClickable(false);
 			
 			//my reset
-			m_opponentBoard.resetBoard();
+			m_myBoard.resetBoard();
 			m_myBoard.setAllTilesDragable(true);
+			
+			m_startGame.Hide();
 		}
 		
 		public void repositoryIsEmpty()
 		{
 			m_submarineHanger.Hide();
 			m_startGame.Show();
+			m_startGame.Text = "My submarines are all in place!        Give me a worthy opponent to crush!";
+			m_startGame.Enabled = true;
 			game.SendData("SU");
 			m_submarineHanger.setAllTilesDragable(false);
 			m_myBoard.setAllTilesDragable(false);
