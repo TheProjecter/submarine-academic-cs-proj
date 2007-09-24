@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+        	this.components = new System.ComponentModel.Container();
         	this.lunchServer = new System.Windows.Forms.Button();
         	this.port = new System.Windows.Forms.TextBox();
         	this.label3 = new System.Windows.Forms.Label();
         	this.m_loggerOutput = new System.Windows.Forms.ListBox();
+        	this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
         	this.SuspendLayout();
         	// 
         	// lunchServer
@@ -84,6 +86,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ListBox m_loggerOutput;
 
         #endregion
