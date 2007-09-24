@@ -76,11 +76,11 @@ namespace Sub_Marine_Server
 				catch (IOException)
 				{
 					connectionIsUp = false;
-					if (m_Player[0].connection!=null && !m_Player[0].connection.Connected)
+					if (m_Player[0].connection!=null && !m_Player[0].isConnected())
 					{
 						m_logger("player 0 was disconnected");
 						m_Player[0].clearUser();
-						if (m_Player[1]!=null)
+						if (m_Player[1]!=null && m_Player[1].isConnected())
 						{
 							m_Player[0] = new Player();
 							reacive_t[0] = null;
@@ -92,11 +92,11 @@ namespace Sub_Marine_Server
 							startPlayers();
 						}
 					}
-					if (m_Player[1].connection!=null  && !m_Player[1].connection.Connected)
+					    if (m_Player[1].connection!=null  && !m_Player[1].isConnected())
 					{
 						m_logger(string.Format("player 1 was disconnected"));
 						m_Player[1].clearUser();
-						if (m_Player[0]!=null)
+						if (m_Player[0]!=null && m_Player[0].isConnected() )
 						{
 							m_Player[1] = new Player();
 							reacive_t[1] = null;
@@ -130,6 +130,7 @@ namespace Sub_Marine_Server
 						changePlayer(); //After sending data switch player
 						
 					}
+					else
 					if (str.StartsWith("SU"))
 					{
 						m_Player[pnum].subInPlace = true;
@@ -258,7 +259,7 @@ namespace Sub_Marine_Server
 		}
 		private bool onlyPlayer()
 		{
-			if ((m_Player[0].connection!=null && !m_Player[0].connection.Connected) &&m_Player[1].connection!=null && !m_Player[1].connection.Connected)
+			if ((m_Player[0].connection!=null && !m_Player[0].connection.Connected) && (m_Player[1].connection!=null && !m_Player[1].connection.Connected))
 				return false; //I'm only player
 			else
 				return true; //I'm only player
@@ -282,8 +283,8 @@ namespace Sub_Marine_Server
 		}
 		private void sendInitStatus()
 		{
-			send("ut",0);
-			send ("nut",1);
+			send("WA",0);
+			send ("WA",1);
 		}
 		private void stopPlayer(int pnum)
 		{
@@ -295,7 +296,7 @@ namespace Sub_Marine_Server
 			if (pnum==0)
 				send("wj",1);
 			else
-				send("wj",2);
+				send("wj",0);
 			init(pnum);
 			m_Player[pnum].setSocketStream();
 			m_Player[pnum].subInPlace = false;

@@ -22,7 +22,7 @@ namespace Sub_Marine_Server
 	/// </summary>
 	public class Player
 	{
-		public Socket connection; // Socket for accepting a connection
+		public Socket connection = null; // Socket for accepting a connection
 		public NetworkStream socketStream; // network data stream
 	    public BinaryWriter output; //Out buffer
         public BinaryReader input;  //in buffer
@@ -49,7 +49,6 @@ namespace Sub_Marine_Server
             output = null;
             connection = null;
             socketStream = null;
-            subInPlace = false;
         }
         public bool isConnected()
         {
