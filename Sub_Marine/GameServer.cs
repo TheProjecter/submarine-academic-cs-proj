@@ -133,13 +133,22 @@ namespace Sub_Marine_Server
 					else if (str.StartsWith("SU"))
 					{
 						m_Player[pnum].subInPlace = true;
+						int otherPlayer = 0;
 						if (pnum ==0)
 						{
-							send("ut",0);
+							otherPlayer=1;
 						}
-						else
+						if (m_Player[otherPlayer].isConnected())
 						{
-							send("nut",1);
+							if ( m_Player[otherPlayer].subInPlace==false)
+							{
+								send("WA",otherPlayer);
+							}
+							else
+							{
+								send("ut",0);
+								send("nut",1);
+							}
 						}
 					}
 					else if (str.StartsWith("GO"))
