@@ -130,14 +130,28 @@ namespace Sub_Marine_Server
 						changePlayer(); //After sending data switch player
 						
 					}
-					else
-					if (str.StartsWith("SU"))
+					else if (str.StartsWith("SU"))
 					{
 						m_Player[pnum].subInPlace = true;
 						if (pnum ==0)
+						{
 							send("ut",0);
-								else
+						}
+						else
+						{
 							send("nut",1);
+						}
+					}
+					else if (str.StartsWith("GO"))
+					{
+						if (pnum ==0)
+						{
+							send("GO",1);
+						}
+						else
+						{
+							send("GO",0);
+						};
 					}
 					else 
 					{

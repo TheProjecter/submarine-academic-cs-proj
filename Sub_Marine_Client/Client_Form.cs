@@ -171,6 +171,15 @@ namespace Sub_Marine_Client
 					
 				}
 			}
+			else if (str.StartsWith(types[3].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+			{
+				//Game Over event
+				MessageBox.Show(this,"Game Over, you won!",
+				                "Game Over",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Exclamation);
+				resetGame();
+			}
 		}
 
 		/// <summary>
