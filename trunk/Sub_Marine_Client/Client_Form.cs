@@ -250,25 +250,17 @@ namespace Sub_Marine_Client
 			m_startGame.Text = "My submarines are all in place!        Give me a worthy opponent to crush!";
 			m_startGame.Enabled = true;
 			game.SendData("SU");
-			m_submarineHanger.setAllTilesDragable(false);
-			m_myBoard.setAllTilesDragable(false);
 		}
 		
 		void M_startGameClick(object sender, EventArgs e)
-		{
-			//TODO check if player 1
-			
+		{		
 			m_startGame.Text = "Waiting for the worthy opponent to connect...";
 			m_startGame.Enabled = false;
-			
-			//TODO wait for other side
 			
 			m_startGame.Text = "Fight for your life!";
 			
 			m_myBoard.setAllTilesDragable(false);
 			m_opponentBoard.setAllTilesClickable(true);
-			
-			//TODO start game
 		}
 		
 		void Client_FormFormClosing(object sender, FormClosingEventArgs e)
