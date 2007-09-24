@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+        	this.components = new System.ComponentModel.Container();
         	this.ip = new System.Windows.Forms.TextBox();
         	this.port = new System.Windows.Forms.TextBox();
         	this.label2 = new System.Windows.Forms.Label();
@@ -40,6 +41,7 @@
         	this.turn = new System.Windows.Forms.Label();
         	this.label1 = new System.Windows.Forms.Label();
         	this.label4 = new System.Windows.Forms.Label();
+        	this.m_clientTooltip = new System.Windows.Forms.ToolTip(this.components);
         	this.SuspendLayout();
         	// 
         	// ip
@@ -48,6 +50,7 @@
         	this.ip.Name = "ip";
         	this.ip.Size = new System.Drawing.Size(72, 20);
         	this.ip.TabIndex = 4;
+        	this.m_clientTooltip.SetToolTip(this.ip, "IP Address");
         	// 
         	// port
         	// 
@@ -55,6 +58,7 @@
         	this.port.Name = "port";
         	this.port.Size = new System.Drawing.Size(69, 20);
         	this.port.TabIndex = 5;
+        	this.m_clientTooltip.SetToolTip(this.port, "Port Number");
         	// 
         	// label2
         	// 
@@ -81,6 +85,7 @@
         	this.Connect.Size = new System.Drawing.Size(66, 28);
         	this.Connect.TabIndex = 8;
         	this.Connect.Text = "Connect";
+        	this.m_clientTooltip.SetToolTip(this.Connect, "Connect to the server");
         	this.Connect.UseVisualStyleBackColor = true;
         	this.Connect.Click += new System.EventHandler(this.Connect_Click);
         	// 
@@ -91,6 +96,7 @@
         	this.m_myBoard.Name = "m_myBoard";
         	this.m_myBoard.Size = new System.Drawing.Size(349, 378);
         	this.m_myBoard.TabIndex = 11;
+        	this.m_clientTooltip.SetToolTip(this.m_myBoard, "My board Grid");
         	// 
         	// m_submarineHanger
         	// 
@@ -100,6 +106,7 @@
         	this.m_submarineHanger.Name = "m_submarineHanger";
         	this.m_submarineHanger.Size = new System.Drawing.Size(318, 65);
         	this.m_submarineHanger.TabIndex = 12;
+        	this.m_clientTooltip.SetToolTip(this.m_submarineHanger, "Submarine hanger");
         	// 
         	// m_opponentBoard
         	// 
@@ -108,6 +115,7 @@
         	this.m_opponentBoard.Name = "m_opponentBoard";
         	this.m_opponentBoard.Size = new System.Drawing.Size(346, 378);
         	this.m_opponentBoard.TabIndex = 13;
+        	this.m_clientTooltip.SetToolTip(this.m_opponentBoard, "Opponent\'s Board Grid");
         	// 
         	// m_startGame
         	// 
@@ -119,6 +127,7 @@
         	this.m_startGame.TabIndex = 14;
         	this.m_startGame.Text = "My submarines are all in place!        Give me a worthy opponent to crush!";
         	this.m_startGame.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+        	this.m_clientTooltip.SetToolTip(this.m_startGame, "Start the game");
         	this.m_startGame.UseVisualStyleBackColor = true;
         	this.m_startGame.Visible = false;
         	this.m_startGame.Click += new System.EventHandler(this.M_startGameClick);
@@ -133,6 +142,7 @@
         	this.turn.Name = "turn";
         	this.turn.Size = new System.Drawing.Size(243, 53);
         	this.turn.TabIndex = 15;
+        	this.m_clientTooltip.SetToolTip(this.turn, "Current game status");
         	// 
         	// label1
         	// 
@@ -180,6 +190,7 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.ToolTip m_clientTooltip;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label turn;
