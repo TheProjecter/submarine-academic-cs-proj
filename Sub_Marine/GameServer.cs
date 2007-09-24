@@ -134,6 +134,10 @@ namespace Sub_Marine_Server
 					if (str.StartsWith("SU"))
 					{
 						m_Player[pnum].subInPlace = true;
+						if (pnum ==0)
+							send("ut",0);
+								else
+							send("nut",1);
 					}
 					else 
 					{
