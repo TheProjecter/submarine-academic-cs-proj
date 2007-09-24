@@ -50,6 +50,10 @@ namespace Sub_Marine_Client
     			}
     			m_state = value;
         	}
+        	get
+        	{
+        		return m_state;
+        	}
         }
         
         public bool Dragable
@@ -287,6 +291,7 @@ namespace Sub_Marine_Client
         public void resetTile()
         {
         	this.BackgroundImage = null;
+        	this.BackColor = Color.Black;
         	m_image = null;
         	this.Dragable = false;
         	this.Clickable = true;
@@ -295,6 +300,7 @@ namespace Sub_Marine_Client
         	m_upperLayerImage.Hide();
         	this.Clickable = false;
         	this.Dragable = false;
+        	this.Size = new Size(TILE_EDGE_LENGTH,TILE_EDGE_LENGTH);
         }
         
         public int getTileNumber()
