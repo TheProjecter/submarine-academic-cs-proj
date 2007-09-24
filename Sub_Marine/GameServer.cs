@@ -28,7 +28,7 @@ namespace Sub_Marine_Server
 		Globals.LoggerDelegate m_logger = null;
 		public GameServer(int port, Globals.LoggerDelegate logger)
 		{
-            m_IP = "0.0.0.0";
+			m_IP = "0.0.0.0";
 			m_port = port;
 			m_logger = logger;
 			m_Player = new Player[NPLAYER];
@@ -52,26 +52,60 @@ namespace Sub_Marine_Server
 				m_logger("caught ArgumentOutOfRangeException");
 			}
 		}
-	
+		
 		private void waitForSubs(int pnum)
 		{
 			
 			try{
-			while (!m_Player[pnum].subInPlace) {
-			string str = m_Player[pnum].input.ReadString(); //need to suround
-			m_logger(string.Format("data recieved from player {0}:{1}",pnum, str));
-			if (str=="SU")
-			{
-				m_Player[pnum].subInPlace = true;
-			}
-			}
+				while (!m_Player[pnum].subInPlace) {
+					string str = m_Player[pnum].input.ReadString(); //need to suround
+					m_logger(string.Format("data recieved from player {0}:{1}",pnum, str));
+					if (str=="SU")
+					{
+						m_Player[pnum].subInPlace = true;
+					}
+				}
 			}
 			catch (ObjectDisposedException)
-				{
+			{
 			}
 			catch (IOException)
 			{
-				
+				connectionIsUp = false;
+				if (m_Player[0].connection!=null && !m_Player[0].connection.Connected)
+				{
+					m_logger("player 0 was disconnected");
+					m_Player[0].clearUser();
+					if (m_Player[1]!=null)
+					{
+						m_Player[0] = new Player();
+						reacive_t[0] = null;
+						recover(0);
+					}
+					else
+					{
+						m_logger("both players disconnected");
+						startPlayers();
+					}
+				}
+				if (m_Player[1].connection!=null  && !m_Player[1].connection.Connected)
+				{
+					m_logger(string.Format("player 1 was disconnected"));
+					m_Player[1].clearUser();
+					if (m_Player[0]!=null)
+					{
+						m_Player[1] = new Player();
+						reacive_t[1] = null;
+						recover(1);
+					}
+					else
+					{
+						m_logger("both players disconnected");
+						startPlayers();
+					}
+					
+				}
+				return;
 			}
 		}
 		private void waitForopSubs(int pnum)
@@ -83,6 +117,7 @@ namespace Sub_Marine_Server
 		}
 		private void onDataRecieved(object data)
 		{
+			
 			int pnum = int.Parse(data.ToString());
 			String str;
 			connectionIsUp = true;
