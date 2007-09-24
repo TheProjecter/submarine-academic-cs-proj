@@ -19,8 +19,13 @@ namespace Sub_Marine_Client
 		public Client_Form()
 		{
 			InitializeComponent();
+
 		}
 
+		private void changeBoardstatus(bool status)
+		{
+			m_opponentBoard.setAllTilesClickable(status);
+		}
 
 		private void Connect_Click(object sender, EventArgs e)
 		{
@@ -38,6 +43,7 @@ namespace Sub_Marine_Client
 				init = new Thread(new ThreadStart(game.start));
 				init.Start();
 				Connect.Enabled = false;
+				changeBoardstatus(true);
 			}
 			catch (ArgumentException)
 			{
@@ -46,6 +52,7 @@ namespace Sub_Marine_Client
 				                MessageBoxButtons.OK,
 				                MessageBoxIcon.Error);
 			}
+			m_myBoard.setAllTilesDragable(true);
 		}
 
 		public void sendData(DataType type, string data)
@@ -60,12 +67,21 @@ namespace Sub_Marine_Client
 			if (str=="ut")
 			{
 				turn.Text= "It is your's turn";
+				changeBoardstatus(true);
 				return;
 			}
 			if(str=="nut")
 			{
 				turn.Text="It is not you'r turn";
+				changeBoardstatus(false);
+				return;
 			}
+			if (str=="wj")
+			{
+				turn.Text = "Waiting for other player to join";
+				return;
+			}
+			
 			Type DataTypes = typeof(DataType);
 			string[] types = DataType.GetNames(DataTypes);
 			if (str.StartsWith(types[0].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
@@ -121,10 +137,11 @@ namespace Sub_Marine_Client
 			}
 		}
 
-		
 		void Client_FormLoad(object sender, EventArgs e)
 		{
 			resetGame();
+			changeBoardstatus(false);
+			m_myBoard.setAllTilesDragable(false);
 		}
 		
 		public void resetGame()
@@ -137,13 +154,11 @@ namespace Sub_Marine_Client
 			
 			//opponent reset
 			m_opponentBoard.resetBoard();
-			m_opponentBoard.Text = "Opponent Board";
 			m_opponentBoard.setParent(this);
 			m_submarineHanger.setAllTilesClickable(false);
 			
 			//my reset
 			m_opponentBoard.resetBoard();
-			m_myBoard.Text = "My Board";
 			m_myBoard.setAllTilesDragable(true);
 		}
 		
@@ -151,6 +166,9 @@ namespace Sub_Marine_Client
 		{
 			m_submarineHanger.Hide();
 			m_startGame.Show();
+			game.SendData("SU");
+			m_submarineHanger.setAllTilesDragable(false);
+			m_myBoard.setAllTilesDragable(false);
 		}
 		
 		void M_startGameClick(object sender, EventArgs e)
@@ -179,7 +197,7 @@ namespace Sub_Marine_Client
 		}
 		
 		
-        
- 
+		
+		
 	}
 }

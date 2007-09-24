@@ -26,6 +26,7 @@ namespace Sub_Marine_Server
 		public NetworkStream socketStream; // network data stream
 	    public BinaryWriter output; //Out buffer
         public BinaryReader input;  //in buffer
+        public bool subInPlace = false;
         public Player()
         {
         }

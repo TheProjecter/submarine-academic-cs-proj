@@ -38,18 +38,20 @@
         	this.m_opponentBoard = new Sub_Marine_Client.GameGridPanel();
         	this.m_startGame = new System.Windows.Forms.Button();
         	this.turn = new System.Windows.Forms.Label();
+        	this.label1 = new System.Windows.Forms.Label();
+        	this.label4 = new System.Windows.Forms.Label();
         	this.SuspendLayout();
         	// 
         	// ip
         	// 
-        	this.ip.Location = new System.Drawing.Point(425, 427);
+        	this.ip.Location = new System.Drawing.Point(493, 421);
         	this.ip.Name = "ip";
         	this.ip.Size = new System.Drawing.Size(72, 20);
         	this.ip.TabIndex = 4;
         	// 
         	// port
         	// 
-        	this.port.Location = new System.Drawing.Point(503, 427);
+        	this.port.Location = new System.Drawing.Point(571, 421);
         	this.port.Name = "port";
         	this.port.Size = new System.Drawing.Size(69, 20);
         	this.port.TabIndex = 5;
@@ -57,7 +59,7 @@
         	// label2
         	// 
         	this.label2.AutoSize = true;
-        	this.label2.Location = new System.Drawing.Point(441, 404);
+        	this.label2.Location = new System.Drawing.Point(509, 398);
         	this.label2.Name = "label2";
         	this.label2.Size = new System.Drawing.Size(17, 13);
         	this.label2.TabIndex = 6;
@@ -66,7 +68,7 @@
         	// label3
         	// 
         	this.label3.AutoSize = true;
-        	this.label3.Location = new System.Drawing.Point(517, 403);
+        	this.label3.Location = new System.Drawing.Point(585, 397);
         	this.label3.Name = "label3";
         	this.label3.Size = new System.Drawing.Size(26, 13);
         	this.label3.TabIndex = 7;
@@ -74,7 +76,7 @@
         	// 
         	// Connect
         	// 
-        	this.Connect.Location = new System.Drawing.Point(578, 416);
+        	this.Connect.Location = new System.Drawing.Point(646, 416);
         	this.Connect.Name = "Connect";
         	this.Connect.Size = new System.Drawing.Size(66, 28);
         	this.Connect.TabIndex = 8;
@@ -126,16 +128,38 @@
         	this.turn.BackColor = System.Drawing.SystemColors.ActiveBorder;
         	this.turn.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
         	this.turn.ForeColor = System.Drawing.SystemColors.ControlText;
-        	this.turn.Location = new System.Drawing.Point(262, 9);
+        	this.turn.Location = new System.Drawing.Point(236, 4);
         	this.turn.Name = "turn";
-        	this.turn.Size = new System.Drawing.Size(185, 23);
+        	this.turn.Size = new System.Drawing.Size(227, 35);
         	this.turn.TabIndex = 15;
+        	// 
+        	// label1
+        	// 
+        	this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+        	this.label1.Location = new System.Drawing.Point(80, 10);
+        	this.label1.Name = "label1";
+        	this.label1.Size = new System.Drawing.Size(150, 23);
+        	this.label1.TabIndex = 16;
+        	this.label1.Text = "My Board";
+        	this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+        	// 
+        	// label4
+        	// 
+        	this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(177)));
+        	this.label4.Location = new System.Drawing.Point(469, 9);
+        	this.label4.Name = "label4";
+        	this.label4.Size = new System.Drawing.Size(210, 23);
+        	this.label4.TabIndex = 17;
+        	this.label4.Text = "Oponnent\'s  Board";
+        	this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
         	// 
         	// Client_Form
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.ClientSize = new System.Drawing.Size(716, 477);
+        	this.ClientSize = new System.Drawing.Size(723, 486);
+        	this.Controls.Add(this.label4);
+        	this.Controls.Add(this.label1);
         	this.Controls.Add(this.turn);
         	this.Controls.Add(this.m_startGame);
         	this.Controls.Add(this.m_opponentBoard);
@@ -155,6 +179,8 @@
         	this.ResumeLayout(false);
         	this.PerformLayout();
         }
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label turn;
         private System.Windows.Forms.Button m_startGame;
         private Sub_Marine_Client.RepositoryGridPanel m_submarineHanger;
