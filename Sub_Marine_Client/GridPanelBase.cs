@@ -219,5 +219,18 @@ namespace Sub_Marine_Client
 				tile.resetTile();
 			}
 		}
+		
+		public int countTilesOfState(Tile.TileState state)
+		{
+			int rc = 0;
+			foreach(Tile tile in m_tilesList)
+			{
+				if (tile.State == state)
+				{
+					rc++;
+				}
+			}
+			return rc;
+		}
 	}
 }

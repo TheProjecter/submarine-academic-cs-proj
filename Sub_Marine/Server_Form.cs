@@ -33,16 +33,31 @@ namespace Sub_Marine_Server
 
 		private void lunchServer_Click(object sender, EventArgs e)
 		{
-			log(string.Format("Server launched on port {0}", port.Text));
-			lunchServer.Enabled = false;
-			port.Enabled = false;
-			String str = port.Text;
-			int i_port = int.Parse(port.Text);
-			server = new GameServer(i_port,new Globals.LoggerDelegate(log));
-			server.r_Command = data_handler;
-			init = new Thread(new ThreadStart(server.start));// server.start();
-			init.Start();
-			log("Waiting for 2 players to connect");
+			try
+			{
+				String str = port.Text;
+				int i_port = 0; 
+				int.TryParse(port.Text,out i_port);
+				if ( 0 >= i_port || i_port >= 65535 )
+				{
+					throw new ArgumentException();
+				}
+				log(string.Format("Server launched on port {0}", port.Text));
+				lunchServer.Enabled = false;
+				port.Enabled = false;
+				server = new GameServer(i_port,new Globals.LoggerDelegate(log));
+				server.r_Command = data_handler;
+				init = new Thread(new ThreadStart(server.start));// server.start();
+				init.Start();
+				log("Waiting for 2 players to connect");
+			}
+			catch (ArgumentException)
+			{
+				MessageBox.Show("Port number is invalid or empty. Please choose a different port",
+                "Error",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Error);
+			}
 		}
 		public void data_handler(String str)
 		{
