@@ -49,6 +49,7 @@ namespace Sub_Marine_Server
             output = null;
             connection = null;
             socketStream = null;
+            subInPlace = false;
         }
         public bool isConnected()
         {
