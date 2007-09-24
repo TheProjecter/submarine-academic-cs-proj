@@ -207,8 +207,15 @@ namespace Sub_Marine_Client
 			m_myBoard.setAllTilesDragable(false);
 		}
 		
+		public delegate void ResetGameDelegate();
+		
 		public void resetGame()
 		{
+			if(InvokeRequired)
+			{
+				this.BeginInvoke(new ResetGameDelegate(resetGame));
+				return;
+			}
 			//submarine hanger reset
 			m_submarineHanger.resetBoard();
 			m_submarineHanger.addSubs();
