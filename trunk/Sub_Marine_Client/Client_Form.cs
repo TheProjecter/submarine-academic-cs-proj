@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Threading;
+using System.Net;
 
 namespace Sub_Marine_Client
 {
@@ -38,12 +39,23 @@ namespace Sub_Marine_Client
 				{
 					throw new ArgumentException();
 				}
-				game = new GameClient(ip.Text, portNumber);
-				game.r_Command = reaciveEvent;
-				init = new Thread(new ThreadStart(game.start));
-				init.Start();
-				Connect.Enabled = false;
-				changeBoardstatus(true);
+				IPAddress ipAdder = new IPAddress(0);
+				if(IPAddress.TryParse(ip.Text,out ipAdder)==true)
+				{
+					game = new GameClient(ip.Text, portNumber);
+					game.r_Command = reaciveEvent;
+					init = new Thread(new ThreadStart(game.start));
+					init.Start();
+					Connect.Enabled = false;
+					changeBoardstatus(true);
+				}
+				else
+				{
+					MessageBox.Show("Bad IP Address. Please choose a different ip",
+				                "Error",
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Error);
+				}
 			}
 			catch (ArgumentException)
 			{
@@ -61,18 +73,28 @@ namespace Sub_Marine_Client
 			string header = DataType.GetName(DataTypes, type).Substring(0,NUMBER_OF_CHARS_IN_HEADER);
 			game.SendData(header+data);
 		}
+		delegate void EditTextBoxDelegate(string msg);
 		
+		private void editTurnTextBox(string msg)
+		{
+			if (this.InvokeRequired)
+			{
+				this.BeginInvoke(new EditTextBoxDelegate(editTurnTextBox), new object[] {msg});
+				return;
+			}
+			turn.Text = msg;
+		}
 		private void reaciveEvent(string str)
 		{
 			if (str=="ut")
 			{
-				turn.Text= "It is your's turn";
+				editTurnTextBox("It is your's turn");
 				changeBoardstatus(true);
 				return;
 			}
 			if(str=="nut")
 			{
-				turn.Text="It is not you'r turn";
+				editTurnTextBox("It is not you'r turn");
 				changeBoardstatus(false);
 				return;
 			}
