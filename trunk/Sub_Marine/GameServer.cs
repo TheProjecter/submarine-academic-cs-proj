@@ -53,76 +53,13 @@ namespace Sub_Marine_Server
 			}
 		}
 		
-		private void waitForSubs(int pnum)
-		{
-			
-			try{
-				while (!m_Player[pnum].subInPlace) {
-					string str = m_Player[pnum].input.ReadString(); //need to suround
-					m_logger(string.Format("data recieved from player {0}:{1}",pnum, str));
-					if (str=="SU")
-					{
-						m_Player[pnum].subInPlace = true;
-					}
-				}
-			}
-			catch (ObjectDisposedException)
-			{
-			}
-			catch (IOException)
-			{
-				connectionIsUp = false;
-				if (m_Player[0].connection!=null && !m_Player[0].connection.Connected)
-				{
-					m_logger("player 0 was disconnected");
-					m_Player[0].clearUser();
-					if (m_Player[1]!=null)
-					{
-						m_Player[0] = new Player();
-						reacive_t[0] = null;
-						recover(0);
-					}
-					else
-					{
-						m_logger("both players disconnected");
-						startPlayers();
-					}
-				}
-				if (m_Player[1].connection!=null  && !m_Player[1].connection.Connected)
-				{
-					m_logger(string.Format("player 1 was disconnected"));
-					m_Player[1].clearUser();
-					if (m_Player[0]!=null)
-					{
-						m_Player[1] = new Player();
-						reacive_t[1] = null;
-						recover(1);
-					}
-					else
-					{
-						m_logger("both players disconnected");
-						startPlayers();
-					}
-					
-				}
-				return;
-			}
-		}
-		private void waitForopSubs(int pnum)
-		{ //need to write with exeptions
-			if (pnum==0)
-				while (!m_Player[1].subInPlace);
-			else
-				while (!m_Player[0].subInPlace);
-		}
 		private void onDataRecieved(object data)
 		{
 			
 			int pnum = int.Parse(data.ToString());
 			String str;
 			connectionIsUp = true;
-			waitForSubs(pnum);
-			waitForopSubs(pnum);
+
 			while(connectionIsUp)
 			{
 				try
@@ -174,7 +111,7 @@ namespace Sub_Marine_Server
 					}
 					return;
 				}
-				if (str != null & pnum==aPlayer)
+				if (m_Player[pnum].subInPlace && str != null && pnum==aPlayer)
 				{
 					handleData(str);
 					if (pnum == 0){
@@ -193,7 +130,12 @@ namespace Sub_Marine_Server
 						changePlayer(); //After sending data switch player
 						
 					}
-					else {
+					if (str.StartsWith("SU"))
+					{
+						m_Player[pnum].subInPlace = true;
+					}
+					else 
+					{
 						send("nut",pnum);
 						m_logger(string.Format("Player {0} tried to move while it was not it's turn",pnum));
 					}
@@ -332,11 +274,9 @@ namespace Sub_Marine_Server
 					send("wj",0);
 				reacive_t[aPlayer] = new Thread((onDataRecieved));
 				reacive_t[aPlayer].IsBackground = true;
+				reacive_t[aPlayer].Start(aPlayer);
 			}
-			connectionIsUp = true;//Will be reached only when we have to players connectede
 			aPlayer=0;
-			reacive_t[0].Start(0);
-			reacive_t[1].Start(1);
 			sendInitStatus();
 			m_logger("2 players have been connected successfully");
 		}
