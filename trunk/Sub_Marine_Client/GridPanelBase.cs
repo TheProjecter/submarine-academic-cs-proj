@@ -139,15 +139,15 @@ namespace Sub_Marine_Client
 			Tile tile = m_tilesList[tileNumber];
 			bool rc = !tile.isInUse();
 			//check if relevent neighbours are in use
-			if (rc && m_tilesList[tileNumber-1].isInUse() == true && m_tilesList[tileNumber-1].getTileHorizSize()>1)
+			if (rc && tileNumber >= 1 && m_tilesList[tileNumber-1].isInUse() == true && m_tilesList[tileNumber-1].getTileHorizSize()>1)
 			{
 				rc = false;
 			}
-			if (rc && m_tilesList[tileNumber-2].isInUse() == true && m_tilesList[tileNumber-2].getTileHorizSize()>2)
+			if (rc && tileNumber >= 2 && m_tilesList[tileNumber-2].isInUse() == true && m_tilesList[tileNumber-2].getTileHorizSize()>2)
 			{
 				rc = false;
 			}
-			if (rc && m_tilesList[tileNumber-3].isInUse() == true && m_tilesList[tileNumber-3].getTileHorizSize()>3)
+			if (rc && tileNumber >= 3 && m_tilesList[tileNumber-3].isInUse() == true && m_tilesList[tileNumber-3].getTileHorizSize()>3)
 			{
 				rc = false;
 			}
