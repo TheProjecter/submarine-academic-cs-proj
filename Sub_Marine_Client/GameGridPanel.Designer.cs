@@ -159,6 +159,7 @@
         	this.tile1.Location = new System.Drawing.Point(213, 126);
         	this.tile1.Name = "tile1";
         	this.tile1.Size = new System.Drawing.Size(30, 30);
+        	this.tile1.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile1.TabIndex = 0;
         	// 
         	// tile2
@@ -169,6 +170,7 @@
         	this.tile2.Location = new System.Drawing.Point(58, 64);
         	this.tile2.Name = "tile2";
         	this.tile2.Size = new System.Drawing.Size(30, 30);
+        	this.tile2.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile2.TabIndex = 1;
         	// 
         	// tile3
@@ -179,6 +181,7 @@
         	this.tile3.Location = new System.Drawing.Point(89, 64);
         	this.tile3.Name = "tile3";
         	this.tile3.Size = new System.Drawing.Size(30, 30);
+        	this.tile3.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile3.TabIndex = 2;
         	// 
         	// tile4
@@ -189,6 +192,7 @@
         	this.tile4.Location = new System.Drawing.Point(120, 64);
         	this.tile4.Name = "tile4";
         	this.tile4.Size = new System.Drawing.Size(30, 30);
+        	this.tile4.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile4.TabIndex = 3;
         	// 
         	// tile5
@@ -199,6 +203,7 @@
         	this.tile5.Location = new System.Drawing.Point(151, 64);
         	this.tile5.Name = "tile5";
         	this.tile5.Size = new System.Drawing.Size(30, 30);
+        	this.tile5.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile5.TabIndex = 4;
         	// 
         	// tile6
@@ -209,6 +214,7 @@
         	this.tile6.Location = new System.Drawing.Point(182, 64);
         	this.tile6.Name = "tile6";
         	this.tile6.Size = new System.Drawing.Size(30, 30);
+        	this.tile6.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile6.TabIndex = 5;
         	// 
         	// tile7
@@ -219,6 +225,7 @@
         	this.tile7.Location = new System.Drawing.Point(213, 64);
         	this.tile7.Name = "tile7";
         	this.tile7.Size = new System.Drawing.Size(30, 30);
+        	this.tile7.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile7.TabIndex = 6;
         	// 
         	// tile8
@@ -229,6 +236,7 @@
         	this.tile8.Location = new System.Drawing.Point(244, 64);
         	this.tile8.Name = "tile8";
         	this.tile8.Size = new System.Drawing.Size(30, 30);
+        	this.tile8.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile8.TabIndex = 7;
         	// 
         	// tile9
@@ -239,6 +247,7 @@
         	this.tile9.Location = new System.Drawing.Point(275, 64);
         	this.tile9.Name = "tile9";
         	this.tile9.Size = new System.Drawing.Size(30, 30);
+        	this.tile9.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile9.TabIndex = 8;
         	// 
         	// tile10
@@ -249,6 +258,7 @@
         	this.tile10.Location = new System.Drawing.Point(306, 64);
         	this.tile10.Name = "tile10";
         	this.tile10.Size = new System.Drawing.Size(30, 30);
+        	this.tile10.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile10.TabIndex = 9;
         	// 
         	// tile11
@@ -259,6 +269,7 @@
         	this.tile11.Location = new System.Drawing.Point(27, 95);
         	this.tile11.Name = "tile11";
         	this.tile11.Size = new System.Drawing.Size(30, 30);
+        	this.tile11.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile11.TabIndex = 19;
         	// 
         	// tile12
@@ -268,6 +279,7 @@
         	this.tile12.Location = new System.Drawing.Point(58, 95);
         	this.tile12.Name = "tile12";
         	this.tile12.Size = new System.Drawing.Size(30, 30);
+        	this.tile12.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile12.TabIndex = 18;
         	// 
         	// tile13
@@ -278,6 +290,7 @@
         	this.tile13.Location = new System.Drawing.Point(89, 95);
         	this.tile13.Name = "tile13";
         	this.tile13.Size = new System.Drawing.Size(30, 30);
+        	this.tile13.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile13.TabIndex = 17;
         	// 
         	// tile14
@@ -288,6 +301,7 @@
         	this.tile14.Location = new System.Drawing.Point(120, 95);
         	this.tile14.Name = "tile14";
         	this.tile14.Size = new System.Drawing.Size(30, 30);
+        	this.tile14.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile14.TabIndex = 16;
         	// 
         	// tile15
@@ -298,6 +312,7 @@
         	this.tile15.Location = new System.Drawing.Point(151, 95);
         	this.tile15.Name = "tile15";
         	this.tile15.Size = new System.Drawing.Size(30, 30);
+        	this.tile15.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile15.TabIndex = 15;
         	// 
         	// tile16
@@ -308,6 +323,7 @@
         	this.tile16.Location = new System.Drawing.Point(182, 95);
         	this.tile16.Name = "tile16";
         	this.tile16.Size = new System.Drawing.Size(30, 30);
+        	this.tile16.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile16.TabIndex = 14;
         	// 
         	// tile17
@@ -318,6 +334,7 @@
         	this.tile17.Location = new System.Drawing.Point(213, 95);
         	this.tile17.Name = "tile17";
         	this.tile17.Size = new System.Drawing.Size(30, 30);
+        	this.tile17.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile17.TabIndex = 13;
         	// 
         	// tile18
@@ -328,6 +345,7 @@
         	this.tile18.Location = new System.Drawing.Point(244, 95);
         	this.tile18.Name = "tile18";
         	this.tile18.Size = new System.Drawing.Size(30, 30);
+        	this.tile18.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile18.TabIndex = 12;
         	// 
         	// tile19
@@ -338,6 +356,7 @@
         	this.tile19.Location = new System.Drawing.Point(275, 95);
         	this.tile19.Name = "tile19";
         	this.tile19.Size = new System.Drawing.Size(30, 30);
+        	this.tile19.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile19.TabIndex = 11;
         	// 
         	// tile20
@@ -348,6 +367,7 @@
         	this.tile20.Location = new System.Drawing.Point(306, 95);
         	this.tile20.Name = "tile20";
         	this.tile20.Size = new System.Drawing.Size(30, 30);
+        	this.tile20.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile20.TabIndex = 10;
         	// 
         	// tile21
@@ -358,6 +378,7 @@
         	this.tile21.Location = new System.Drawing.Point(27, 126);
         	this.tile21.Name = "tile21";
         	this.tile21.Size = new System.Drawing.Size(30, 30);
+        	this.tile21.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile21.TabIndex = 29;
         	// 
         	// tile22
@@ -368,6 +389,7 @@
         	this.tile22.Location = new System.Drawing.Point(58, 126);
         	this.tile22.Name = "tile22";
         	this.tile22.Size = new System.Drawing.Size(30, 30);
+        	this.tile22.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile22.TabIndex = 28;
         	// 
         	// tile23
@@ -377,6 +399,7 @@
         	this.tile23.Location = new System.Drawing.Point(89, 126);
         	this.tile23.Name = "tile23";
         	this.tile23.Size = new System.Drawing.Size(30, 30);
+        	this.tile23.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile23.TabIndex = 27;
         	// 
         	// tile24
@@ -387,6 +410,7 @@
         	this.tile24.Location = new System.Drawing.Point(120, 126);
         	this.tile24.Name = "tile24";
         	this.tile24.Size = new System.Drawing.Size(30, 30);
+        	this.tile24.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile24.TabIndex = 26;
         	// 
         	// tile25
@@ -397,6 +421,7 @@
         	this.tile25.Location = new System.Drawing.Point(151, 126);
         	this.tile25.Name = "tile25";
         	this.tile25.Size = new System.Drawing.Size(30, 30);
+        	this.tile25.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile25.TabIndex = 25;
         	// 
         	// tile26
@@ -407,6 +432,7 @@
         	this.tile26.Location = new System.Drawing.Point(182, 126);
         	this.tile26.Name = "tile26";
         	this.tile26.Size = new System.Drawing.Size(30, 30);
+        	this.tile26.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile26.TabIndex = 24;
         	// 
         	// tile27
@@ -417,6 +443,7 @@
         	this.tile27.Location = new System.Drawing.Point(27, 64);
         	this.tile27.Name = "tile27";
         	this.tile27.Size = new System.Drawing.Size(30, 30);
+        	this.tile27.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile27.TabIndex = 23;
         	// 
         	// tile28
@@ -427,6 +454,7 @@
         	this.tile28.Location = new System.Drawing.Point(244, 126);
         	this.tile28.Name = "tile28";
         	this.tile28.Size = new System.Drawing.Size(30, 30);
+        	this.tile28.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile28.TabIndex = 22;
         	// 
         	// tile29
@@ -437,6 +465,7 @@
         	this.tile29.Location = new System.Drawing.Point(275, 126);
         	this.tile29.Name = "tile29";
         	this.tile29.Size = new System.Drawing.Size(30, 30);
+        	this.tile29.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile29.TabIndex = 21;
         	// 
         	// tile30
@@ -447,6 +476,7 @@
         	this.tile30.Location = new System.Drawing.Point(306, 126);
         	this.tile30.Name = "tile30";
         	this.tile30.Size = new System.Drawing.Size(30, 30);
+        	this.tile30.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile30.TabIndex = 20;
         	// 
         	// tile31
@@ -457,6 +487,7 @@
         	this.tile31.Location = new System.Drawing.Point(27, 157);
         	this.tile31.Name = "tile31";
         	this.tile31.Size = new System.Drawing.Size(30, 30);
+        	this.tile31.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile31.TabIndex = 39;
         	// 
         	// tile32
@@ -467,6 +498,7 @@
         	this.tile32.Location = new System.Drawing.Point(58, 157);
         	this.tile32.Name = "tile32";
         	this.tile32.Size = new System.Drawing.Size(30, 30);
+        	this.tile32.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile32.TabIndex = 38;
         	// 
         	// tile33
@@ -477,6 +509,7 @@
         	this.tile33.Location = new System.Drawing.Point(89, 157);
         	this.tile33.Name = "tile33";
         	this.tile33.Size = new System.Drawing.Size(30, 30);
+        	this.tile33.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile33.TabIndex = 37;
         	// 
         	// tile34
@@ -487,6 +520,7 @@
         	this.tile34.Location = new System.Drawing.Point(120, 157);
         	this.tile34.Name = "tile34";
         	this.tile34.Size = new System.Drawing.Size(30, 30);
+        	this.tile34.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile34.TabIndex = 36;
         	// 
         	// tile35
@@ -497,6 +531,7 @@
         	this.tile35.Location = new System.Drawing.Point(151, 157);
         	this.tile35.Name = "tile35";
         	this.tile35.Size = new System.Drawing.Size(30, 30);
+        	this.tile35.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile35.TabIndex = 35;
         	// 
         	// tile36
@@ -507,6 +542,7 @@
         	this.tile36.Location = new System.Drawing.Point(182, 157);
         	this.tile36.Name = "tile36";
         	this.tile36.Size = new System.Drawing.Size(30, 30);
+        	this.tile36.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile36.TabIndex = 34;
         	// 
         	// tile37
@@ -517,6 +553,7 @@
         	this.tile37.Location = new System.Drawing.Point(213, 157);
         	this.tile37.Name = "tile37";
         	this.tile37.Size = new System.Drawing.Size(30, 30);
+        	this.tile37.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile37.TabIndex = 33;
         	// 
         	// tile38
@@ -527,6 +564,7 @@
         	this.tile38.Location = new System.Drawing.Point(244, 157);
         	this.tile38.Name = "tile38";
         	this.tile38.Size = new System.Drawing.Size(30, 30);
+        	this.tile38.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile38.TabIndex = 32;
         	// 
         	// tile39
@@ -536,6 +574,7 @@
         	this.tile39.Location = new System.Drawing.Point(275, 157);
         	this.tile39.Name = "tile39";
         	this.tile39.Size = new System.Drawing.Size(30, 30);
+        	this.tile39.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile39.TabIndex = 31;
         	// 
         	// tile40
@@ -546,6 +585,7 @@
         	this.tile40.Location = new System.Drawing.Point(306, 157);
         	this.tile40.Name = "tile40";
         	this.tile40.Size = new System.Drawing.Size(30, 30);
+        	this.tile40.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile40.TabIndex = 30;
         	// 
         	// tile41
@@ -556,6 +596,7 @@
         	this.tile41.Location = new System.Drawing.Point(27, 188);
         	this.tile41.Name = "tile41";
         	this.tile41.Size = new System.Drawing.Size(30, 30);
+        	this.tile41.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile41.TabIndex = 49;
         	// 
         	// tile42
@@ -566,6 +607,7 @@
         	this.tile42.Location = new System.Drawing.Point(58, 188);
         	this.tile42.Name = "tile42";
         	this.tile42.Size = new System.Drawing.Size(30, 30);
+        	this.tile42.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile42.TabIndex = 48;
         	// 
         	// tile43
@@ -576,6 +618,7 @@
         	this.tile43.Location = new System.Drawing.Point(89, 188);
         	this.tile43.Name = "tile43";
         	this.tile43.Size = new System.Drawing.Size(30, 30);
+        	this.tile43.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile43.TabIndex = 47;
         	// 
         	// tile44
@@ -586,6 +629,7 @@
         	this.tile44.Location = new System.Drawing.Point(120, 188);
         	this.tile44.Name = "tile44";
         	this.tile44.Size = new System.Drawing.Size(30, 30);
+        	this.tile44.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile44.TabIndex = 46;
         	// 
         	// tile45
@@ -596,6 +640,7 @@
         	this.tile45.Location = new System.Drawing.Point(151, 188);
         	this.tile45.Name = "tile45";
         	this.tile45.Size = new System.Drawing.Size(30, 30);
+        	this.tile45.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile45.TabIndex = 45;
         	// 
         	// tile46
@@ -605,6 +650,7 @@
         	this.tile46.Location = new System.Drawing.Point(182, 188);
         	this.tile46.Name = "tile46";
         	this.tile46.Size = new System.Drawing.Size(30, 30);
+        	this.tile46.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile46.TabIndex = 44;
         	// 
         	// tile47
@@ -614,6 +660,7 @@
         	this.tile47.Location = new System.Drawing.Point(213, 188);
         	this.tile47.Name = "tile47";
         	this.tile47.Size = new System.Drawing.Size(30, 30);
+        	this.tile47.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile47.TabIndex = 43;
         	// 
         	// tile48
@@ -623,6 +670,7 @@
         	this.tile48.Location = new System.Drawing.Point(244, 188);
         	this.tile48.Name = "tile48";
         	this.tile48.Size = new System.Drawing.Size(30, 30);
+        	this.tile48.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile48.TabIndex = 42;
         	// 
         	// tile49
@@ -632,6 +680,7 @@
         	this.tile49.Location = new System.Drawing.Point(275, 188);
         	this.tile49.Name = "tile49";
         	this.tile49.Size = new System.Drawing.Size(30, 30);
+        	this.tile49.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile49.TabIndex = 41;
         	// 
         	// tile50
@@ -642,6 +691,7 @@
         	this.tile50.Location = new System.Drawing.Point(306, 188);
         	this.tile50.Name = "tile50";
         	this.tile50.Size = new System.Drawing.Size(30, 30);
+        	this.tile50.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile50.TabIndex = 40;
         	// 
         	// tile51
@@ -652,6 +702,7 @@
         	this.tile51.Location = new System.Drawing.Point(27, 219);
         	this.tile51.Name = "tile51";
         	this.tile51.Size = new System.Drawing.Size(30, 30);
+        	this.tile51.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile51.TabIndex = 59;
         	// 
         	// tile52
@@ -662,6 +713,7 @@
         	this.tile52.Location = new System.Drawing.Point(58, 219);
         	this.tile52.Name = "tile52";
         	this.tile52.Size = new System.Drawing.Size(30, 30);
+        	this.tile52.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile52.TabIndex = 58;
         	// 
         	// tile53
@@ -672,6 +724,7 @@
         	this.tile53.Location = new System.Drawing.Point(89, 219);
         	this.tile53.Name = "tile53";
         	this.tile53.Size = new System.Drawing.Size(30, 30);
+        	this.tile53.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile53.TabIndex = 57;
         	// 
         	// tile54
@@ -682,6 +735,7 @@
         	this.tile54.Location = new System.Drawing.Point(120, 219);
         	this.tile54.Name = "tile54";
         	this.tile54.Size = new System.Drawing.Size(30, 30);
+        	this.tile54.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile54.TabIndex = 56;
         	// 
         	// tile55
@@ -692,6 +746,7 @@
         	this.tile55.Location = new System.Drawing.Point(151, 219);
         	this.tile55.Name = "tile55";
         	this.tile55.Size = new System.Drawing.Size(30, 30);
+        	this.tile55.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile55.TabIndex = 55;
         	// 
         	// tile56
@@ -701,6 +756,7 @@
         	this.tile56.Location = new System.Drawing.Point(182, 219);
         	this.tile56.Name = "tile56";
         	this.tile56.Size = new System.Drawing.Size(30, 30);
+        	this.tile56.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile56.TabIndex = 54;
         	// 
         	// tile57
@@ -710,6 +766,7 @@
         	this.tile57.Location = new System.Drawing.Point(213, 219);
         	this.tile57.Name = "tile57";
         	this.tile57.Size = new System.Drawing.Size(30, 30);
+        	this.tile57.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile57.TabIndex = 53;
         	// 
         	// tile58
@@ -719,6 +776,7 @@
         	this.tile58.Location = new System.Drawing.Point(244, 219);
         	this.tile58.Name = "tile58";
         	this.tile58.Size = new System.Drawing.Size(30, 30);
+        	this.tile58.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile58.TabIndex = 52;
         	// 
         	// tile59
@@ -728,6 +786,7 @@
         	this.tile59.Location = new System.Drawing.Point(275, 219);
         	this.tile59.Name = "tile59";
         	this.tile59.Size = new System.Drawing.Size(30, 30);
+        	this.tile59.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile59.TabIndex = 51;
         	// 
         	// tile60
@@ -738,6 +797,7 @@
         	this.tile60.Location = new System.Drawing.Point(306, 219);
         	this.tile60.Name = "tile60";
         	this.tile60.Size = new System.Drawing.Size(30, 30);
+        	this.tile60.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile60.TabIndex = 50;
         	// 
         	// tile61
@@ -748,6 +808,7 @@
         	this.tile61.Location = new System.Drawing.Point(27, 250);
         	this.tile61.Name = "tile61";
         	this.tile61.Size = new System.Drawing.Size(30, 30);
+        	this.tile61.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile61.TabIndex = 69;
         	// 
         	// tile62
@@ -758,6 +819,7 @@
         	this.tile62.Location = new System.Drawing.Point(58, 250);
         	this.tile62.Name = "tile62";
         	this.tile62.Size = new System.Drawing.Size(30, 30);
+        	this.tile62.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile62.TabIndex = 68;
         	// 
         	// tile63
@@ -768,6 +830,7 @@
         	this.tile63.Location = new System.Drawing.Point(89, 250);
         	this.tile63.Name = "tile63";
         	this.tile63.Size = new System.Drawing.Size(30, 30);
+        	this.tile63.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile63.TabIndex = 67;
         	// 
         	// tile64
@@ -778,6 +841,7 @@
         	this.tile64.Location = new System.Drawing.Point(120, 250);
         	this.tile64.Name = "tile64";
         	this.tile64.Size = new System.Drawing.Size(30, 30);
+        	this.tile64.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile64.TabIndex = 66;
         	// 
         	// tile65
@@ -788,6 +852,7 @@
         	this.tile65.Location = new System.Drawing.Point(151, 250);
         	this.tile65.Name = "tile65";
         	this.tile65.Size = new System.Drawing.Size(30, 30);
+        	this.tile65.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile65.TabIndex = 65;
         	// 
         	// tile66
@@ -797,6 +862,7 @@
         	this.tile66.Location = new System.Drawing.Point(182, 250);
         	this.tile66.Name = "tile66";
         	this.tile66.Size = new System.Drawing.Size(30, 30);
+        	this.tile66.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile66.TabIndex = 64;
         	// 
         	// tile67
@@ -806,6 +872,7 @@
         	this.tile67.Location = new System.Drawing.Point(213, 250);
         	this.tile67.Name = "tile67";
         	this.tile67.Size = new System.Drawing.Size(30, 30);
+        	this.tile67.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile67.TabIndex = 63;
         	// 
         	// tile68
@@ -815,6 +882,7 @@
         	this.tile68.Location = new System.Drawing.Point(244, 250);
         	this.tile68.Name = "tile68";
         	this.tile68.Size = new System.Drawing.Size(30, 30);
+        	this.tile68.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile68.TabIndex = 62;
         	// 
         	// tile69
@@ -824,6 +892,7 @@
         	this.tile69.Location = new System.Drawing.Point(275, 250);
         	this.tile69.Name = "tile69";
         	this.tile69.Size = new System.Drawing.Size(30, 30);
+        	this.tile69.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile69.TabIndex = 61;
         	// 
         	// tile70
@@ -834,6 +903,7 @@
         	this.tile70.Location = new System.Drawing.Point(306, 250);
         	this.tile70.Name = "tile70";
         	this.tile70.Size = new System.Drawing.Size(30, 30);
+        	this.tile70.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile70.TabIndex = 60;
         	// 
         	// tile71
@@ -844,6 +914,7 @@
         	this.tile71.Location = new System.Drawing.Point(27, 281);
         	this.tile71.Name = "tile71";
         	this.tile71.Size = new System.Drawing.Size(30, 30);
+        	this.tile71.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile71.TabIndex = 79;
         	// 
         	// tile72
@@ -854,6 +925,7 @@
         	this.tile72.Location = new System.Drawing.Point(58, 281);
         	this.tile72.Name = "tile72";
         	this.tile72.Size = new System.Drawing.Size(30, 30);
+        	this.tile72.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile72.TabIndex = 78;
         	// 
         	// tile73
@@ -864,6 +936,7 @@
         	this.tile73.Location = new System.Drawing.Point(89, 281);
         	this.tile73.Name = "tile73";
         	this.tile73.Size = new System.Drawing.Size(30, 30);
+        	this.tile73.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile73.TabIndex = 77;
         	// 
         	// tile74
@@ -874,6 +947,7 @@
         	this.tile74.Location = new System.Drawing.Point(120, 281);
         	this.tile74.Name = "tile74";
         	this.tile74.Size = new System.Drawing.Size(30, 30);
+        	this.tile74.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile74.TabIndex = 76;
         	// 
         	// tile75
@@ -884,6 +958,7 @@
         	this.tile75.Location = new System.Drawing.Point(151, 281);
         	this.tile75.Name = "tile75";
         	this.tile75.Size = new System.Drawing.Size(30, 30);
+        	this.tile75.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile75.TabIndex = 75;
         	// 
         	// tile76
@@ -893,6 +968,7 @@
         	this.tile76.Location = new System.Drawing.Point(182, 281);
         	this.tile76.Name = "tile76";
         	this.tile76.Size = new System.Drawing.Size(30, 30);
+        	this.tile76.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile76.TabIndex = 74;
         	// 
         	// tile77
@@ -902,6 +978,7 @@
         	this.tile77.Location = new System.Drawing.Point(213, 281);
         	this.tile77.Name = "tile77";
         	this.tile77.Size = new System.Drawing.Size(30, 30);
+        	this.tile77.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile77.TabIndex = 73;
         	// 
         	// tile78
@@ -911,6 +988,7 @@
         	this.tile78.Location = new System.Drawing.Point(244, 281);
         	this.tile78.Name = "tile78";
         	this.tile78.Size = new System.Drawing.Size(30, 30);
+        	this.tile78.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile78.TabIndex = 72;
         	// 
         	// tile79
@@ -920,6 +998,7 @@
         	this.tile79.Location = new System.Drawing.Point(275, 281);
         	this.tile79.Name = "tile79";
         	this.tile79.Size = new System.Drawing.Size(30, 30);
+        	this.tile79.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile79.TabIndex = 71;
         	// 
         	// tile80
@@ -930,6 +1009,7 @@
         	this.tile80.Location = new System.Drawing.Point(306, 281);
         	this.tile80.Name = "tile80";
         	this.tile80.Size = new System.Drawing.Size(30, 30);
+        	this.tile80.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile80.TabIndex = 70;
         	// 
         	// tile81
@@ -940,6 +1020,7 @@
         	this.tile81.Location = new System.Drawing.Point(27, 312);
         	this.tile81.Name = "tile81";
         	this.tile81.Size = new System.Drawing.Size(30, 30);
+        	this.tile81.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile81.TabIndex = 89;
         	// 
         	// tile82
@@ -950,6 +1031,7 @@
         	this.tile82.Location = new System.Drawing.Point(58, 312);
         	this.tile82.Name = "tile82";
         	this.tile82.Size = new System.Drawing.Size(30, 30);
+        	this.tile82.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile82.TabIndex = 88;
         	// 
         	// tile83
@@ -959,6 +1041,7 @@
         	this.tile83.Location = new System.Drawing.Point(89, 312);
         	this.tile83.Name = "tile83";
         	this.tile83.Size = new System.Drawing.Size(30, 30);
+        	this.tile83.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile83.TabIndex = 87;
         	// 
         	// tile84
@@ -969,6 +1052,7 @@
         	this.tile84.Location = new System.Drawing.Point(120, 312);
         	this.tile84.Name = "tile84";
         	this.tile84.Size = new System.Drawing.Size(30, 30);
+        	this.tile84.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile84.TabIndex = 86;
         	// 
         	// tile85
@@ -979,6 +1063,7 @@
         	this.tile85.Location = new System.Drawing.Point(151, 312);
         	this.tile85.Name = "tile85";
         	this.tile85.Size = new System.Drawing.Size(30, 30);
+        	this.tile85.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile85.TabIndex = 85;
         	// 
         	// tile86
@@ -988,6 +1073,7 @@
         	this.tile86.Location = new System.Drawing.Point(182, 312);
         	this.tile86.Name = "tile86";
         	this.tile86.Size = new System.Drawing.Size(30, 30);
+        	this.tile86.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile86.TabIndex = 84;
         	// 
         	// tile87
@@ -997,6 +1083,7 @@
         	this.tile87.Location = new System.Drawing.Point(213, 312);
         	this.tile87.Name = "tile87";
         	this.tile87.Size = new System.Drawing.Size(30, 30);
+        	this.tile87.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile87.TabIndex = 83;
         	// 
         	// tile88
@@ -1006,6 +1093,7 @@
         	this.tile88.Location = new System.Drawing.Point(244, 312);
         	this.tile88.Name = "tile88";
         	this.tile88.Size = new System.Drawing.Size(30, 30);
+        	this.tile88.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile88.TabIndex = 82;
         	// 
         	// tile89
@@ -1015,6 +1103,7 @@
         	this.tile89.Location = new System.Drawing.Point(275, 312);
         	this.tile89.Name = "tile89";
         	this.tile89.Size = new System.Drawing.Size(30, 30);
+        	this.tile89.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile89.TabIndex = 81;
         	// 
         	// tile90
@@ -1025,6 +1114,7 @@
         	this.tile90.Location = new System.Drawing.Point(306, 312);
         	this.tile90.Name = "tile90";
         	this.tile90.Size = new System.Drawing.Size(30, 30);
+        	this.tile90.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile90.TabIndex = 80;
         	// 
         	// tile91
@@ -1035,6 +1125,7 @@
         	this.tile91.Location = new System.Drawing.Point(27, 343);
         	this.tile91.Name = "tile91";
         	this.tile91.Size = new System.Drawing.Size(30, 30);
+        	this.tile91.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile91.TabIndex = 99;
         	// 
         	// tile92
@@ -1044,6 +1135,7 @@
         	this.tile92.Location = new System.Drawing.Point(58, 343);
         	this.tile92.Name = "tile92";
         	this.tile92.Size = new System.Drawing.Size(30, 30);
+        	this.tile92.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile92.TabIndex = 98;
         	// 
         	// tile93
@@ -1053,6 +1145,7 @@
         	this.tile93.Location = new System.Drawing.Point(89, 343);
         	this.tile93.Name = "tile93";
         	this.tile93.Size = new System.Drawing.Size(30, 30);
+        	this.tile93.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile93.TabIndex = 97;
         	// 
         	// tile94
@@ -1063,6 +1156,7 @@
         	this.tile94.Location = new System.Drawing.Point(120, 343);
         	this.tile94.Name = "tile94";
         	this.tile94.Size = new System.Drawing.Size(30, 30);
+        	this.tile94.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile94.TabIndex = 96;
         	// 
         	// tile95
@@ -1073,6 +1167,7 @@
         	this.tile95.Location = new System.Drawing.Point(151, 343);
         	this.tile95.Name = "tile95";
         	this.tile95.Size = new System.Drawing.Size(30, 30);
+        	this.tile95.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile95.TabIndex = 95;
         	// 
         	// tile96
@@ -1082,6 +1177,7 @@
         	this.tile96.Location = new System.Drawing.Point(182, 343);
         	this.tile96.Name = "tile96";
         	this.tile96.Size = new System.Drawing.Size(30, 30);
+        	this.tile96.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile96.TabIndex = 94;
         	// 
         	// tile97
@@ -1091,6 +1187,7 @@
         	this.tile97.Location = new System.Drawing.Point(213, 343);
         	this.tile97.Name = "tile97";
         	this.tile97.Size = new System.Drawing.Size(30, 30);
+        	this.tile97.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile97.TabIndex = 93;
         	// 
         	// tile98
@@ -1100,6 +1197,7 @@
         	this.tile98.Location = new System.Drawing.Point(244, 343);
         	this.tile98.Name = "tile98";
         	this.tile98.Size = new System.Drawing.Size(30, 30);
+        	this.tile98.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile98.TabIndex = 92;
         	// 
         	// tile99
@@ -1109,6 +1207,7 @@
         	this.tile99.Location = new System.Drawing.Point(275, 343);
         	this.tile99.Name = "tile99";
         	this.tile99.Size = new System.Drawing.Size(30, 30);
+        	this.tile99.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile99.TabIndex = 91;
         	// 
         	// tile100
@@ -1119,6 +1218,7 @@
         	this.tile100.Location = new System.Drawing.Point(306, 343);
         	this.tile100.Name = "tile100";
         	this.tile100.Size = new System.Drawing.Size(30, 30);
+        	this.tile100.State = Sub_Marine_Client.Tile.TileState.Empty;
         	this.tile100.TabIndex = 90;
         	// 
         	// label1
@@ -1334,7 +1434,7 @@
         	// 
         	this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
         	this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-        	this.BackColor = System.Drawing.Color.Transparent;
+        	this.BackColor = System.Drawing.SystemColors.Control;
         	this.Controls.Add(this.m_title);
         	this.Controls.Add(this.label20);
         	this.Controls.Add(this.label19);

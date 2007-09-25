@@ -62,14 +62,14 @@ namespace Sub_Marine_Client
 				}
 				catch (ObjectDisposedException se)
 				{
-					MessageBox.Show("odrse " +se.Message);
+					MessageBox.Show(se.Message);
 					connectionIsUp = false;
 					return;
 				}
-				catch (IOException se1)
+				catch (IOException)
 				{
 					connectionIsUp = false;
-					MessageBox.Show("odrse1 "+se1.Message);
+					MessageBox.Show("Communication to the sever is out, please make sure that the server is up and running");
 					return;
 				}
 				if (str != null)
@@ -101,22 +101,6 @@ namespace Sub_Marine_Client
 		{
 			connectionIsUp = false;
 		}
-				
-		/*
-        public Result Move(int x,int y)
-        {
-        	SendData("x="+x+"y="+y);
-        	string str=WaitForData();
-        	Resault resaultStr = parsestr(str);
-			return resaultStr;
-        }
-        public Result counterMove(string Str)
-        {
-        	int x,y;
-        	parsepoint(Str,ref x,ref y);
-        	Result res=checkInArray(x,y);
-        	SendData(res.ToString());
-        }*/
 	}
 
 }

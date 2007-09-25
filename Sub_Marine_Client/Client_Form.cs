@@ -111,7 +111,7 @@ namespace Sub_Marine_Client
 			
 			Type DataTypes = typeof(DataType);
 			string[] types = DataType.GetNames(DataTypes);
-			if (str.StartsWith(types[0].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+			if (str.StartsWith("HI")==true)
 			{
 				//Hit event
 				try
@@ -125,7 +125,7 @@ namespace Sub_Marine_Client
 					
 				}
 			}
-			else if (str.StartsWith(types[1].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+			else if (str.StartsWith("MI")==true)
 			{
 				//Miss event
 				try
@@ -139,7 +139,7 @@ namespace Sub_Marine_Client
 					
 				}
 			}
-			else if (str.StartsWith(types[2].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+			else if (str.StartsWith("GU")==true)
 			{
 				//guess request
 				try
@@ -168,7 +168,7 @@ namespace Sub_Marine_Client
 					
 				}
 			}
-			else if (str.StartsWith(types[3].Substring(0,NUMBER_OF_CHARS_IN_HEADER))==true)
+			else if (str.StartsWith("GO")==true)
 			{
 				//Game Over event
 				displayGameOverMessageBox("Game Over, you won!");
