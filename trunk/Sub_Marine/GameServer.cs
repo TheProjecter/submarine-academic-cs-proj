@@ -84,15 +84,14 @@ namespace Sub_Marine_Server
 						{
 							m_Player[0] = new Player();
 							reacive_t[0] = null;
-							recover(0);
 						}
 						else
 						{
 							m_logger("both players disconnected");
-							startPlayers();
 						}
+						recover(0);
 					}
-					    if (m_Player[1].connection!=null  && !m_Player[1].isConnected())
+					if (m_Player[1].connection!=null  && !m_Player[1].isConnected())
 					{
 						m_logger(string.Format("player 1 was disconnected"));
 						m_Player[1].clearUser();
@@ -100,14 +99,12 @@ namespace Sub_Marine_Server
 						{
 							m_Player[1] = new Player();
 							reacive_t[1] = null;
-							recover(1);
 						}
 						else
 						{
 							m_logger("both players disconnected");
-							startPlayers();
 						}
-						
+						recover(1);
 					}
 					return;
 				}
@@ -126,7 +123,12 @@ namespace Sub_Marine_Server
 				{
 					if (str.StartsWith("HI") || str.StartsWith("MI"))
 					{
-						send(str,aPlayer); //I will always send to aplayer. it
+						int anotherPlayer = 0;
+						if (pnum==0)
+						{
+							anotherPlayer = 1;
+						}
+						send(str,anotherPlayer); //I will always send to aplayer. it
 						changePlayer(); //After sending data switch player
 						
 					}
@@ -299,7 +301,9 @@ namespace Sub_Marine_Server
 				init(aPlayer);
 				m_Player[aPlayer].setSocketStream();
 				if (onlyPlayer())
+				{
 					send("wj",0);
+				}
 				reacive_t[aPlayer] = new Thread((onDataRecieved));
 				reacive_t[aPlayer].IsBackground = true;
 				reacive_t[aPlayer].Start(aPlayer);
@@ -321,15 +325,26 @@ namespace Sub_Marine_Server
 		private void recover(int pnum) //It creates new thread for the broken connection with init and waiting for data
 		{
 			if (pnum==0)
-				send("wj",1);
+			{
+				if (m_Player[1].isConnected())
+				{
+					send("wj",1);
+				}
+			}
 			else
-				send("wj",0);
+			{
+				if (m_Player[0].isConnected())
+				{
+					send("wj",0);
+				}
+			}
 			init(pnum);
 			m_Player[pnum].setSocketStream();
 			m_Player[pnum].subInPlace = false;
 			reacive_t[pnum] = new Thread((onDataRecieved));
 			reacive_t[pnum].IsBackground = true;
 			reacive_t[pnum].Start(pnum);
+			send("WA",pnum);
 		}
 		private void limitConnection()
 		{
