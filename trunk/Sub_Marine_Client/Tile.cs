@@ -46,7 +46,7 @@ namespace Sub_Marine_Client
     			if (newBackFileName!=null)
     			{
     				Bitmap newBack = new Bitmap(newBackFileName);
-    				PutItem(newBack);
+    				PutItem2Layer(newBack);
     			}
     			m_state = value;
         	}
@@ -254,6 +254,7 @@ namespace Sub_Marine_Client
     		}
     		m_upperLayerImage.Image = image;
     		m_upperLayerImage.Show();
+    		this.BringToFront();
         }
         
         private delegate void RemoveItemDelegate();

@@ -226,6 +226,7 @@ namespace Sub_Marine_Client
 				return;
 			}
 			//submarine hanger reset
+			m_submarineHanger.Show();
 			m_submarineHanger.resetBoard();
 			m_submarineHanger.addSubs();
 			m_submarineHanger.setAllTilesDragable(true);
