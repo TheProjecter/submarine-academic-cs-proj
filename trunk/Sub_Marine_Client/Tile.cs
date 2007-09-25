@@ -228,33 +228,34 @@ namespace Sub_Marine_Client
 		/// <param name="image">image to put in the current tile</param>
         public void PutItem(Bitmap image)
         {
-        	if (m_image==null)
-        	{
-        		if (InvokeRequired)
-        		{
-        			this.BeginInvoke(new PutItemDelegate(PutItem),new object []{image});
-        			return;
-        		}
-        		m_parent.objectInTileWasAdded(this);
-            	this.Size = image.Size;
-	            System.Console.Out.WriteLine(Size);
-	            m_image = image;
-	            this.BackColor = Color.Transparent;
-	            this.BackgroundImage = m_image;
-	            this.BringToFront();
-        	}
-        	else
-        	{
-        		if (InvokeRequired)
-        		{
-        			this.BeginInvoke(new PutItemDelegate(PutItem),new object []{image});
-        			return;
-        		}
-        		m_upperLayerImage.Image = image;
-        		m_upperLayerImage.Show();
-        	}
+			if (InvokeRequired)
+    		{
+    			this.BeginInvoke(new PutItemDelegate(PutItem),new object []{image});
+    			return;
+    		}
+    		m_parent.objectInTileWasAdded(this);
+        	this.Size = image.Size;
+            m_image = image;
+            this.BackColor = Color.Transparent;
+            this.BackgroundImage = m_image;
+            this.BringToFront();
         }
 
+        /// <summary>
+		/// put an image above the current tile
+		/// </summary>
+		/// <param name="image">image to put above the current tile</param>
+        public void PutItem2Layer(Bitmap image)
+        {
+    		if (InvokeRequired)
+    		{
+    			this.BeginInvoke(new PutItemDelegate(PutItem2Layer),new object []{image});
+    			return;
+    		}
+    		m_upperLayerImage.Image = image;
+    		m_upperLayerImage.Show();
+        }
+        
         private delegate void RemoveItemDelegate();
         
         /// <summary>
